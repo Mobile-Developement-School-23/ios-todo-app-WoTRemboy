@@ -1,9 +1,4 @@
-//
-//  AppDelegate.swift
-//  School_ToDoList
-//
-//  Created by Roman Tverdokhleb on 10.06.2023.
-//
+
 
 import UIKit
 
