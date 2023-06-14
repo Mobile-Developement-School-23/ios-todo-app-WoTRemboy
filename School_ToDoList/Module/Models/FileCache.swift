@@ -2,7 +2,7 @@
 
 import Foundation
 
-class FileCache {
+final class FileCache {
     private(set) var items: [String: ToDoItem] = [:]
     
     func add(item: ToDoItem) -> ToDoItem? {
@@ -56,6 +56,42 @@ class FileCache {
             
         } catch {
             print("loading from file error: \(error)")
+        }
+    }
+    
+    func saveToCSVFile(to fileName: String) {
+        let csvItems = items.values.map { $0.csv }
+        let csvString = csvItems.joined(separator: ";")
+        
+        do {
+            guard let filesDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+                print("documents directory not found")
+                return
+            }
+            let fileURL = filesDirectory.appendingPathComponent("\(fileName).csv")
+            try csvString.write(to: fileURL, atomically: true, encoding: .utf8)
+            
+        } catch {
+            print("saving to CSV file error: \(error)")
+        }
+    }
+    
+    func loadFromCSVFile(from fileName: String) {
+        do {
+            guard let filesDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+                print("Documents directory not found")
+                return
+            }
+            let fileURL = filesDirectory.appendingPathComponent("\(fileName).csv")
+            
+            let csvString = try String(contentsOf: fileURL, encoding: .utf8)
+            let csvItems = csvString.components(separatedBy: ";")
+            
+            let loadedItems = csvItems.compactMap { ToDoItem.parse(csv: $0) }
+            items = Dictionary(uniqueKeysWithValues: loadedItems.map { ($0.id, $0) })
+            
+        } catch {
+            print("loading from CSV file error: \(error)")
         }
     }
 }
