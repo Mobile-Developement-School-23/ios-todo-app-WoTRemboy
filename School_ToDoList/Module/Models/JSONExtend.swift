@@ -13,9 +13,7 @@ extension ToDoItem {
         }
         
         let createDate = Date(timeIntervalSince1970: TimeInterval(createDateInt))
-        
         let completed = data["completed"] as? Bool
-        
         let importance = (data["importance"] as? String).flatMap(Importance.init(rawValue:))
 
 //        let importance: Importance?
@@ -26,7 +24,6 @@ extension ToDoItem {
         let deadline = (data["deadline"] as? Int).flatMap { timestamp -> Date? in
             return Date(timeIntervalSince1970: TimeInterval(timestamp))
         }
-        
         let editDate = (data["editDate"] as? Int).flatMap { timestamp -> Date? in
             return Date(timeIntervalSince1970: TimeInterval(timestamp))
         }

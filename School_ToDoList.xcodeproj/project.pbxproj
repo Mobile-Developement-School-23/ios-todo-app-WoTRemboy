@@ -12,7 +12,8 @@
 		634452612A34A85600BFB9E3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634452602A34A85600BFB9E3 /* ViewController.swift */; };
 		634452662A34A85700BFB9E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 634452652A34A85700BFB9E3 /* Assets.xcassets */; };
 		634452772A34ACD900BFB9E3 /* ToDoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634452762A34ACD900BFB9E3 /* ToDoItem.swift */; };
-		634452792A38A34500BFB9E3 /* JSONParse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634452782A38A34500BFB9E3 /* JSONParse.swift */; };
+		634452792A38A34500BFB9E3 /* JSONExtend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634452782A38A34500BFB9E3 /* JSONExtend.swift */; };
+		6344527B2A39D84700BFB9E3 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6344527A2A39D84700BFB9E3 /* FileCache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,7 +24,8 @@
 		634452652A34A85700BFB9E3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6344526A2A34A85700BFB9E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		634452762A34ACD900BFB9E3 /* ToDoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItem.swift; sourceTree = "<group>"; };
-		634452782A38A34500BFB9E3 /* JSONParse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParse.swift; sourceTree = "<group>"; };
+		634452782A38A34500BFB9E3 /* JSONExtend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONExtend.swift; sourceTree = "<group>"; };
+		6344527A2A39D84700BFB9E3 /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,7 +104,8 @@
 			isa = PBXGroup;
 			children = (
 				634452762A34ACD900BFB9E3 /* ToDoItem.swift */,
-				634452782A38A34500BFB9E3 /* JSONParse.swift */,
+				634452782A38A34500BFB9E3 /* JSONExtend.swift */,
+				6344527A2A39D84700BFB9E3 /* FileCache.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -185,9 +188,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				634452612A34A85600BFB9E3 /* ViewController.swift in Sources */,
-				634452792A38A34500BFB9E3 /* JSONParse.swift in Sources */,
+				634452792A38A34500BFB9E3 /* JSONExtend.swift in Sources */,
 				6344525D2A34A85600BFB9E3 /* AppDelegate.swift in Sources */,
 				634452772A34ACD900BFB9E3 /* ToDoItem.swift in Sources */,
+				6344527B2A39D84700BFB9E3 /* FileCache.swift in Sources */,
 				6344525F2A34A85600BFB9E3 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
