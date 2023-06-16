@@ -11,7 +11,7 @@ struct ToDoItem {
     let createDate: Date
     let editDate: Date?
     
-    // инициализатор с учетом значений по умолчанию для свойств и значимости полей
+    // MARK: Initializer considering default values ​​for properties and field values
     
     init(id: String = UUID().uuidString, taskText: String, importance: Importance, deadline: Date? = nil, completed: Bool = false, createDate: Date = Date(), editDate: Date? = nil) {
         self.id = id

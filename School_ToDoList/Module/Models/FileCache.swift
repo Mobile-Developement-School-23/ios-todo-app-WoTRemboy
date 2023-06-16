@@ -6,7 +6,7 @@ final class FileCache {
     private(set) var items: [String: ToDoItem] = [:]
     
     func add(item: ToDoItem) -> ToDoItem? {
-        if let replacedItem = items[item.id] {
+        if let replacedItem = items[item.id] { // duplication id check
             items[item.id] = item
             return replacedItem
         } else {
@@ -25,6 +25,8 @@ final class FileCache {
         }
     }
     
+    // MARK: Working with JSON
+    
     func saveToFile(to fileName: String) {
         let jsonItems = items.values.map { $0.json }
         
@@ -36,7 +38,7 @@ final class FileCache {
             }
             let fileURL = filesDirectory.appendingPathComponent("\(fileName).todofile")
             try jsonData.write(to: fileURL)
-
+            
         } catch {
             print("saving to file error: \(error)")
         }
@@ -59,9 +61,11 @@ final class FileCache {
         }
     }
     
+    // MARK: Working with CSV
+    
     func saveToCSVFile(to fileName: String) {
         let csvItems = items.values.map { $0.csv }
-        let csvString = csvItems.joined(separator: ";")
+        let csvString = csvItems.joined(separator: "\n")
         
         do {
             guard let filesDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
@@ -79,13 +83,13 @@ final class FileCache {
     func loadFromCSVFile(from fileName: String) {
         do {
             guard let filesDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-                print("Documents directory not found")
+                print("documents directory not found")
                 return
             }
             let fileURL = filesDirectory.appendingPathComponent("\(fileName).csv")
             
             let csvString = try String(contentsOf: fileURL, encoding: .utf8)
-            let csvItems = csvString.components(separatedBy: ";")
+            let csvItems = csvString.components(separatedBy: "\n")
             
             let loadedItems = csvItems.compactMap { ToDoItem.parse(csv: $0) }
             items = Dictionary(uniqueKeysWithValues: loadedItems.map { ($0.id, $0) })
