@@ -103,7 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				634452742A34A8EE00BFB9E3 /* Models */,
-				634452732A34A8E400BFB9E3 /* Views */,
+				634B8E592A409AAE00BE9ADB /* Views */,
 				634452722A34A8DC00BFB9E3 /* Controllers */,
 			);
 			path = Module;
@@ -115,13 +115,6 @@
 				634452602A34A85600BFB9E3 /* ViewController.swift */,
 			);
 			path = Controllers;
-			sourceTree = "<group>";
-		};
-		634452732A34A8E400BFB9E3 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		634452742A34A8EE00BFB9E3 /* Models */ = {
@@ -149,6 +142,13 @@
 				634452842A3B1A5500BFB9E3 /* ConfigurationAndParsingTests.swift */,
 			);
 			path = School_ToDoListTests;
+			sourceTree = "<group>";
+		};
+		634B8E592A409AAE00BE9ADB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
