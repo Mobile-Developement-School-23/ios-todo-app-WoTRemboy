@@ -27,6 +27,7 @@
 		634B8E712A41D8DA00BE9ADB /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634B8E702A41D8DA00BE9ADB /* TableViewController.swift */; };
 		634B8E732A41F3D000BE9ADB /* TableViewDelegateExtend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634B8E722A41F3D000BE9ADB /* TableViewDelegateExtend.swift */; };
 		634B8E752A41F51900BE9ADB /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634B8E742A41F51900BE9ADB /* SegmentedControl.swift */; };
+		634B8E782A422B5800BE9ADB /* ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634B8E772A422B5800BE9ADB /* ScrollView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		634B8E702A41D8DA00BE9ADB /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		634B8E722A41F3D000BE9ADB /* TableViewDelegateExtend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDelegateExtend.swift; sourceTree = "<group>"; };
 		634B8E742A41F51900BE9ADB /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
+		634B8E772A422B5800BE9ADB /* ScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +177,7 @@
 			children = (
 				634B8E6A2A41CABD00BE9ADB /* DetailsTextView.swift */,
 				634B8E742A41F51900BE9ADB /* SegmentedControl.swift */,
+				634B8E772A422B5800BE9ADB /* ScrollView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				634452612A34A85600BFB9E3 /* DetailsViewController.swift in Sources */,
+				634B8E782A422B5800BE9ADB /* ScrollView.swift in Sources */,
 				6344527D2A3A07F300BFB9E3 /* CSVExtend.swift in Sources */,
 				634B8E732A41F3D000BE9ADB /* TableViewDelegateExtend.swift in Sources */,
 				634B8E642A41B6A500BE9ADB /* FontStyles.swift in Sources */,
