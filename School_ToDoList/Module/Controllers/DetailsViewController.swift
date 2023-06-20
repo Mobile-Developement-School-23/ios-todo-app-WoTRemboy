@@ -30,6 +30,7 @@ class DetailsViewController: UIViewController {
         navigationItem.rightBarButtonItem = saveButton
         
         scrollView.frame = view.bounds
+        scrollView.showsVerticalScrollIndicator = false
         tableViewConfiguration()
         
         detailsTextView.delegate = self
@@ -43,6 +44,7 @@ class DetailsViewController: UIViewController {
         scrollViewSetup()
         detailsTextViewSetup()
         tableViewSetup()
+
     }
     
     @objc func buttonTapped() {
@@ -51,9 +53,9 @@ class DetailsViewController: UIViewController {
     
     func detailsTextViewSetup() {
         detailsTextView.translatesAutoresizingMaskIntoConstraints = false
-        detailsTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
+        detailsTextView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
         detailsTextView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 20).isActive = true
-        detailsTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+        detailsTextView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
         detailsTextView.heightAnchor.constraint(greaterThanOrEqualToConstant: 120).isActive = true
     }
     
@@ -67,10 +69,11 @@ class DetailsViewController: UIViewController {
     
     func tableViewSetup() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
         tableView.topAnchor.constraint(equalTo: detailsTextView.bottomAnchor, constant: 16).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-        tableView.heightAnchor.constraint(equalToConstant: 112).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
+        tableView.heightAnchor.constraint(equalToConstant: 440).isActive = true
+        
     }
     
     func scrollViewSetup() {
