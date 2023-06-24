@@ -22,6 +22,14 @@ extension DetailsViewController: UITextViewDelegate {
             textView.textColor = UIColor(named: "LabelTertiary")
         }
     }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            saveButton.isEnabled = false
+        } else {
+            saveButton.isEnabled = true
+        }
+    }
 
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

@@ -37,4 +37,5 @@ class SegmentedControl: UISegmentedControl {
     private func commonInit() {
         addSubview(segmentControl)
     }
+    
 }

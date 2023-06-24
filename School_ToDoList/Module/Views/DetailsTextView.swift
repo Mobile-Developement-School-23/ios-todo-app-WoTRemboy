@@ -5,6 +5,7 @@ class DetailsTextView: UITextView {
     let placeholder = "Что надо сделать?"
     
     private func textViewInit() {
+        
         text = placeholder
         textColor = UIColor(named: "LabelTertiary")
         font = .body()

@@ -2,6 +2,13 @@
 
 import Foundation
 
+//protocol JsonFunc {
+//    var items: [String: ToDoItem] { get }
+//    func add(toDoItem: ToDoItem) -> ToDoItem?
+//
+//    func remove(id: String) -> ToDoItem?
+//}
+
 final class FileCache {
     private(set) var items: [String: ToDoItem] = [:]
     
@@ -20,7 +27,7 @@ final class FileCache {
             items[id] = nil
             return deletedItem
         } else {
-            print("where is no item with this id")
+            print("where is no item with this id: \(id)")
             return nil
         }
     }
