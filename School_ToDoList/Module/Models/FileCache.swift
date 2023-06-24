@@ -2,13 +2,6 @@
 
 import Foundation
 
-//protocol JsonFunc {
-//    var items: [String: ToDoItem] { get }
-//    func add(toDoItem: ToDoItem) -> ToDoItem?
-//
-//    func remove(id: String) -> ToDoItem?
-//}
-
 final class FileCache {
     private(set) var items: [String: ToDoItem] = [:]
     
