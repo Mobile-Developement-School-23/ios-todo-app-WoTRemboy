@@ -20,7 +20,7 @@ final class FileCache {
             items[id] = nil
             return deletedItem
         } else {
-            print("where is no item with this id")
+            print("where is no item with this id: \(id)")
             return nil
         }
     }

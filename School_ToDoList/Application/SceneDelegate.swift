@@ -13,9 +13,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
         
-        let viewController = ViewController()
+        var viewController: UIViewController = DetailsViewController(openType: .edit, item: nil)
         
-        window?.rootViewController = viewController
+        let fileCache = FileCache()
+        fileCache.loadFromFile(from: "testFile")
+        if let item = fileCache.items.first?.value {
+            viewController = DetailsViewController(openType: .edit, item: item)
+        }
+        
+        
+        let navController = UINavigationController(rootViewController: viewController)
+        
+        window?.rootViewController = navController
         window?.makeKeyAndVisible()
     }
 
