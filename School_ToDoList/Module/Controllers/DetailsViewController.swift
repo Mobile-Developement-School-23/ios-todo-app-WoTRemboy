@@ -35,17 +35,12 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     var labelConstraint1: NSLayoutConstraint? = nil
     var dateLabelConstraint: NSLayoutConstraint? = nil
     
-    // MARK: NavButtons initialization
-    
-    let cancelButton = UIBarButtonItem(title: "Отменить", style: .plain, target: self, action: #selector(cancelButtonTapped))
-    let saveButton = UIBarButtonItem(title: "Сохранить", style: .done, target: self, action: #selector(saveButtonTapped))
-    
     // MARK: Extend initialization
     
     var selectedDate: Date?
     var isCalendarShown: Bool = false
     var isLandscapeOrientation: Bool = false
-    var data = ["Важность", nil]
+    var data = ["", ""]
     var datePickerVisible = false
     var deadlineAlreadyHere = false
     
@@ -56,6 +51,8 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
         picker.locale = .current
         picker.datePickerMode = .date
         picker.preferredDatePickerStyle = .inline
+        picker.calendar.firstWeekday = 2
+        picker.minimumDate = Calendar.current.startOfDay(for: Date())
         
         return picker
     }()
@@ -65,10 +62,18 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
         button.setTitle("Удалить", for: .normal)
         button.setTitleColor(UIColor(named: "Red"), for: .normal)
         button.backgroundColor = UIColor(named: "BackSecondary")
-        button.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
         button.layer.cornerRadius = 16
         
         return button
+    }()
+    
+    let importanceLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Важность"
+        label.textColor = UIColor(named: "LabelPrimary")
+        label.font = .body()
+        
+        return label
     }()
     
     let doneUntilLabel: UILabel = {
@@ -81,33 +86,53 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     }()
     
     let dateUntilLabel: UIButton = {
-        
         let button = UIButton()
-        
         button.setTitleColor(UIColor(named: "Blue"), for: .normal)
         button.titleLabel?.font = .footnote()
-        button.addTarget(self, action: #selector(dateButtonPressed), for: .touchUpInside)
         
         return button
     }()
     
-    let additionalLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Постановка дедлайна в задаче значительно повышает организацию и продуктивность работы, устанавливает приоритеты, способствует сознательности и стимулирует достижение целей."
-        label.textColor = UIColor(named: "LabelPrimary")
-        label.font = .body()
-        label.numberOfLines = 0
-        label.textAlignment = .left
-        label.isHidden = true
-        
-        return label
-    }()
+    // MARK: NavigationBar setup
     
+    func navigationBarSetup() {
+        navigationItem.title = "Дело"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: "Отменить",
+            style: .plain,
+            target: self,
+            action: #selector(cancelButtonTapped)
+        )
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Сохранить",
+            style: .done,
+            target: self,
+            action: #selector(saveButtonTapped)
+        )
+    }
+    
+    func saveButtonEnableCheck() {
+        if !detailsTextView.text.isEmpty && detailsTextView.text != "Что надо сделать?" {
+            navigationItem.rightBarButtonItem?.isEnabled = true
+        }
+    }
+    
+    // MARK: dateCell views setup
+    
+    func dateCellViewSetup() {
+        dateUntilLabel.setTitle(dateConfiguration().0, for: .normal)
+        dateUntilLabel.addTarget(self, action: #selector(dateButtonPressed), for: .touchUpInside)
+        datePicker.date = dateConfiguration().1 ?? Date(timeIntervalSinceNow: 86400)
+        datePicker.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
+    }
+
     // MARK: @objc functions
     
     @objc func datePickerValueChanged(_ sender: UIDatePicker) {
+        dismissKeyboard()
         selectedDate = sender.date
         dateUntilLabel.setTitle(dateConfiguration(date: selectedDate).0, for: .normal)
+        saveButtonEnableCheck()
     }
     
     @objc func cancelButtonTapped() {
@@ -117,15 +142,14 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     @objc func deleteButtonTapped() {
         let fileCache = FileCache()
         if let item = item {
-            fileCache.add(item: item)
-            fileCache.remove(at: item.id)
+            _ = fileCache.remove(at: item.id)
             fileCache.saveToFile(to: "testFile")
         }
         cleaning()
     }
     
     @objc func segmentValueChanged(_ sender: UISegmentedControl) {
-        
+        dismissKeyboard()
         let selectedSegment = sender.selectedSegmentIndex
         switch selectedSegment {
         case 0:
@@ -138,6 +162,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
             itemImportance = .regular
         }
         print(itemImportance)
+        saveButtonEnableCheck()
     }
     
     @objc private func saveButtonTapped() {
@@ -153,12 +178,10 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
         }
         
         let fileCache = FileCache()
-        fileCache.add(item: newItem)
+        let replacedItem = fileCache.add(item: newItem)
         fileCache.saveToFile(to: "testFile")
-        print("saved \(newItem)")
+        print("saved: \(newItem), replaced: \(String(describing: replacedItem))")
     }
-    
-
     
     // MARK: Working with keyboard show
     
@@ -238,7 +261,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
         self.openType = openType
         self.item = item
         super.init(nibName: nil, bundle: nil)
-        let placeholder = "Что надо сделать?"
+        //let placeholder = "Что надо сделать?"
         if openType == .edit {
             deleteButton.isEnabled = true
         } else {
@@ -256,7 +279,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
         if let text = item?.taskText {
             detailsTextView.text = text
             detailsTextView.textColor = UIColor(named: "LabelPrimary")
-            saveButton.isEnabled = true
+            navigationItem.rightBarButtonItem?.isEnabled = true
         }
         
         if let importance = item?.importance {
@@ -267,8 +290,6 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
                 segmentedControl.selectedSegmentIndex = 1
             case .important:
                 segmentedControl.selectedSegmentIndex = 2
-            default:
-                segmentedControl.selectedSegmentIndex = 1
             }
         }
     }
@@ -280,12 +301,9 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Дело"
+        navigationBarSetup()
         view.backgroundColor = UIColor(named: "BackPrimary")
-        
-        navigationItem.leftBarButtonItem = cancelButton
-        navigationItem.rightBarButtonItem = saveButton
-        saveButton.isEnabled = false
+        navigationItem.rightBarButtonItem?.isEnabled = false
         
         scrollView.frame = view.bounds
         scrollView.showsVerticalScrollIndicator = false
@@ -304,17 +322,10 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
         detailsTextViewSetup()
         tableViewSetup()
         deleteButtonSetup()
-        
-        dateUntilLabel.setTitle(dateConfiguration().0, for: .normal)
-        datePicker.date = dateConfiguration().1 ?? Date(timeIntervalSinceNow: 86400)
-        datePicker.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
-        
+        dateCellViewSetup()
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        scrollView.addGestureRecognizer(tapGesture)
         
         tableView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
     }
@@ -335,6 +346,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
         deleteButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
         deleteButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
         deleteButton.heightAnchor.constraint(equalToConstant: 56).isActive = true
+        deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
     }
     
     func detailsTextViewSetup() {
@@ -393,7 +405,11 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
             
             
             cell.contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56).isActive = true
+            cell.contentView.addSubview(importanceLabel)
             cell.contentView.addSubview(segmentedControl)
+            importanceLabel.translatesAutoresizingMaskIntoConstraints = false
+            importanceLabel.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor, constant: 16).isActive = true
+            importanceLabel.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor).isActive = true
             segmentedControl.translatesAutoresizingMaskIntoConstraints = false
             segmentedControl.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -14).isActive = true
             segmentedControl.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor).isActive = true
@@ -431,18 +447,13 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
             dateUntilLabel.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor, constant: 10).isActive = true
             dateUntilLabel.heightAnchor.constraint(equalToConstant: 18).isActive = true
         } else {
-            cell.contentView.addSubview(datePicker)
+            
             cell.contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 332).isActive = true
-            
-            cell.contentView.addSubview(additionalLabel)
-            
-            additionalLabel.translatesAutoresizingMaskIntoConstraints = false
-            additionalLabel.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -16).isActive = true
-            additionalLabel.leadingAnchor.constraint(equalTo: datePicker.trailingAnchor, constant: 20).isActive = true
-            additionalLabel.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor).isActive = true
-            if isLandscapeOrientation {
-                
-            }
+            cell.contentView.addSubview(datePicker)
+            datePicker.translatesAutoresizingMaskIntoConstraints = false
+            datePicker.centerXAnchor.constraint(equalTo: cell.contentView.centerXAnchor).isActive = true
+            datePicker.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor).isActive = true
+
         }
         
         
@@ -454,8 +465,8 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     @objc func dateButtonPressed() {
         
         let calendarRowNumber = 2
-        let constraint1 = tableView.heightAnchor.constraint(equalToConstant: 112 + 332)
-        let constraint2 = tableView.heightAnchor.constraint(equalToConstant: 112)
+        let constraintWithCalendar = tableView.heightAnchor.constraint(equalToConstant: 112 + 332)
+        let constraintNoCalendar = tableView.heightAnchor.constraint(equalToConstant: 112)
         
         if !isCalendarShown {
             datePickerVisible = true
@@ -468,10 +479,10 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
             tableView.insertRows(at: [calendarIndexPath], with: .fade)
             tableView.endUpdates()
             
-            constraint1.priority = .defaultHigh
-            constraint2.priority = .defaultLow
-            constraint1.isActive = true
-            constraint2.isActive = false
+            constraintWithCalendar.priority = .defaultHigh
+            constraintNoCalendar.priority = .defaultLow
+            constraintWithCalendar.isActive = true
+            constraintNoCalendar.isActive = false
             scrollView.contentSize = contentSize
             
             UIView.animate(withDuration: 0.5) {
@@ -484,10 +495,10 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
             
             let calendarIndexPath = IndexPath(row: calendarRowNumber, section: 0)
             
-            constraint1.priority = .defaultLow
-            constraint2.priority = .defaultHigh
-            constraint1.isActive = false
-            constraint2.isActive = true
+            constraintWithCalendar.priority = .defaultLow
+            constraintNoCalendar.priority = .defaultHigh
+            constraintWithCalendar.isActive = false
+            constraintNoCalendar.isActive = true
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.tableView.beginUpdates()
@@ -505,7 +516,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     // MARK: Done until button to show
     
     @objc func switchValueChanged(_ sender: UISwitch) {
-        
+        dismissKeyboard()
         if let cell = sender.superview?.superview as? UITableViewCell,
            let tableView = cell.superview as? UITableView {
             let isSwitchOn = sender.isOn
@@ -533,6 +544,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
                 selectedDate = nil
             }
         }
+        saveButtonEnableCheck()
     }
     
     // MARK: Working with scrollView
@@ -542,22 +554,8 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == "contentSize", let tableView = object as? UITableView {
+        if keyPath == "contentSize" {
             scrollView.contentSize = contentSize
-        }
-    }
-    
-    
-    // MARK: Working with landscape orientation
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        
-        let isLandscape = size.width > size.height
-        if isLandscape {
-            additionalLabel.isHidden = false
-        } else {
-            additionalLabel.isHidden = true
         }
     }
 }

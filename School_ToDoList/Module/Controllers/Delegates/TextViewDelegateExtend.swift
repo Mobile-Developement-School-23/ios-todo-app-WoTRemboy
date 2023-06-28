@@ -25,9 +25,9 @@ extension DetailsViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         if textView.text.isEmpty {
-            saveButton.isEnabled = false
+            navigationItem.rightBarButtonItem?.isEnabled = false
         } else {
-            saveButton.isEnabled = true
+            navigationItem.rightBarButtonItem?.isEnabled = true
         }
     }
 
