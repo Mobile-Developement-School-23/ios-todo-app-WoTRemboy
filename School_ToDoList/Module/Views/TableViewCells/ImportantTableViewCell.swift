@@ -24,15 +24,6 @@ class ImportantTableViewCell: UITableViewCell {
         return view
     }()
     
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = .body()
-        label.textColor = UIColor(named: "LabelPrimary")
-        label.numberOfLines = 3
-        
-        return label
-    }()
-    
     required init?(coder: NSCoder) {
         fatalError()
     }
@@ -40,19 +31,21 @@ class ImportantTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        titleLabel.text = nil
+        textLabel?.text = nil
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        textLabel?.font = .body()
+        textLabel?.textColor = UIColor(named: "LabelPrimary")
+        textLabel?.numberOfLines = 3
         backgroundColor = UIColor(named: "BackSecondary")
                 
         contentView.addSubview(importanceImageView)
-        contentView.addSubview(titleLabel)
         
         importanceImageViewSetup()
         titleLabelSetup()
-        contentView.heightAnchor.constraint(equalTo: titleLabel.heightAnchor, constant: 12 + 12 + 4).isActive = true
+        contentView.heightAnchor.constraint(equalTo: textLabel?.heightAnchor ?? contentView.heightAnchor, constant: 16 + 16 + 4).isActive = true
     }
     
     func importanceImageViewSetup() {
@@ -64,10 +57,10 @@ class ImportantTableViewCell: UITableViewCell {
     }
     
     func titleLabelSetup() {
-        titleLabel.leadingAnchor.constraint(equalTo: importanceImageView.trailingAnchor, constant: 2).isActive = true
-        titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12).isActive = true
-        titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        textLabel?.leadingAnchor.constraint(equalTo: importanceImageView.trailingAnchor, constant: 2).isActive = true
+        textLabel?.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12).isActive = true
+        textLabel?.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        textLabel?.translatesAutoresizingMaskIntoConstraints = false
     }
 
 }

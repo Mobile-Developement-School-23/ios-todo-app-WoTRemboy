@@ -46,14 +46,14 @@ class BothTableViewCell: UITableViewCell {
         return view
     }()
     
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = .body()
-        label.textColor = UIColor(named: "LabelPrimary")
-        label.numberOfLines = 3
-        
-        return label
-    }()
+//    let textLabel: UILabel = {
+//        let label = UILabel()
+//        label.font = .body()
+//        label.textColor = UIColor(named: "LabelPrimary")
+//        label.numberOfLines = 3
+//
+//        return label
+//    }()
     
     required init?(coder: NSCoder) {
         fatalError()
@@ -62,16 +62,18 @@ class BothTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        titleLabel.text = nil
+        textLabel?.text = nil
         dateLabel.text = nil
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = UIColor(named: "BackSecondary")
+        textLabel?.font = .body()
+        textLabel?.textColor = UIColor(named: "LabelPrimary")
+        textLabel?.numberOfLines = 3
                 
         contentView.addSubview(importanceImageView)
-        contentView.addSubview(titleLabel)
         contentView.addSubview(calendarImageView)
         contentView.addSubview(dateLabel)
         
@@ -79,7 +81,7 @@ class BothTableViewCell: UITableViewCell {
         titleLabelSetup()
         calendarImageViewSetup()
         dateLabelSetup()
-        contentView.heightAnchor.constraint(equalTo: titleLabel.heightAnchor, constant: 12 + 12 + 4 + 15).isActive = true
+        contentView.heightAnchor.constraint(equalTo: textLabel?.heightAnchor ?? contentView.heightAnchor, constant: 12 + 12 + 4 + 15).isActive = true
     }
     
     func importanceImageViewSetup() {
@@ -91,24 +93,24 @@ class BothTableViewCell: UITableViewCell {
     }
     
     func titleLabelSetup() {
-        titleLabel.leadingAnchor.constraint(equalTo: importanceImageView.trailingAnchor, constant: 2).isActive = true
-        titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12).isActive = true
-        titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12).isActive = true
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        textLabel?.leadingAnchor.constraint(equalTo: importanceImageView.trailingAnchor, constant: 2).isActive = true
+        textLabel?.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12).isActive = true
+        textLabel?.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12).isActive = true
+        textLabel?.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func calendarImageViewSetup() {
         calendarImageView.leadingAnchor.constraint(equalTo: importanceImageView.trailingAnchor, constant: 2).isActive = true
         calendarImageView.widthAnchor.constraint(equalToConstant: 16).isActive = true
         calendarImageView.heightAnchor.constraint(equalToConstant: 16).isActive = true
-        calendarImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 2).isActive = true
+        calendarImageView.topAnchor.constraint(equalTo: textLabel?.bottomAnchor ?? contentView.topAnchor, constant: 2).isActive = true
         calendarImageView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func dateLabelSetup() {
         dateLabel.leadingAnchor.constraint(equalTo: calendarImageView.trailingAnchor, constant: 2).isActive = true
         dateLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10).isActive = true
-        dateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 1).isActive = true
+        dateLabel.topAnchor.constraint(equalTo: textLabel?.bottomAnchor ?? contentView.topAnchor, constant: 1).isActive = true
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
     }
 

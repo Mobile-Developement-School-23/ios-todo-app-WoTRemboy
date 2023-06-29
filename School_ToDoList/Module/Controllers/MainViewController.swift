@@ -281,12 +281,14 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 }
                 let item = sortedArray[indexPath.row]
                 
-                cellDeadlineImportant.titleLabel.text = item.taskText
+                cellDeadlineImportant.textLabel?.text = item.taskText
                 let arrowImageView = UIImageView(image: UIImage(named: "transit"))
                 cellDeadlineImportant.accessoryView = arrowImageView
                 if item.completed {
+                    cellDeadlineImportant.textLabel?.textColor = UIColor(named: "LabelTertiary")
                     cellDeadlineImportant.imageView?.image = UIImage(named: "doneCircle")
                 } else {
+                    cellDeadlineImportant.textLabel?.textColor = UIColor(named: "LabelPrimary")
                     if item.importance == .important {
                         cellDeadlineImportant.imageView?.image = UIImage(named: "importantCircle")?.withTintColor(UIColor(named: "Red") ?? .red)
                     } else {
@@ -316,12 +318,14 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 }
                 let item = sortedArray[indexPath.row]
                 
-                cellDeadline.titleLabel.text = item.taskText
+                cellDeadline.textLabel?.text = item.taskText
                 let arrowImageView = UIImageView(image: UIImage(named: "transit"))
                 cellDeadline.accessoryView = arrowImageView
                 if item.completed {
+                    cellDeadline.textLabel?.textColor = UIColor(named: "LabelTertiary")
                     cellDeadline.imageView?.image = UIImage(named: "doneCircle")
                 } else {
+                    cellDeadline.textLabel?.textColor = UIColor(named: "LabelPrimary")
                     cellDeadline.imageView?.image = UIImage(named: "emptyCircle")?.withTintColor(UIColor(named: "LabelSecondary") ?? .secondarySystemGroupedBackground)
                     
                 }
@@ -343,12 +347,14 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 }
                 let item = sortedArray[indexPath.row]
                 
-                cellImportant.titleLabel.text = item.taskText
+                cellImportant.textLabel?.text = item.taskText
                 let arrowImageView = UIImageView(image: UIImage(named: "transit"))
                 cellImportant.accessoryView = arrowImageView
                 if item.completed {
+                    cellImportant.textLabel?.textColor = UIColor(named: "LabelTertiary")
                     cellImportant.imageView?.image = UIImage(named: "doneCircle")
                 } else {
+                    cellImportant.textLabel?.textColor = UIColor(named: "LabelPrimary")
                     if item.importance == .important {
                         cellImportant.imageView?.image = UIImage(named: "importantCircle")?.withTintColor(UIColor(named: "Red") ?? .red)
                     } else {
@@ -372,12 +378,14 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 }
                 let item = sortedArray[indexPath.row]
                 
-                cellDefault.titleLabel.text = item.taskText
+                cellDefault.textLabel?.text = item.taskText
                 let arrowImageView = UIImageView(image: UIImage(named: "transit"))
                 cellDefault.accessoryView = arrowImageView
                 if item.completed {
+                    cellDefault.textLabel?.textColor = UIColor(named: "LabelTertiary")
                     cellDefault.imageView?.image = UIImage(named: "doneCircle")
                 } else {
+                    cellDefault.textLabel?.textColor = UIColor(named: "LabelPrimary")
                     cellDefault.imageView?.image = UIImage(named: "emptyCircle")?.withTintColor(UIColor(named: "LabelSecondary") ?? .secondarySystemGroupedBackground)
                 }
                 
@@ -431,6 +439,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let action = UIContextualAction(style: .normal, title: "") { (action, sourceView, completionHandler) in
             var itemDone = false
             if !isDone {
+                cell?.textLabel?.textColor = UIColor(named: "LabelTertiary")
                 cell?.imageView?.image = UIImage(named: "doneCircle")
                 itemDone = true
                 self.completedCount += 1
@@ -440,6 +449,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                     }
                 }
             } else {
+                cell?.textLabel?.textColor = UIColor(named: "LabelPrimary")
                 if item.importance == .important {
                     cell?.imageView?.image = UIImage(named: "importantCircle")?.withTintColor(UIColor(named: "Red") ?? .red)
                 } else {
@@ -525,4 +535,73 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         
         return UISwipeActionsConfiguration(actions: [deleteAction, detailsAction])
     }
+    
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        guard indexPath.row < sortedArray.count else {
+            return nil
+        }
+        
+        let item = sortedArray[indexPath.row]
+        
+        let previewProvider: () -> UIViewController? = {
+            let detailsVC = DetailsViewController(openType: .edit, item: item)
+            return detailsVC
+        }
+        
+        let actionsProvider: ([UIMenuElement]) -> UIMenu? = { _ in
+            let editAction = UIAction(title: "Изменить", image: UIImage(systemName: "pencil")) { [weak self] _ in
+                let vc = DetailsViewController(openType: .edit, item: self?.sortedArray[indexPath.row])
+                vc.completionHandler = { id, taskText, importance, deadline, completed, createDate, editDate, toDelete in
+                    
+                    self?.sortedArray.remove(at: indexPath.row)
+                    let item = ToDoItem(id: id, taskText: taskText, importance: importance, deadline: deadline, completed: completed, createDate: createDate, editDate: editDate)
+                    if !toDelete {
+                        self?.sortedArray.insert(item, at: indexPath.row)
+                        tableView.reloadRows(at: [indexPath], with: .none)
+                        let _ = self?.fileCache.add(item: item)
+                    } else {
+                        if item.completed {
+                            self?.completedCount -= 1
+                            self?.headerSetup()
+                        }
+                        tableView.reloadData()
+                        let _ = self?.fileCache.remove(at: id)
+                    }
+                    self?.fileCache.saveToFile(to: "testFile")
+                    
+                    
+                }
+                let navVC = UINavigationController(rootViewController: vc)
+                self?.present(navVC, animated: true)
+            }
+            
+            let deleteAction = UIAction(title: "Удалить", image: UIImage(systemName: "trash"), attributes: .destructive) { [weak self] _ in
+                
+                if self?.sortedArray[indexPath.row].completed == true {
+                    self?.completedCount -= 1
+                    self?.headerSetup()
+                }
+                
+                tableView.beginUpdates()
+                self?.sortedArray.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                tableView.endUpdates()
+                let _ = self?.fileCache.remove(at: item.id)
+                self?.fileCache.saveToFile(to: "testFile")
+            }
+            
+            return UIMenu(title: "", children: [editAction, deleteAction])
+        }
+        
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: previewProvider, actionProvider: actionsProvider)
+    }
+    
+    func tableView(_ tableView: UITableView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+        guard let detailsVC = animator.previewViewController as? DetailsViewController else {
+            return
+        }
+        
+        navigationController?.pushViewController(detailsVC, animated: true)
+    }
 }
+
