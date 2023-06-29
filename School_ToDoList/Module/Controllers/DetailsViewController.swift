@@ -10,6 +10,8 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
         case edit
     }
     
+    public var completionHandler: ((String, String, Importance, Date?, Bool, Date, Date?) -> Void)?
+    
     private let openType: OpenType
     private var item: ToDoItem?
     private var itemImportance: Importance = .regular
@@ -136,7 +138,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     }
     
     @objc func cancelButtonTapped() {
-        cleaning()
+        dismiss(animated: true)
     }
     
     @objc func deleteButtonTapped() {
@@ -145,7 +147,8 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
             _ = fileCache.remove(at: item.id)
             fileCache.saveToFile(to: "testFile")
         }
-        cleaning()
+        //cleaning()
+        dismiss(animated: true)
     }
     
     @objc func segmentValueChanged(_ sender: UISegmentedControl) {
@@ -166,21 +169,21 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     }
     
     @objc private func saveButtonTapped() {
-        let newItem: ToDoItem
-        if let item = item {
-            newItem = item.update(taskText: detailsTextView.text,
-                                  importance: itemImportance,
-                                  deadline: selectedDate)
-        } else {
-            newItem = ToDoItem(taskText: detailsTextView.text,
+        let newItem = ToDoItem(taskText: detailsTextView.text,
                                importance: itemImportance,
                                deadline: selectedDate)
-        }
         
-        let fileCache = FileCache()
-        let replacedItem = fileCache.add(item: newItem)
-        fileCache.saveToFile(to: "testFile")
-        print("saved: \(newItem), replaced: \(String(describing: replacedItem))")
+//        let fileCache = FileCache()
+//        let replacedItem = fileCache.add(item: newItem)
+//
+//        //fileCache.saveToFile(to: "testFile")
+//        print("saved: \(newItem), replaced: \(String(describing: replacedItem))")
+//        print(fileCache.items)
+//        let vc = MainViewController(items: fileCache.items)
+//        vc.tableView.reloadData()
+        
+        completionHandler?(item?.id ?? newItem.id, newItem.taskText, newItem.importance, newItem.deadline, item?.completed ?? false, item?.createDate ?? newItem.createDate, newItem.editDate)
+        dismiss(animated: true)
     }
     
     // MARK: Working with keyboard show
@@ -261,7 +264,6 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
         self.openType = openType
         self.item = item
         super.init(nibName: nil, bundle: nil)
-        //let placeholder = "Что надо сделать?"
         if openType == .edit {
             deleteButton.isEnabled = true
         } else {

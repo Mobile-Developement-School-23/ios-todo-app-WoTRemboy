@@ -13,13 +13,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
         
-        var viewController: UIViewController = DetailsViewController(openType: .edit, item: nil)
-        
         let fileCache = FileCache()
         fileCache.loadFromFile(from: "testFile")
-        if let item = fileCache.items.first?.value {
-            viewController = DetailsViewController(openType: .edit, item: item)
-        }
+
+        let viewController = MainViewController(items: fileCache.items)
+        
+//        var viewController: UIViewController = DetailsViewController(openType: .edit, item: nil)
+//
+
         
         
         let navController = UINavigationController(rootViewController: viewController)

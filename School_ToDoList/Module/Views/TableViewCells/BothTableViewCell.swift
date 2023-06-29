@@ -1,0 +1,86 @@
+//
+//  BothTableViewCell.swift
+//  School_ToDoList
+//
+//  Created by Roman Tverdokhleb on 29.06.2023.
+//
+
+import UIKit
+
+class BothTableViewCell: UITableViewCell {
+    
+    static let identifier = "BothViewsCell"
+    
+    let imageCheckSwipe = UIImage(
+        systemName: "checkmark.circle.fill",
+        withConfiguration: UIImage.SymbolConfiguration(
+            paletteColors: [.systemGreen, .white]))
+
+    let dateLabel: UILabel = {
+        
+        let label = UILabel()
+        
+        label.text = "March 6, 2024"
+        label.numberOfLines = 1
+        label.font = .systemFont(ofSize: 18, weight: .light)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
+    
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .body()
+        label.textColor = UIColor(named: "LabelTertiary")
+        
+        return label
+    }()
+    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        titleLabel.text = nil
+        dateLabel.text = nil
+    }
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+                
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(dateLabel)
+        
+        titleLabelSetup()
+//        editImageViewSetup()
+//        dateLabelSetup()
+    }
+    
+    func titleLabelSetup() {
+        titleLabel.leadingAnchor.constraint(equalTo: imageView!.trailingAnchor, constant: contentView.frame.width/20).isActive = true
+        titleLabel.trailingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: -10).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    func dateLabelSetup() {
+        dateLabel.leadingAnchor.constraint(equalTo: imageView!.trailingAnchor, constant: contentView.frame.width/20).isActive = true
+        dateLabel.trailingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: -10).isActive = true
+        dateLabel.topAnchor.constraint(equalTo: titleLabel.topAnchor, constant: 10).isActive = true
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false
+    }
+
+//    override func awakeFromNib() {
+//        super.awakeFromNib()
+//        // Initialization code
+//    }
+//
+//    override func setSelected(_ selected: Bool, animated: Bool) {
+//        super.setSelected(selected, animated: animated)
+//
+//        // Configure the view for the selected state
+//    }
+
+}
