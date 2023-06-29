@@ -10,7 +10,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
         case edit
     }
     
-    public var completionHandler: ((String, String, Importance, Date?, Bool, Date, Date?) -> Void)?
+    public var completionHandler: ((String, String, Importance, Date?, Bool, Date, Date?, Bool) -> Void)?
     
     private let openType: OpenType
     private var item: ToDoItem?
@@ -142,12 +142,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     }
     
     @objc func deleteButtonTapped() {
-        let fileCache = FileCache()
-        if let item = item {
-            _ = fileCache.remove(at: item.id)
-            fileCache.saveToFile(to: "testFile")
-        }
-        //cleaning()
+        completionHandler?(item?.id ?? "", item?.taskText ?? "", item?.importance ?? .regular, item?.deadline, item?.completed ?? false, item?.createDate ?? Date(), item?.editDate, true)
         dismiss(animated: true)
     }
     
@@ -169,20 +164,15 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     }
     
     @objc private func saveButtonTapped() {
+        var toEditDate: Date? = nil
+        if item != nil {
+            toEditDate = Date()
+        }
         let newItem = ToDoItem(taskText: detailsTextView.text,
                                importance: itemImportance,
                                deadline: selectedDate)
         
-//        let fileCache = FileCache()
-//        let replacedItem = fileCache.add(item: newItem)
-//
-//        //fileCache.saveToFile(to: "testFile")
-//        print("saved: \(newItem), replaced: \(String(describing: replacedItem))")
-//        print(fileCache.items)
-//        let vc = MainViewController(items: fileCache.items)
-//        vc.tableView.reloadData()
-        
-        completionHandler?(item?.id ?? newItem.id, newItem.taskText, newItem.importance, newItem.deadline, item?.completed ?? false, item?.createDate ?? newItem.createDate, newItem.editDate)
+        completionHandler?(item?.id ?? newItem.id, newItem.taskText, newItem.importance, newItem.deadline, item?.completed ?? false, item?.createDate ?? newItem.createDate, toEditDate ?? newItem.editDate, false)
         dismiss(animated: true)
     }
     
@@ -210,30 +200,6 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     @objc func dismissKeyboard() {
         scrollView.endEditing(true)
     }
-    
-    // MARK: Cleaning
-    
-    func cleaning() {
-        detailsTextView.text = "Что надо сделать?"
-        detailsTextView.textColor = UIColor(named: "LabelTertiary")
-        selectedDate = nil
-        itemImportance = .regular
-        segmentedControl.selectedSegmentIndex = 1
-        switchControl.isOn = false
-        if isCalendarShown {
-            dateButtonPressed()
-        }
-        UIView.animate(withDuration: 0.5) {
-            self.labelConstraint1?.constant = 0
-            self.dateUntilLabel.alpha = 0
-            self.scrollView.layoutIfNeeded()
-        }
-        datePicker.date = dateConfiguration().1 ?? Date(timeIntervalSince1970: 86400)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.dateUntilLabel.setTitle(self.dateConfiguration().0, for: .normal)
-        }
-    }
-    
     
     // MARK: Date configuration
     
@@ -302,6 +268,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        itemImportance = item?.importance ?? .regular
 
         navigationBarSetup()
         view.backgroundColor = UIColor(named: "BackPrimary")

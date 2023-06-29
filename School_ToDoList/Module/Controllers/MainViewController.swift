@@ -14,7 +14,7 @@ class MainViewController: UIViewController {
     let fileCache = FileCache()
     
     var completedCount = -3
-    var showIsOn = false
+    var doneTasksAreHidden = true
     
     let tableView = UITableView(frame: .zero, style: .insetGrouped)
     
@@ -66,7 +66,7 @@ class MainViewController: UIViewController {
         print(fileCache.items)
         
         completedCount = items.values.filter { $0.completed }.count
-
+        
         title = "Мои дела"
         view.backgroundColor = UIColor(named: "BackPrimary")
         tableView.backgroundColor = nil
@@ -74,6 +74,11 @@ class MainViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(BothTableViewCell.self, forCellReuseIdentifier: "BothViewsCell")
+        tableView.register(DeadlineTableViewCell.self, forCellReuseIdentifier: "DeadlineCell")
+        tableView.register(ImportantTableViewCell.self, forCellReuseIdentifier: "ImportantCell")
+        tableView.register(DefaultTableViewCell.self, forCellReuseIdentifier: "DefaultCell")
+        tableView.register(EmptyTableViewCell.self, forCellReuseIdentifier: "EmptyCell")
         
         
         view.addSubview(tableView)
@@ -146,7 +151,7 @@ class MainViewController: UIViewController {
     @objc func newTaskCreate() {
         let viewController = DetailsViewController(openType: .add, item: nil)
         
-        viewController.completionHandler = { id, taskText, importance, deadline, completed, createDate, editDate in
+        viewController.completionHandler = { id, taskText, importance, deadline, completed, createDate, editDate, toDelete in
             
             let item = ToDoItem(id: id, taskText: taskText, importance: importance, deadline: deadline, createDate: createDate)
             self.sortedArray.insert(item, at: 0)
@@ -205,23 +210,28 @@ class MainViewController: UIViewController {
         showButton.trailingAnchor.constraint(equalTo: header.trailingAnchor, constant: -32).isActive = true
         showButton.centerYAnchor.constraint(equalTo: header.centerYAnchor).isActive = true
         showButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 70).isActive = true
-        if showIsOn {
-            showButton.setTitle("Скрыть", for: .normal)
-        } else {
+        if doneTasksAreHidden {
             showButton.setTitle("Показать", for: .normal)
+        } else {
+            showButton.setTitle("Скрыть", for: .normal)
         }
         tableView.tableHeaderView = header
         
     }
     
     @objc func showButtonTapped() {
-        showIsOn = !showIsOn
-        if showIsOn {
-            showButton.setTitle("Скрыть", for: .normal)
-        } else {
+        doneTasksAreHidden = !doneTasksAreHidden
+        if doneTasksAreHidden {
             showButton.setTitle("Показать", for: .normal)
+            if let visibleIndexPaths = tableView.indexPathsForVisibleRows {
+                tableView.reloadRows(at: visibleIndexPaths, with: .fade)
+            }
+        } else {
+            showButton.setTitle("Скрыть", for: .normal)
+            if let visibleIndexPaths = tableView.indexPathsForVisibleRows {
+                tableView.reloadRows(at: visibleIndexPaths, with: .fade)
+            }
         }
-        view.layoutIfNeeded()
     }
 }
 
@@ -239,61 +249,142 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56).isActive = true
-        //cell.contentView.frame.size = CGSize(width: tableView.frame.width, height: 70)
-        
-        cell.contentView.layoutMargins = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 16)
-        cell.textLabel?.numberOfLines = 3
-        if indexPath.row == sortedArray.count {
+        guard indexPath.row < sortedArray.count else {
             cell.textLabel?.text = "Новое"
             cell.textLabel?.font = .body()
             cell.textLabel?.textColor = UIColor(named: "LabelTertiary")
             cell.imageView?.image = imageEmpty
             cell.accessoryView = nil
-        } else {
-            cell.textLabel?.text = sortedArray[indexPath.row].taskText
-            cell.textLabel?.font = .body()
-            cell.textLabel?.textColor = UIColor(named: "LabelPrimary")
-            let circleImage = UIImage(named: "emptyCircle")
-            cell.imageView?.image = circleImage
-            let arrowImageView = UIImageView(image: UIImage(named: "transit"))
-            cell.accessoryView = arrowImageView
-            
-            if sortedArray[indexPath.row].completed {
-                cell.imageView?.image = UIImage(named: "doneCircle")
-            } else {
-                cell.imageView?.image = UIImage(named: "emptyCircle")
-            }
-            let constraint1 = cell.contentView.heightAnchor.constraint(equalToConstant: 0)
-            constraint1.priority = .defaultLow
-            let constraint2 = cell.heightAnchor.constraint(equalToConstant: 56)
-            constraint2.priority = .defaultLow
+            cell.backgroundColor = UIColor(named: "BackSecondary")
 
-//            if !showIsOn && sortedArray[indexPath.row].completed {
-//               constraint1.isActive = true
-//                constraint1.isActive = false
-//                constraint1.priority = .defaultHigh
-//                constraint2.priority = .defaultLow
-//                UIView.animate(withDuration: 0.5) {
-//                    self.view.layoutIfNeeded()
-//                }
-//            } else {
-//                UIView.animate(withDuration: 0.5) {
-//                    self.view.layoutIfNeeded()
-//                }
-//            }
+            return cell
         }
         
-        cell.backgroundColor = UIColor(named: "BackSecondary")
-
-        return cell
+        if doneTasksAreHidden {
+            if sortedArray[indexPath.row].completed {
+                guard let cellEmpty: EmptyTableViewCell = tableView.dequeueReusableCell(withIdentifier: EmptyTableViewCell.identifier, for: indexPath) as? EmptyTableViewCell
+                else {
+                    fatalError()
+                }
+                
+                return cellEmpty
+            }
+        }
+        
+        cell.contentView.layoutMargins = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 16)
+        cell.textLabel?.numberOfLines = 3
+        if sortedArray[indexPath.row].deadline != nil {
+            if sortedArray[indexPath.row].importance == .important || sortedArray[indexPath.row].importance == .unimportant {
+                guard let cellDeadlineImportant: BothTableViewCell = tableView.dequeueReusableCell(withIdentifier: BothTableViewCell.identifier, for: indexPath) as? BothTableViewCell
+                else {
+                    fatalError()
+                }
+                let item = sortedArray[indexPath.row]
+                
+                cellDeadlineImportant.titleLabel.text = item.taskText
+                let arrowImageView = UIImageView(image: UIImage(named: "transit"))
+                cellDeadlineImportant.accessoryView = arrowImageView
+                if item.completed {
+                    cellDeadlineImportant.imageView?.image = UIImage(named: "doneCircle")
+                } else {
+                    if item.importance == .important {
+                        cellDeadlineImportant.imageView?.image = UIImage(named: "importantCircle")?.withTintColor(UIColor(named: "Red") ?? .red)
+                    } else {
+                        cellDeadlineImportant.imageView?.image = UIImage(named: "emptyCircle")?.withTintColor(UIColor(named: "LabelSecondary") ?? .secondarySystemGroupedBackground)
+                    }
+                }
+                
+                if item.importance == .important {
+                    let image = UIImage(named: "importantCell")?.withTintColor(UIColor(named: "Red") ?? .red)
+                    cellDeadlineImportant.importanceImageView.image = image
+                } else {
+                    let image = UIImage(named: "unimportantCell")?.withTintColor(UIColor(named: "Grey") ?? .gray)
+                    cellDeadlineImportant.importanceImageView.image = image
+                }
+                
+                let timeStartFormatter = DateFormatter()
+                timeStartFormatter.dateFormat = "dd MMMM"
+                
+                let fromDate = timeStartFormatter.string(from: item.deadline ?? Date())
+                cellDeadlineImportant.dateLabel.text = "\(fromDate)"
+                
+                return cellDeadlineImportant
+            } else {
+                guard let cellDeadline: DeadlineTableViewCell = tableView.dequeueReusableCell(withIdentifier: DeadlineTableViewCell.identifier, for: indexPath) as? DeadlineTableViewCell
+                else {
+                    fatalError()
+                }
+                let item = sortedArray[indexPath.row]
+                
+                cellDeadline.titleLabel.text = item.taskText
+                let arrowImageView = UIImageView(image: UIImage(named: "transit"))
+                cellDeadline.accessoryView = arrowImageView
+                if item.completed {
+                    cellDeadline.imageView?.image = UIImage(named: "doneCircle")
+                } else {
+                    cellDeadline.imageView?.image = UIImage(named: "emptyCircle")?.withTintColor(UIColor(named: "LabelSecondary") ?? .secondarySystemGroupedBackground)
+                    
+                }
+                let timeStartFormatter = DateFormatter()
+                timeStartFormatter.dateFormat = "dd MMMM"
+                
+                let fromDate = timeStartFormatter.string(from: item.deadline ?? Date())
+                cellDeadline.dateLabel.text = "\(fromDate)"
+                
+                return cellDeadline
+            }
+            
+        } else {
+            
+            if sortedArray[indexPath.row].importance == .important || sortedArray[indexPath.row].importance == .unimportant {
+                guard let cellImportant: ImportantTableViewCell = tableView.dequeueReusableCell(withIdentifier: ImportantTableViewCell.identifier, for: indexPath) as? ImportantTableViewCell
+                else {
+                    fatalError()
+                }
+                let item = sortedArray[indexPath.row]
+                
+                cellImportant.titleLabel.text = item.taskText
+                let arrowImageView = UIImageView(image: UIImage(named: "transit"))
+                cellImportant.accessoryView = arrowImageView
+                if item.completed {
+                    cellImportant.imageView?.image = UIImage(named: "doneCircle")
+                } else {
+                    if item.importance == .important {
+                        cellImportant.imageView?.image = UIImage(named: "importantCircle")?.withTintColor(UIColor(named: "Red") ?? .red)
+                    } else {
+                        cellImportant.imageView?.image = UIImage(named: "emptyCircle")?.withTintColor(UIColor(named: "LabelSecondary") ?? .secondarySystemGroupedBackground)
+                    }
+                }
+                
+                if item.importance == .important {
+                    let image = UIImage(named: "importantCell")?.withTintColor(UIColor(named: "Red") ?? .red)
+                    cellImportant.importanceImageView.image = image
+                } else {
+                    let image = UIImage(named: "unimportantCell")?.withTintColor(UIColor(named: "Grey") ?? .gray)
+                    cellImportant.importanceImageView.image = image
+                }
+                
+                return cellImportant
+            } else {
+                guard let cellDefault: DefaultTableViewCell = tableView.dequeueReusableCell(withIdentifier: DefaultTableViewCell.identifier, for: indexPath) as? DefaultTableViewCell
+                else {
+                    fatalError()
+                }
+                let item = sortedArray[indexPath.row]
+                
+                cellDefault.titleLabel.text = item.taskText
+                let arrowImageView = UIImageView(image: UIImage(named: "transit"))
+                cellDefault.accessoryView = arrowImageView
+                if item.completed {
+                    cellDefault.imageView?.image = UIImage(named: "doneCircle")
+                } else {
+                    cellDefault.imageView?.image = UIImage(named: "emptyCircle")?.withTintColor(UIColor(named: "LabelSecondary") ?? .secondarySystemGroupedBackground)
+                }
+                
+                return cellDefault
+            }
+        }
     }
-    
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        let cell = tableView.cellForRow(at: indexPath)
-//        let margins = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
-//        cell?.contentView.layoutMargins = margins
-//        cell?.layoutMargins = margins
-//    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == sortedArray.count {
@@ -301,15 +392,25 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             //oldTaskEdit(item: sortedArray[indexPath.row])
             let vc = DetailsViewController(openType: .edit, item: sortedArray[indexPath.row])
-            vc.completionHandler = { id, taskText, importance, deadline, completed, createDate, editDate in
+            vc.completionHandler = { id, taskText, importance, deadline, completed, createDate, editDate, toDelete in
                 
                 self.sortedArray.remove(at: indexPath.row)
-                let item = ToDoItem(id: id, taskText: taskText, importance: importance, deadline: deadline, completed: completed, createDate: createDate)
-                self.sortedArray.insert(item, at: indexPath.row)
-                let _ = self.fileCache.add(item: item)
+                let item = ToDoItem(id: id, taskText: taskText, importance: importance, deadline: deadline, completed: completed, createDate: createDate, editDate: editDate)
+                if !toDelete {
+                    self.sortedArray.insert(item, at: indexPath.row)
+                    tableView.reloadRows(at: [indexPath], with: .none)
+                    let _ = self.fileCache.add(item: item)
+                } else {
+                    if item.completed {
+                        self.completedCount -= 1
+                        self.headerSetup()
+                    }
+                    tableView.reloadData()
+                    let _ = self.fileCache.remove(at: id)
+                }
                 print(self.fileCache.items)
                 self.fileCache.saveToFile(to: "testFile")
-                tableView.reloadRows(at: [indexPath], with: .none)
+                
                 
             }
             
@@ -333,14 +434,24 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 cell?.imageView?.image = UIImage(named: "doneCircle")
                 itemDone = true
                 self.completedCount += 1
+                if self.doneTasksAreHidden {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                        self.tableView.reloadRows(at: [indexPath], with: .fade)
+                    }
+                }
             } else {
-                cell?.imageView?.image = UIImage(named: "emptyCircle")
+                if item.importance == .important {
+                    cell?.imageView?.image = UIImage(named: "importantCircle")?.withTintColor(UIColor(named: "Red") ?? .red)
+                } else {
+                    cell?.imageView?.image = UIImage(named: "emptyCircle")?.withTintColor(UIColor(named: "LabelSecondary") ?? .secondarySystemGroupedBackground)
+                }
                 itemDone = false
                 self.completedCount -= 1
             }
             let newItem = ToDoItem(id: item.id, taskText: item.taskText, importance: item.importance, deadline: item.deadline, completed: itemDone, createDate: item.createDate, editDate: item.editDate)
             self.headerSetup()
             self.sortedArray[indexPath.row] = newItem
+            
             let _ = self.fileCache.add(item: newItem)
             self.fileCache.saveToFile(to: "testFile")
             completionHandler(true)
@@ -366,12 +477,22 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let detailsAction = UIContextualAction(style: .normal, title: "") { (action, sourceView, completionHandler) in
             
             let vc = DetailsViewController(openType: .edit, item: self.sortedArray[indexPath.row])
-            vc.completionHandler = { id, taskText, importance, deadline, completed, createDate, editDate in
+            vc.completionHandler = { id, taskText, importance, deadline, completed, createDate, editDate, toDelete in
                 
                 self.sortedArray.remove(at: indexPath.row)
                 let item = ToDoItem(id: id, taskText: taskText, importance: importance, deadline: deadline, completed: completed, createDate: createDate)
-                self.sortedArray.insert(item, at: indexPath.row)
-                let _ = self.fileCache.add(item: item)
+                if !toDelete {
+                    self.sortedArray.insert(item, at: indexPath.row)
+                    tableView.reloadRows(at: [indexPath], with: .none)
+                    let _ = self.fileCache.add(item: item)
+                } else {
+                    if item.completed {
+                        self.completedCount -= 1
+                        self.headerSetup()
+                    }
+                    tableView.reloadData()
+                    let _ = self.fileCache.remove(at: id)
+                }
                 print(self.fileCache.items)
                 self.fileCache.saveToFile(to: "testFile")
                 tableView.reloadRows(at: [indexPath], with: .none)

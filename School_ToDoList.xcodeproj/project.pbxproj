@@ -31,6 +31,7 @@
 		63C034002A4DB6D3009A1CB3 /* ImportantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C033FF2A4DB6D3009A1CB3 /* ImportantTableViewCell.swift */; };
 		63C034022A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C034012A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift */; };
 		63C034042A4DB6F3009A1CB3 /* BothTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C034032A4DB6F3009A1CB3 /* BothTableViewCell.swift */; };
+		63C034072A4DF343009A1CB3 /* EmptyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C034062A4DF343009A1CB3 /* EmptyTableViewCell.swift */; };
 		63EE3C1A2A4C5A9B00B275DF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EE3C192A4C5A9B00B275DF /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +73,7 @@
 		63C033FF2A4DB6D3009A1CB3 /* ImportantTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportantTableViewCell.swift; sourceTree = "<group>"; };
 		63C034012A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeadlineTableViewCell.swift; sourceTree = "<group>"; };
 		63C034032A4DB6F3009A1CB3 /* BothTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothTableViewCell.swift; sourceTree = "<group>"; };
+		63C034062A4DF343009A1CB3 /* EmptyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTableViewCell.swift; sourceTree = "<group>"; };
 		63EE3C192A4C5A9B00B275DF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -224,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				63C033FC2A4DB6B3009A1CB3 /* DefaultTableViewCell.swift */,
+				63C034062A4DF343009A1CB3 /* EmptyTableViewCell.swift */,
 				63C033FF2A4DB6D3009A1CB3 /* ImportantTableViewCell.swift */,
 				63C034012A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift */,
 				63C034032A4DB6F3009A1CB3 /* BothTableViewCell.swift */,
@@ -351,6 +354,7 @@
 				634B8E752A41F51900BE9ADB /* SegmentedControl.swift in Sources */,
 				634B8E6B2A41CABD00BE9ADB /* DetailsTextView.swift in Sources */,
 				63C034022A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift in Sources */,
+				63C034072A4DF343009A1CB3 /* EmptyTableViewCell.swift in Sources */,
 				6344527B2A39D84700BFB9E3 /* FileCache.swift in Sources */,
 				6344525F2A34A85600BFB9E3 /* SceneDelegate.swift in Sources */,
 			);
