@@ -46,22 +46,13 @@ class BothTableViewCell: UITableViewCell {
         return view
     }()
     
-//    let textLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = .body()
-//        label.textColor = UIColor(named: "LabelPrimary")
-//        label.numberOfLines = 3
-//
-//        return label
-//    }()
-    
     required init?(coder: NSCoder) {
         fatalError()
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
+        textLabel?.attributedText = nil
         textLabel?.text = nil
         dateLabel.text = nil
     }
