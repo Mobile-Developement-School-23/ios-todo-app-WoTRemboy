@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 class CustomTransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     let duration: TimeInterval = 0.5
     

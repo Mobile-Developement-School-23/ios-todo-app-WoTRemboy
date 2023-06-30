@@ -1,5 +1,3 @@
-
-
 import Foundation
 
 struct ToDoItem {
@@ -30,5 +28,3 @@ enum Importance: String {
     case regular
     case important
 }
-
-

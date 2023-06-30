@@ -5,6 +5,7 @@
 //  Created by Roman Tverdokhleb on 28.06.2023.
 //
 
+
 import UIKit
 import CocoaLumberjackSwift
 
@@ -12,7 +13,7 @@ class MainViewController: UIViewController {
     
     // MARK: ToDoItems initialization and sorting
     
-    let items: [String : ToDoItem]
+    let items: [String: ToDoItem]
     var sortedArray = [ToDoItem]()
     let fileCache = FileCache()
     
@@ -148,7 +149,6 @@ class MainViewController: UIViewController {
         
         showButton.addTarget(self, action: #selector(showButtonTapped), for: .touchUpInside)
         
-        
         countLabel.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 32).isActive = true
         countLabel.widthAnchor.constraint(lessThanOrEqualToConstant: header.frame.width/2).isActive = true
         countLabel.centerYAnchor.constraint(equalTo: header.centerYAnchor).isActive = true
@@ -223,13 +223,13 @@ class MainViewController: UIViewController {
         DDLogDebug("Command to new task", level: .debug)
         let viewController = DetailsViewController(openType: .add, item: nil)
         
-        viewController.completionHandler = { id, taskText, importance, deadline, completed, createDate, editDate, toDelete in
+        viewController.completionHandler = { id, taskText, importance, deadline, _, createDate, _, _ in
             
             let item = ToDoItem(id: id, taskText: taskText, importance: importance, deadline: deadline, createDate: createDate)
             self.sortedArray.insert(item, at: 0)
             self.tableView.reloadData()
             DispatchQueue.main.async {
-                let _ = self.fileCache.add(item: item)
+                _ = self.fileCache.add(item: item)
                 self.fileCache.saveToFile(to: "testFile")
             }
         }
@@ -254,4 +254,3 @@ class MainViewController: UIViewController {
         }
     }
 }
-

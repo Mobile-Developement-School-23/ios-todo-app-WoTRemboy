@@ -10,7 +10,6 @@ import CocoaLumberjackSwift
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -211,8 +210,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == sortedArray.count { // newTask cell check
             newTaskCreate()
         } else {
-            let vc = DetailsViewController(openType: .edit, item: sortedArray[indexPath.row])
-            vc.completionHandler = { id, taskText, importance, deadline, completed, createDate, editDate, toDelete in
+            let viewController = DetailsViewController(openType: .edit, item: sortedArray[indexPath.row])
+            viewController.completionHandler = { id, taskText, importance, deadline, completed, createDate, editDate, toDelete in
                 
                 self.sortedArray.remove(at: indexPath.row)
                 let item = ToDoItem(id: id, taskText: taskText, importance: importance, deadline: deadline, completed: completed, createDate: createDate, editDate: editDate)
@@ -220,7 +219,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 if !toDelete { // DetailsVC Save button pressed
                     self.sortedArray.insert(item, at: indexPath.row)
                     tableView.reloadRows(at: [indexPath], with: .none)
-                    let _ = self.fileCache.add(item: item)
+                    _ = self.fileCache.add(item: item)
                     
                 } else { // DetailsVC Delete button pressed
                     if item.completed {
@@ -228,14 +227,14 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                         self.headerSetup()
                     }
                     tableView.reloadData()
-                    let _ = self.fileCache.remove(at: id)
+                    _ = self.fileCache.remove(at: id)
                 }
                 DispatchQueue.main.async {
                     self.fileCache.saveToFile(to: "testFile")
                 }
             }
             
-            let navVC = UINavigationController(rootViewController: vc)
+            let navVC = UINavigationController(rootViewController: viewController)
             present(navVC, animated: true)
         }
         tableView.deselectRow(at: indexPath, animated: true)
@@ -253,7 +252,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let item = sortedArray[indexPath.row]
         let isDone = item.completed
         
-        let action = UIContextualAction(style: .normal, title: "") { (action, sourceView, completionHandler) in
+        let action = UIContextualAction(style: .normal, title: "") { (_, _, completionHandler) in
             
             var itemDone = false
             if !isDone {
@@ -283,7 +282,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             self.sortedArray[indexPath.row] = newItem
             
             DispatchQueue.main.async {
-                let _ = self.fileCache.add(item: newItem)
+                _ = self.fileCache.add(item: newItem)
                 self.fileCache.saveToFile(to: "testFile")
             }
             completionHandler(true)
@@ -296,7 +295,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             action.image = imageUncheckSwipe
         }
         
-        
         return UISwipeActionsConfiguration(actions: [action])
     }
     
@@ -307,11 +305,11 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         }
         let item = sortedArray[indexPath.row]
         
-        let detailsAction = UIContextualAction(style: .normal, title: "") { (action, sourceView, completionHandler) in
+        let detailsAction = UIContextualAction(style: .normal, title: "") { (_, _, completionHandler) in
             
-            let vc = DetailsViewController(openType: .edit, item: self.sortedArray[indexPath.row])
+            let viewController = DetailsViewController(openType: .edit, item: self.sortedArray[indexPath.row])
             
-            vc.completionHandler = { id, taskText, importance, deadline, completed, createDate, editDate, toDelete in
+            viewController.completionHandler = { id, taskText, importance, deadline, completed, createDate, _, toDelete in
                 
                 self.sortedArray.remove(at: indexPath.row)
                 let item = ToDoItem(id: id, taskText: taskText, importance: importance, deadline: deadline, completed: completed, createDate: createDate)
@@ -319,21 +317,21 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 if !toDelete { // pressed DetailsVC Save button
                     self.sortedArray.insert(item, at: indexPath.row)
                     tableView.reloadRows(at: [indexPath], with: .none)
-                    let _ = self.fileCache.add(item: item)
+                    _ = self.fileCache.add(item: item)
                 } else { // pressed DetailsVC Delete button
                     if item.completed {
                         self.completedCount -= 1
                         self.headerSetup()
                     }
                     tableView.reloadData()
-                    let _ = self.fileCache.remove(at: id)
+                    _ = self.fileCache.remove(at: id)
                 }
                 tableView.reloadRows(at: [indexPath], with: .none)
                 DispatchQueue.main.async {
                     self.fileCache.saveToFile(to: "testFile")
                 }
             }
-            let navVC = UINavigationController(rootViewController: vc)
+            let navVC = UINavigationController(rootViewController: viewController)
             self.present(navVC, animated: true)
             completionHandler(true)
         }
@@ -341,8 +339,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         detailsAction.backgroundColor = UIColor(named: "GrayLight")
         detailsAction.image = imageInfo
         
-        
-        let deleteAction = UIContextualAction(style: .destructive, title: "") { (action, sourceView, completionHandler) in
+        let deleteAction = UIContextualAction(style: .destructive, title: "") { (_, _, completionHandler) in
             
             if self.sortedArray[indexPath.row].completed { // countLabel update
                 self.completedCount -= 1
@@ -355,7 +352,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             tableView.endUpdates()
             
             DispatchQueue.main.async {
-                let _ = self.fileCache.remove(at: item.id)
+                _ = self.fileCache.remove(at: item.id)
                 self.fileCache.saveToFile(to: "testFile")
             }
             DDLogDebug("\(item.taskText) is deleted", level: .debug)
@@ -385,8 +382,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             
             let editAction = UIAction(title: "Изменить", image: UIImage(systemName: "pencil")) { [weak self] _ in
                 
-                let vc = DetailsViewController(openType: .edit, item: self?.sortedArray[indexPath.row])
-                vc.completionHandler = { id, taskText, importance, deadline, completed, createDate, editDate, toDelete in
+                let viewController = DetailsViewController(openType: .edit, item: self?.sortedArray[indexPath.row])
+                viewController.completionHandler = { id, taskText, importance, deadline, completed, createDate, editDate, toDelete in
                     
                     self?.sortedArray.remove(at: indexPath.row)
                     let item = ToDoItem(id: id, taskText: taskText, importance: importance, deadline: deadline, completed: completed, createDate: createDate, editDate: editDate)
@@ -394,7 +391,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                     if !toDelete { // DetailsVC Save button pressed
                         self?.sortedArray.insert(item, at: indexPath.row)
                         tableView.reloadRows(at: [indexPath], with: .none)
-                        let _ = self?.fileCache.add(item: item)
+                        _ = self?.fileCache.add(item: item)
                         
                     } else { // DetailsVC Delete button pressed
                         if item.completed {
@@ -402,13 +399,13 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                             self?.headerSetup()
                         }
                         tableView.reloadData()
-                        let _ = self?.fileCache.remove(at: id)
+                        _ = self?.fileCache.remove(at: id)
                     }
                     DispatchQueue.main.async {
                         self?.fileCache.saveToFile(to: "testFile")
                     }
                 }
-                let navVC = UINavigationController(rootViewController: vc)
+                let navVC = UINavigationController(rootViewController: viewController)
                 self?.present(navVC, animated: true)
             }
             
@@ -425,7 +422,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 tableView.endUpdates()
                 
                 DispatchQueue.main.async {
-                    let _ = self?.fileCache.remove(at: item.id)
+                    _ = self?.fileCache.remove(at: item.id)
                     self?.fileCache.saveToFile(to: "testFile")
                 }
             }

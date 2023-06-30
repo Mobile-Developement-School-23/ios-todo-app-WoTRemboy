@@ -1,4 +1,3 @@
-
 import UIKit
 import CocoaLumberjackSwift
 
@@ -379,7 +378,6 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
             segmentedControl.addTarget(self, action: #selector(segmentValueChanged(_:)), for: .valueChanged)
             segmentedControl.backgroundColor = UIColor(named: "SupportSegmented")
             
-            
             cell.contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56).isActive = true
             cell.contentView.addSubview(importanceLabel)
             cell.contentView.addSubview(segmentedControl)
@@ -403,12 +401,10 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
                 dateUntilLabel.alpha = 1
             }
             
-            
             cell.contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56).isActive = true
             switchControl.translatesAutoresizingMaskIntoConstraints = false
             switchControl.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -14).isActive = true
             switchControl.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor).isActive = true
-            
             
             if !deadlineAlreadyHere {
                 labelConstraint1 = doneUntilLabel.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor, constant: 0)
@@ -448,7 +444,6 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
             data.insert("", at: calendarRowNumber)
             
             let calendarIndexPath = IndexPath(row: calendarRowNumber, section: 0)
-            
             
             tableView.beginUpdates()
             tableView.insertRows(at: [calendarIndexPath], with: .fade)
@@ -531,12 +526,9 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
         CGSize(width: view.frame.width, height: detailsTextView.frame.height + tableView.frame.height + deleteButton.frame.height + 100)
     }
     
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "contentSize" {
             scrollView.contentSize = contentSize
         }
     }
 }
-
-
-

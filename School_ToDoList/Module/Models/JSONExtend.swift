@@ -1,5 +1,3 @@
-
-
 import Foundation
 
 extension ToDoItem {
@@ -52,4 +50,3 @@ extension ToDoItem {
         return dictionary
     }
 }
-
