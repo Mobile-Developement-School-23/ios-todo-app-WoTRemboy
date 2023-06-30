@@ -33,6 +33,7 @@
 		63C034042A4DB6F3009A1CB3 /* BothTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C034032A4DB6F3009A1CB3 /* BothTableViewCell.swift */; };
 		63C034072A4DF343009A1CB3 /* EmptyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C034062A4DF343009A1CB3 /* EmptyTableViewCell.swift */; };
 		63C034092A4E06F7009A1CB3 /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C034082A4E06F7009A1CB3 /* TransitionAnimator.swift */; };
+		63C034102A4EDBA6009A1CB3 /* TableViewDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C0340F2A4EDBA6009A1CB3 /* TableViewDelegates.swift */; };
 		63EE3C1A2A4C5A9B00B275DF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EE3C192A4C5A9B00B275DF /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -76,6 +77,7 @@
 		63C034032A4DB6F3009A1CB3 /* BothTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothTableViewCell.swift; sourceTree = "<group>"; };
 		63C034062A4DF343009A1CB3 /* EmptyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTableViewCell.swift; sourceTree = "<group>"; };
 		63C034082A4E06F7009A1CB3 /* TransitionAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionAnimator.swift; sourceTree = "<group>"; };
+		63C0340F2A4EDBA6009A1CB3 /* TableViewDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDelegates.swift; sourceTree = "<group>"; };
 		63EE3C192A4C5A9B00B275DF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -219,8 +221,8 @@
 		634B8E762A41FBA100BE9ADB /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
-				634B8E6C2A41D2C900BE9ADB /* TextViewDelegateExtend.swift */,
-				634B8E722A41F3D000BE9ADB /* TableViewDelegateExtend.swift */,
+				63C0340C2A4EDB61009A1CB3 /* MainController */,
+				63C0340B2A4EDB51009A1CB3 /* DetailsController */,
 			);
 			path = Delegates;
 			sourceTree = "<group>";
@@ -243,6 +245,23 @@
 				63C034082A4E06F7009A1CB3 /* TransitionAnimator.swift */,
 			);
 			path = Animations;
+			sourceTree = "<group>";
+		};
+		63C0340B2A4EDB51009A1CB3 /* DetailsController */ = {
+			isa = PBXGroup;
+			children = (
+				634B8E6C2A41D2C900BE9ADB /* TextViewDelegateExtend.swift */,
+				634B8E722A41F3D000BE9ADB /* TableViewDelegateExtend.swift */,
+			);
+			path = DetailsController;
+			sourceTree = "<group>";
+		};
+		63C0340C2A4EDB61009A1CB3 /* MainController */ = {
+			isa = PBXGroup;
+			children = (
+				63C0340F2A4EDBA6009A1CB3 /* TableViewDelegates.swift */,
+			);
+			path = MainController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -350,6 +369,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				634452612A34A85600BFB9E3 /* DetailsViewController.swift in Sources */,
+				63C034102A4EDBA6009A1CB3 /* TableViewDelegates.swift in Sources */,
 				634B8E782A422B5800BE9ADB /* ScrollView.swift in Sources */,
 				6344527D2A3A07F300BFB9E3 /* CSVExtend.swift in Sources */,
 				634B8E732A41F3D000BE9ADB /* TableViewDelegateExtend.swift in Sources */,

@@ -159,7 +159,6 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
         default:
             itemImportance = .regular
         }
-        print(itemImportance)
         saveButtonEnableCheck()
     }
     
