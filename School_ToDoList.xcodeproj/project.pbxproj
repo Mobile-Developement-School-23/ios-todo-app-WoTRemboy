@@ -27,6 +27,14 @@
 		634B8E732A41F3D000BE9ADB /* TableViewDelegateExtend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634B8E722A41F3D000BE9ADB /* TableViewDelegateExtend.swift */; };
 		634B8E752A41F51900BE9ADB /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634B8E742A41F51900BE9ADB /* SegmentedControl.swift */; };
 		634B8E782A422B5800BE9ADB /* ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634B8E772A422B5800BE9ADB /* ScrollView.swift */; };
+		63C033FD2A4DB6B3009A1CB3 /* DefaultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C033FC2A4DB6B3009A1CB3 /* DefaultTableViewCell.swift */; };
+		63C034002A4DB6D3009A1CB3 /* ImportantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C033FF2A4DB6D3009A1CB3 /* ImportantTableViewCell.swift */; };
+		63C034022A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C034012A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift */; };
+		63C034042A4DB6F3009A1CB3 /* BothTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C034032A4DB6F3009A1CB3 /* BothTableViewCell.swift */; };
+		63C034072A4DF343009A1CB3 /* EmptyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C034062A4DF343009A1CB3 /* EmptyTableViewCell.swift */; };
+		63C034092A4E06F7009A1CB3 /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C034082A4E06F7009A1CB3 /* TransitionAnimator.swift */; };
+		63C034102A4EDBA6009A1CB3 /* TableViewDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C0340F2A4EDBA6009A1CB3 /* TableViewDelegates.swift */; };
+		63EE3C1A2A4C5A9B00B275DF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EE3C192A4C5A9B00B275DF /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +71,14 @@
 		634B8E722A41F3D000BE9ADB /* TableViewDelegateExtend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDelegateExtend.swift; sourceTree = "<group>"; };
 		634B8E742A41F51900BE9ADB /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
 		634B8E772A422B5800BE9ADB /* ScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollView.swift; sourceTree = "<group>"; };
+		63C033FC2A4DB6B3009A1CB3 /* DefaultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTableViewCell.swift; sourceTree = "<group>"; };
+		63C033FF2A4DB6D3009A1CB3 /* ImportantTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportantTableViewCell.swift; sourceTree = "<group>"; };
+		63C034012A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeadlineTableViewCell.swift; sourceTree = "<group>"; };
+		63C034032A4DB6F3009A1CB3 /* BothTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothTableViewCell.swift; sourceTree = "<group>"; };
+		63C034062A4DF343009A1CB3 /* EmptyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTableViewCell.swift; sourceTree = "<group>"; };
+		63C034082A4E06F7009A1CB3 /* TransitionAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionAnimator.swift; sourceTree = "<group>"; };
+		63C0340F2A4EDBA6009A1CB3 /* TableViewDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDelegates.swift; sourceTree = "<group>"; };
+		63EE3C192A4C5A9B00B275DF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +145,7 @@
 				634452742A34A8EE00BFB9E3 /* Models */,
 				634B8E592A409AAE00BE9ADB /* Views */,
 				634452722A34A8DC00BFB9E3 /* Controllers */,
+				63C0340A2A4E0703009A1CB3 /* Animations */,
 			);
 			path = Module;
 			sourceTree = "<group>";
@@ -137,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				634452602A34A85600BFB9E3 /* DetailsViewController.swift */,
+				63EE3C192A4C5A9B00B275DF /* MainViewController.swift */,
 				634B8E762A41FBA100BE9ADB /* Delegates */,
 			);
 			path = Controllers;
@@ -175,6 +193,7 @@
 				634B8E6A2A41CABD00BE9ADB /* DetailsTextView.swift */,
 				634B8E742A41F51900BE9ADB /* SegmentedControl.swift */,
 				634B8E772A422B5800BE9ADB /* ScrollView.swift */,
+				63C033FE2A4DB6B8009A1CB3 /* TableViewCells */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -202,10 +221,47 @@
 		634B8E762A41FBA100BE9ADB /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
+				63C0340C2A4EDB61009A1CB3 /* MainController */,
+				63C0340B2A4EDB51009A1CB3 /* DetailsController */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
+		63C033FE2A4DB6B8009A1CB3 /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				63C033FC2A4DB6B3009A1CB3 /* DefaultTableViewCell.swift */,
+				63C034062A4DF343009A1CB3 /* EmptyTableViewCell.swift */,
+				63C033FF2A4DB6D3009A1CB3 /* ImportantTableViewCell.swift */,
+				63C034012A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift */,
+				63C034032A4DB6F3009A1CB3 /* BothTableViewCell.swift */,
+			);
+			path = TableViewCells;
+			sourceTree = "<group>";
+		};
+		63C0340A2A4E0703009A1CB3 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				63C034082A4E06F7009A1CB3 /* TransitionAnimator.swift */,
+			);
+			path = Animations;
+			sourceTree = "<group>";
+		};
+		63C0340B2A4EDB51009A1CB3 /* DetailsController */ = {
+			isa = PBXGroup;
+			children = (
 				634B8E6C2A41D2C900BE9ADB /* TextViewDelegateExtend.swift */,
 				634B8E722A41F3D000BE9ADB /* TableViewDelegateExtend.swift */,
 			);
-			path = Delegates;
+			path = DetailsController;
+			sourceTree = "<group>";
+		};
+		63C0340C2A4EDB61009A1CB3 /* MainController */ = {
+			isa = PBXGroup;
+			children = (
+				63C0340F2A4EDBA6009A1CB3 /* TableViewDelegates.swift */,
+			);
+			path = MainController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -313,16 +369,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				634452612A34A85600BFB9E3 /* DetailsViewController.swift in Sources */,
+				63C034102A4EDBA6009A1CB3 /* TableViewDelegates.swift in Sources */,
 				634B8E782A422B5800BE9ADB /* ScrollView.swift in Sources */,
 				6344527D2A3A07F300BFB9E3 /* CSVExtend.swift in Sources */,
 				634B8E732A41F3D000BE9ADB /* TableViewDelegateExtend.swift in Sources */,
+				63C033FD2A4DB6B3009A1CB3 /* DefaultTableViewCell.swift in Sources */,
 				634B8E642A41B6A500BE9ADB /* FontStyles.swift in Sources */,
 				634452792A38A34500BFB9E3 /* JSONExtend.swift in Sources */,
 				634B8E6D2A41D2C900BE9ADB /* TextViewDelegateExtend.swift in Sources */,
+				63C034002A4DB6D3009A1CB3 /* ImportantTableViewCell.swift in Sources */,
 				6344525D2A34A85600BFB9E3 /* AppDelegate.swift in Sources */,
+				63C034042A4DB6F3009A1CB3 /* BothTableViewCell.swift in Sources */,
 				634452772A34ACD900BFB9E3 /* ToDoItem.swift in Sources */,
+				63EE3C1A2A4C5A9B00B275DF /* MainViewController.swift in Sources */,
 				634B8E752A41F51900BE9ADB /* SegmentedControl.swift in Sources */,
 				634B8E6B2A41CABD00BE9ADB /* DetailsTextView.swift in Sources */,
+				63C034022A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift in Sources */,
+				63C034072A4DF343009A1CB3 /* EmptyTableViewCell.swift in Sources */,
+				63C034092A4E06F7009A1CB3 /* TransitionAnimator.swift in Sources */,
 				6344527B2A39D84700BFB9E3 /* FileCache.swift in Sources */,
 				6344525F2A34A85600BFB9E3 /* SceneDelegate.swift in Sources */,
 			);

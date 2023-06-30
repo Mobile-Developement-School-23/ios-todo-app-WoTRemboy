@@ -22,16 +22,7 @@ struct ToDoItem {
         self.createDate = createDate
         self.editDate = editDate
     }
-    
-    func update(taskText: String, importance: Importance, deadline: Date?) -> ToDoItem {
-        ToDoItem(id: self.id,
-                 taskText: taskText,
-                 importance: importance,
-                 deadline: deadline,
-                 completed: self.completed,
-                 createDate: self.createDate,
-                 editDate: Date())
-      }
+
 }
 
 enum Importance: String {

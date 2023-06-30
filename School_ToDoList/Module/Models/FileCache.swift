@@ -6,13 +6,9 @@ final class FileCache {
     private(set) var items: [String: ToDoItem] = [:]
     
     func add(item: ToDoItem) -> ToDoItem? {
-        if let replacedItem = items[item.id] { // duplication id check
-            items[item.id] = item
-            return replacedItem
-        } else {
-            items[item.id] = item
-            return nil
-        }
+        let replacedItem = items[item.id]
+        items.updateValue(item, forKey: item.id)
+        return replacedItem
     }
     
     func remove(at id: String) -> ToDoItem? {
