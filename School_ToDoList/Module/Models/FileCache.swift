@@ -43,6 +43,7 @@ final class FileCache {
             DDLogError("Saving to file error: \(error)", level: .error)
         }
         DDLogDebug("Saved fileCache", level: .debug)
+        DDLogInfo("All tasks: \(items.count); Completed: \(items.values.filter { $0.completed }.count)", level: .info)
     }
     
     func loadFromFile(from fileName: String) {
