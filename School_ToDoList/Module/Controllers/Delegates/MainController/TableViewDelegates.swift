@@ -82,9 +82,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 cellDeadlineImportant.accessoryView = arrowImageView
                 
                 if item.completed {
+                    let attributedString = NSAttributedString(string: item.taskText, attributes: [NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue])
+                    cellDeadlineImportant.textLabel?.attributedText = attributedString
                     cellDeadlineImportant.textLabel?.textColor = UIColor(named: "LabelTertiary")
                     cellDeadlineImportant.imageView?.image = UIImage(named: "doneCircle")
                 } else {
+                    cellDeadlineImportant.textLabel?.attributedText = NSAttributedString(string: item.taskText)
                     cellDeadlineImportant.textLabel?.textColor = UIColor(named: "LabelPrimary")
 
                     if item.importance == .important { // red empty circle check
@@ -124,9 +127,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 cellDeadline.accessoryView = arrowImageView
                 
                 if item.completed {
+                    let attributedString = NSAttributedString(string: item.taskText, attributes: [NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue])
+                    cellDeadline.textLabel?.attributedText = attributedString
                     cellDeadline.textLabel?.textColor = UIColor(named: "LabelTertiary")
                     cellDeadline.imageView?.image = UIImage(named: "doneCircle")
                 } else {
+                    cellDeadline.textLabel?.attributedText = NSAttributedString(string: item.taskText)
                     cellDeadline.textLabel?.textColor = UIColor(named: "LabelPrimary")
                     cellDeadline.imageView?.image = UIImage(named: "emptyCircle")?.withTintColor(UIColor(named: "LabelSecondary") ?? .secondarySystemGroupedBackground)
                 }
@@ -158,11 +164,14 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 cellImportant.accessoryView = arrowImageView
                 
                 if item.completed {
+                    let attributedString = NSAttributedString(string: item.taskText, attributes: [NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue])
+                    cellImportant.textLabel?.attributedText = attributedString
                     cellImportant.textLabel?.textColor = UIColor(named: "LabelTertiary")
                     cellImportant.imageView?.image = UIImage(named: "doneCircle")
-                } else { // red empty circle check
+                } else {
+                    cellImportant.textLabel?.attributedText = NSAttributedString(string: item.taskText)
                     cellImportant.textLabel?.textColor = UIColor(named: "LabelPrimary")
-                    if item.importance == .important {
+                    if item.importance == .important { // red empty circle check
                         cellImportant.imageView?.image = UIImage(named: "importantCircle")?.withTintColor(UIColor(named: "Red") ?? .red)
                     } else {
                         cellImportant.imageView?.image = UIImage(named: "emptyCircle")?.withTintColor(UIColor(named: "LabelSecondary") ?? .secondarySystemGroupedBackground)
@@ -194,9 +203,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 cellDefault.accessoryView = arrowImageView
                 
                 if item.completed {
+                    let attributedString = NSAttributedString(string: item.taskText, attributes: [NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue])
+                    cellDefault.textLabel?.attributedText = attributedString
                     cellDefault.textLabel?.textColor = UIColor(named: "LabelTertiary")
                     cellDefault.imageView?.image = UIImage(named: "doneCircle")
                 } else {
+                    cellDefault.textLabel?.attributedText = NSAttributedString(string: item.taskText)
                     cellDefault.textLabel?.textColor = UIColor(named: "LabelPrimary")
                     cellDefault.imageView?.image = UIImage(named: "emptyCircle")?.withTintColor(UIColor(named: "LabelSecondary") ?? .secondarySystemGroupedBackground)
                 }
@@ -257,6 +269,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             
             var itemDone = false
             if !isDone {
+                DispatchQueue.main.async {
+                    let attributedString = NSAttributedString(string: item.taskText, attributes: [NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue])
+                    cell?.textLabel?.attributedText = attributedString
+                }
                 cell?.textLabel?.textColor = UIColor(named: "LabelTertiary")
                 cell?.imageView?.image = UIImage(named: "doneCircle")
                 itemDone = true
@@ -268,6 +284,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                     }
                 }
             } else {
+                DispatchQueue.main.async {
+                    cell?.textLabel?.attributedText = NSAttributedString(string: item.taskText)
+                }
                 cell?.textLabel?.textColor = UIColor(named: "LabelPrimary")
                 if item.importance == .important {
                     cell?.imageView?.image = UIImage(named: "importantCircle")?.withTintColor(UIColor(named: "Red") ?? .red)
@@ -372,7 +391,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             return nil
         }
         
-        let item = sortedArray[indexPath.row]
+        var item: ToDoItem? = nil
+        DispatchQueue.main.async {
+            item = self.sortedArray[indexPath.row]
+        }
         
         let previewProvider: () -> UIViewController? = {
             let detailsVC = DetailsViewController(openType: .edit, item: item)
@@ -423,7 +445,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 tableView.endUpdates()
                 
                 DispatchQueue.main.async {
-                    _ = self?.fileCache.remove(at: item.id)
+                    _ = self?.fileCache.remove(at: item?.id ?? "")
                     self?.fileCache.saveToFile(to: "testFile")
                 }
             }

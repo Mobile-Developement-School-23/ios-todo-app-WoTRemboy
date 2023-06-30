@@ -44,7 +44,7 @@ class DeadlineTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
+        textLabel?.attributedText = nil
         textLabel?.text = nil
         dateLabel.text = nil
     }
