@@ -24,7 +24,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56).isActive = true
-        
         guard indexPath.row < sortedArray.count else { // for newTask cell
             cell.textLabel?.text = "Новое"
             cell.textLabel?.font = .body()
@@ -253,6 +252,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    
     // MARK: Swipe actions
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -287,6 +287,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 DispatchQueue.main.async {
                     cell?.textLabel?.attributedText = NSAttributedString(string: item.taskText)
                 }
+
                 cell?.textLabel?.textColor = UIColor(named: "LabelPrimary")
                 if item.importance == .important {
                     cell?.imageView?.image = UIImage(named: "importantCircle")?.withTintColor(UIColor(named: "Red") ?? .red)
@@ -390,12 +391,11 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         guard indexPath.row < sortedArray.count else {
             return nil
         }
-        
         var item: ToDoItem? = nil
         DispatchQueue.main.async {
             item = self.sortedArray[indexPath.row]
         }
-        
+
         let previewProvider: () -> UIViewController? = {
             let detailsVC = DetailsViewController(openType: .edit, item: item)
             return detailsVC
