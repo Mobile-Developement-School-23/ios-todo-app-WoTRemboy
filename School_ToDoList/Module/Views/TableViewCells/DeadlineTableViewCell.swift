@@ -38,7 +38,6 @@ class DeadlineTableViewCell: UITableViewCell {
         return view
     }()
 
-    
     required init?(coder: NSCoder) {
         fatalError()
     }

@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import CocoaLumberjackSwift
+import FileCachePackage
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
-    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -30,7 +31,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             cell.imageView?.image = imageEmpty
             cell.accessoryView = nil
             cell.backgroundColor = UIColor(named: "BackSecondary")
-
+            
             return cell
         }
         
@@ -38,6 +39,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             if sortedArray[indexPath.row].completed {
                 guard let cellEmpty: EmptyTableViewCell = tableView.dequeueReusableCell(withIdentifier: EmptyTableViewCell.identifier, for: indexPath) as? EmptyTableViewCell
                 else {
+                    DDLogError("EmptyTableViewCell config error", level: .error)
                     fatalError()
                 }
                 
@@ -68,6 +70,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 
                 guard let cellDeadlineImportant: BothTableViewCell = tableView.dequeueReusableCell(withIdentifier: BothTableViewCell.identifier, for: indexPath) as? BothTableViewCell
                 else {
+                    DDLogError("BothTableViewCell config error", level: .error)
                     fatalError()
                 }
                 
@@ -113,6 +116,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             } else { // deadline && !important
                 guard let cellDeadline: DeadlineTableViewCell = tableView.dequeueReusableCell(withIdentifier: DeadlineTableViewCell.identifier, for: indexPath) as? DeadlineTableViewCell
                 else {
+                    DDLogError("DeadlineTableViewCell config error", level: .error)
                     fatalError()
                 }
                 let item = sortedArray[indexPath.row]
@@ -148,6 +152,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 
                 guard let cellImportant: ImportantTableViewCell = tableView.dequeueReusableCell(withIdentifier: ImportantTableViewCell.identifier, for: indexPath) as? ImportantTableViewCell
                 else {
+                    DDLogError("ImportantTableViewCell config error", level: .error)
                     fatalError()
                 }
                 
@@ -186,6 +191,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 
                 guard let cellDefault: DefaultTableViewCell = tableView.dequeueReusableCell(withIdentifier: DefaultTableViewCell.identifier, for: indexPath) as? DefaultTableViewCell
                 else {
+                    DDLogError("DefaultTableViewCell config error", level: .error)
                     fatalError()
                 }
                 
@@ -216,8 +222,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == sortedArray.count { // newTask cell check
             newTaskCreate()
         } else {
-            let vc = DetailsViewController(openType: .edit, item: sortedArray[indexPath.row])
-            vc.completionHandler = { id, taskText, importance, deadline, completed, createDate, editDate, toDelete in
+            let viewController = DetailsViewController(openType: .edit, item: sortedArray[indexPath.row])
+            viewController.completionHandler = { id, taskText, importance, deadline, completed, createDate, editDate, toDelete in
                 
                 self.sortedArray.remove(at: indexPath.row)
                 let item = ToDoItem(id: id, taskText: taskText, importance: importance, deadline: deadline, completed: completed, createDate: createDate, editDate: editDate)
@@ -225,7 +231,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 if !toDelete { // DetailsVC Save button pressed
                     self.sortedArray.insert(item, at: indexPath.row)
                     tableView.reloadRows(at: [indexPath], with: .none)
-                    let _ = self.fileCache.add(item: item)
+                    _ = self.fileCache.add(item: item)
                     
                 } else { // DetailsVC Delete button pressed
                     if item.completed {
@@ -233,19 +239,18 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                         self.headerSetup()
                     }
                     tableView.reloadData()
-                    let _ = self.fileCache.remove(at: id)
+                    _ = self.fileCache.remove(at: id)
                 }
                 DispatchQueue.main.async {
                     self.fileCache.saveToFile(to: "testFile")
                 }
             }
             
-            let navVC = UINavigationController(rootViewController: vc)
+            let navVC = UINavigationController(rootViewController: viewController)
             present(navVC, animated: true)
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
     
     // MARK: Swipe actions
     
@@ -259,7 +264,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         let item = sortedArray[indexPath.row]
         let isDone = item.completed
         
-        let action = UIContextualAction(style: .normal, title: "") { (action, sourceView, completionHandler) in
+        let action = UIContextualAction(style: .normal, title: "") { (_, _, completionHandler) in
             
             var itemDone = false
             if !isDone {
@@ -271,6 +276,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 cell?.imageView?.image = UIImage(named: "doneCircle")
                 itemDone = true
                 self.completedCount += 1
+                DDLogDebug("\(item.taskText) is done", level: .debug)
                 if self.doneTasksAreHidden { // to hide done task
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                         self.tableView.reloadRows(at: [indexPath], with: .fade)
@@ -280,7 +286,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 DispatchQueue.main.async {
                     cell?.textLabel?.attributedText = NSAttributedString(string: item.taskText)
                 }
-                
+
                 cell?.textLabel?.textColor = UIColor(named: "LabelPrimary")
                 if item.importance == .important {
                     cell?.imageView?.image = UIImage(named: "importantCircle")?.withTintColor(UIColor(named: "Red") ?? .red)
@@ -289,13 +295,14 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 }
                 itemDone = false
                 self.completedCount -= 1
+                DDLogDebug("\(item.taskText) is undone", level: .debug)
             }
             let newItem = ToDoItem(id: item.id, taskText: item.taskText, importance: item.importance, deadline: item.deadline, completed: itemDone, createDate: item.createDate, editDate: item.editDate)
             self.headerSetup()
             self.sortedArray[indexPath.row] = newItem
             
             DispatchQueue.main.async {
-                let _ = self.fileCache.add(item: newItem)
+                _ = self.fileCache.add(item: newItem)
                 self.fileCache.saveToFile(to: "testFile")
             }
             completionHandler(true)
@@ -308,7 +315,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             action.image = imageUncheckSwipe
         }
         
-        
         return UISwipeActionsConfiguration(actions: [action])
     }
     
@@ -319,11 +325,11 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         }
         let item = sortedArray[indexPath.row]
         
-        let detailsAction = UIContextualAction(style: .normal, title: "") { (action, sourceView, completionHandler) in
+        let detailsAction = UIContextualAction(style: .normal, title: "") { (_, _, completionHandler) in
             
-            let vc = DetailsViewController(openType: .edit, item: self.sortedArray[indexPath.row])
+            let viewController = DetailsViewController(openType: .edit, item: self.sortedArray[indexPath.row])
             
-            vc.completionHandler = { id, taskText, importance, deadline, completed, createDate, editDate, toDelete in
+            viewController.completionHandler = { id, taskText, importance, deadline, completed, createDate, _, toDelete in
                 
                 self.sortedArray.remove(at: indexPath.row)
                 let item = ToDoItem(id: id, taskText: taskText, importance: importance, deadline: deadline, completed: completed, createDate: createDate)
@@ -331,21 +337,21 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 if !toDelete { // pressed DetailsVC Save button
                     self.sortedArray.insert(item, at: indexPath.row)
                     tableView.reloadRows(at: [indexPath], with: .none)
-                    let _ = self.fileCache.add(item: item)
+                    _ = self.fileCache.add(item: item)
                 } else { // pressed DetailsVC Delete button
                     if item.completed {
                         self.completedCount -= 1
                         self.headerSetup()
                     }
                     tableView.reloadData()
-                    let _ = self.fileCache.remove(at: id)
+                    _ = self.fileCache.remove(at: id)
                 }
                 tableView.reloadRows(at: [indexPath], with: .none)
                 DispatchQueue.main.async {
                     self.fileCache.saveToFile(to: "testFile")
                 }
             }
-            let navVC = UINavigationController(rootViewController: vc)
+            let navVC = UINavigationController(rootViewController: viewController)
             self.present(navVC, animated: true)
             completionHandler(true)
         }
@@ -353,7 +359,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         detailsAction.backgroundColor = UIColor(named: "GrayLight")
         detailsAction.image = imageInfo
         
-        let deleteAction = UIContextualAction(style: .destructive, title: "") { (action, sourceView, completionHandler) in
+        let deleteAction = UIContextualAction(style: .destructive, title: "") { (_, _, completionHandler) in
             
             if self.sortedArray[indexPath.row].completed { // countLabel update
                 self.completedCount -= 1
@@ -366,9 +372,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             tableView.endUpdates()
             
             DispatchQueue.main.async {
-                let _ = self.fileCache.remove(at: item.id)
+                _ = self.fileCache.remove(at: item.id)
                 self.fileCache.saveToFile(to: "testFile")
             }
+            DDLogDebug("\(item.taskText) is deleted", level: .debug)
             completionHandler(true)
         }
         deleteAction.backgroundColor = UIColor(named: "Red")
@@ -387,8 +394,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         DispatchQueue.main.async {
             item = self.sortedArray[indexPath.row]
         }
-        
-        
+
         let previewProvider: () -> UIViewController? = {
             let detailsVC = DetailsViewController(openType: .edit, item: item)
             return detailsVC
@@ -398,8 +404,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             
             let editAction = UIAction(title: "Изменить", image: UIImage(systemName: "pencil")) { [weak self] _ in
                 
-                let vc = DetailsViewController(openType: .edit, item: self?.sortedArray[indexPath.row])
-                vc.completionHandler = { id, taskText, importance, deadline, completed, createDate, editDate, toDelete in
+                let viewController = DetailsViewController(openType: .edit, item: self?.sortedArray[indexPath.row])
+                viewController.completionHandler = { id, taskText, importance, deadline, completed, createDate, editDate, toDelete in
                     
                     self?.sortedArray.remove(at: indexPath.row)
                     let item = ToDoItem(id: id, taskText: taskText, importance: importance, deadline: deadline, completed: completed, createDate: createDate, editDate: editDate)
@@ -407,7 +413,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                     if !toDelete { // DetailsVC Save button pressed
                         self?.sortedArray.insert(item, at: indexPath.row)
                         tableView.reloadRows(at: [indexPath], with: .none)
-                        let _ = self?.fileCache.add(item: item)
+                        _ = self?.fileCache.add(item: item)
                         
                     } else { // DetailsVC Delete button pressed
                         if item.completed {
@@ -415,13 +421,13 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                             self?.headerSetup()
                         }
                         tableView.reloadData()
-                        let _ = self?.fileCache.remove(at: id)
+                        _ = self?.fileCache.remove(at: id)
                     }
                     DispatchQueue.main.async {
                         self?.fileCache.saveToFile(to: "testFile")
                     }
                 }
-                let navVC = UINavigationController(rootViewController: vc)
+                let navVC = UINavigationController(rootViewController: viewController)
                 self?.present(navVC, animated: true)
             }
             
@@ -438,7 +444,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 tableView.endUpdates()
                 
                 DispatchQueue.main.async {
-                    let _ = self?.fileCache.remove(at: item?.id ?? "")
+                    _ = self?.fileCache.remove(at: item?.id ?? "")
                     self?.fileCache.saveToFile(to: "testFile")
                 }
             }

@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import CocoaLumberjackSwift
+import FileCachePackage
 
 class MainViewController: UIViewController {
     
     // MARK: ToDoItems initialization and sorting
     
-    let items: [String : ToDoItem]
+    let items: [String: ToDoItem]
     var sortedArray = [ToDoItem]()
     let fileCache = FileCache()
     
@@ -88,9 +90,12 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        DDLogDebug("Main view loaded", level: .debug)
         
         fileCache.loadFromFile(from: "testFile")
+        DDLogDebug("Loaded fileCache is fine", level: .debug)
         completedCount = items.values.filter { $0.completed }.count
+        DDLogInfo("All tasks: \(items.count); Completed tasks: \(completedCount)", level: .info)
         
         title = "Мои дела"
         view.backgroundColor = UIColor(named: "BackPrimary")
@@ -143,7 +148,6 @@ class MainViewController: UIViewController {
         header.addSubview(showButton)
         
         showButton.addTarget(self, action: #selector(showButtonTapped), for: .touchUpInside)
-        
         
         countLabel.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 32).isActive = true
         countLabel.widthAnchor.constraint(lessThanOrEqualToConstant: header.frame.width/2).isActive = true
@@ -216,16 +220,18 @@ class MainViewController: UIViewController {
     // MARK: @objc functions
     
     @objc func newTaskCreate() {
+        DDLogDebug("Command to new task", level: .debug)
         let viewController = DetailsViewController(openType: .add, item: nil)
         
-        viewController.completionHandler = { id, taskText, importance, deadline, completed, createDate, editDate, toDelete in
+        viewController.completionHandler = { id, taskText, importance, deadline, _, createDate, _, _ in
             
             let item = ToDoItem(id: id, taskText: taskText, importance: importance, deadline: deadline, createDate: createDate)
             self.sortedArray.insert(item, at: 0)
             self.tableView.reloadData()
-            let _ = self.fileCache.add(item: item)
-            self.fileCache.saveToFile(to: "testFile")
-            
+            DispatchQueue.main.async {
+                _ = self.fileCache.add(item: item)
+                self.fileCache.saveToFile(to: "testFile")
+            }
         }
         let navVC = UINavigationController(rootViewController: viewController)
         present(navVC, animated: true)
@@ -234,11 +240,13 @@ class MainViewController: UIViewController {
     @objc func showButtonTapped() {
         doneTasksAreHidden = !doneTasksAreHidden
         if doneTasksAreHidden {
+            DDLogDebug("Hide button pressed", level: .debug)
             showButton.setTitle("Показать", for: .normal)
             if let visibleIndexPaths = tableView.indexPathsForVisibleRows {
                 tableView.reloadRows(at: visibleIndexPaths, with: .fade)
             }
         } else {
+            DDLogDebug("Show button pressed", level: .debug)
             showButton.setTitle("Скрыть", for: .normal)
             if let visibleIndexPaths = tableView.indexPathsForVisibleRows {
                 tableView.reloadRows(at: visibleIndexPaths, with: .fade)
@@ -246,4 +254,3 @@ class MainViewController: UIViewController {
         }
     }
 }
-

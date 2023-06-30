@@ -1,12 +1,9 @@
-
-
 import XCTest
 
 @testable import School_ToDoList
 
 final class ConfigurationAndParsingTests: XCTestCase {
-    
-    
+        
     // MARK: Parsing tests with ToDoItem struct features
     
     func testJSONParseMinimum() throws {

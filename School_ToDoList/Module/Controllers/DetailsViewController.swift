@@ -1,5 +1,6 @@
-
 import UIKit
+import CocoaLumberjackSwift
+import FileCachePackage
 
 class DetailsViewController: UIViewController, UITableViewDataSource {
     
@@ -133,15 +134,18 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     @objc func datePickerValueChanged(_ sender: UIDatePicker) {
         dismissKeyboard()
         selectedDate = sender.date
+        DDLogDebug("Date changed to \(String(describing: selectedDate))", level: .debug)
         dateUntilLabel.setTitle(dateConfiguration(date: selectedDate).0, for: .normal)
         saveButtonEnableCheck()
     }
     
     @objc func cancelButtonTapped() {
+        DDLogDebug("Cancel button pressed", level: .debug)
         dismiss(animated: true)
     }
     
     @objc func deleteButtonTapped() {
+        DDLogDebug("Delete button pressed", level: .debug)
         completionHandler?(item?.id ?? "", item?.taskText ?? "", item?.importance ?? .regular, item?.deadline, item?.completed ?? false, item?.createDate ?? Date(), item?.editDate, true)
         dismiss(animated: true)
     }
@@ -159,10 +163,12 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
         default:
             itemImportance = .regular
         }
+        DDLogDebug("Importance changed to \(itemImportance)", level: .debug)
         saveButtonEnableCheck()
     }
     
     @objc private func saveButtonTapped() {
+        DDLogDebug("Save button pressed", level: .debug)
         var toEditDate: Date? = nil
         if item != nil {
             toEditDate = Date()
@@ -267,6 +273,8 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        DDLogDebug("Details view loaded", level: .debug)
+        
         itemImportance = item?.importance ?? .regular
 
         navigationBarSetup()
@@ -371,7 +379,6 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
             segmentedControl.addTarget(self, action: #selector(segmentValueChanged(_:)), for: .valueChanged)
             segmentedControl.backgroundColor = UIColor(named: "SupportSegmented")
             
-            
             cell.contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56).isActive = true
             cell.contentView.addSubview(importanceLabel)
             cell.contentView.addSubview(segmentedControl)
@@ -395,12 +402,10 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
                 dateUntilLabel.alpha = 1
             }
             
-            
             cell.contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56).isActive = true
             switchControl.translatesAutoresizingMaskIntoConstraints = false
             switchControl.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -14).isActive = true
             switchControl.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor).isActive = true
-            
             
             if !deadlineAlreadyHere {
                 labelConstraint1 = doneUntilLabel.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor, constant: 0)
@@ -424,7 +429,6 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
 
         }
         
-        
         return cell
     }
     
@@ -441,7 +445,6 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
             data.insert("", at: calendarRowNumber)
             
             let calendarIndexPath = IndexPath(row: calendarRowNumber, section: 0)
-            
             
             tableView.beginUpdates()
             tableView.insertRows(at: [calendarIndexPath], with: .fade)
@@ -484,6 +487,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     // MARK: Done until button to show
     
     @objc func switchValueChanged(_ sender: UISwitch) {
+        DDLogDebug("Switch controller changed value", level: .debug)
         dismissKeyboard()
         if let cell = sender.superview?.superview as? UITableViewCell,
            let tableView = cell.superview as? UITableView {
@@ -491,6 +495,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
             let dateCell = IndexPath(row: 1, section: 0)
             
             if isSwitchOn {
+                DDLogDebug("Deadline activated", level: .debug)
                 labelConstraint1?.constant = -10
                 if selectedDate == nil {
                     selectedDate = Date(timeIntervalSinceNow: 86400)
@@ -500,6 +505,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
                     self.scrollView.layoutIfNeeded()
                 }
             } else {
+                DDLogDebug("Deadline disactivated", level: .debug)
                 if isCalendarShown {
                     dateButtonPressed()
                 }
@@ -521,12 +527,9 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
         CGSize(width: view.frame.width, height: detailsTextView.frame.height + tableView.frame.height + deleteButton.frame.height + 100)
     }
     
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "contentSize" {
             scrollView.contentSize = contentSize
         }
     }
 }
-
-
-
