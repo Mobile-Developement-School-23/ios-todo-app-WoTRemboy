@@ -34,6 +34,10 @@
 		63C034072A4DF343009A1CB3 /* EmptyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C034062A4DF343009A1CB3 /* EmptyTableViewCell.swift */; };
 		63C034092A4E06F7009A1CB3 /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C034082A4E06F7009A1CB3 /* TransitionAnimator.swift */; };
 		63C034102A4EDBA6009A1CB3 /* TableViewDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C0340F2A4EDBA6009A1CB3 /* TableViewDelegates.swift */; };
+		63C034132A4EF2E8009A1CB3 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 63C034122A4EF2E8009A1CB3 /* CocoaLumberjack */; };
+		63C034152A4EF2E8009A1CB3 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 63C034142A4EF2E8009A1CB3 /* CocoaLumberjackSwift */; };
+		63C034172A4EF2E8009A1CB3 /* CocoaLumberjackSwiftLogBackend in Frameworks */ = {isa = PBXBuildFile; productRef = 63C034162A4EF2E8009A1CB3 /* CocoaLumberjackSwiftLogBackend */; };
+		63C034192A4EF97C009A1CB3 /* LogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C034182A4EF97C009A1CB3 /* LogFormatter.swift */; };
 		63EE3C1A2A4C5A9B00B275DF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EE3C192A4C5A9B00B275DF /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +82,7 @@
 		63C034062A4DF343009A1CB3 /* EmptyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTableViewCell.swift; sourceTree = "<group>"; };
 		63C034082A4E06F7009A1CB3 /* TransitionAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionAnimator.swift; sourceTree = "<group>"; };
 		63C0340F2A4EDBA6009A1CB3 /* TableViewDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDelegates.swift; sourceTree = "<group>"; };
+		63C034182A4EF97C009A1CB3 /* LogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFormatter.swift; sourceTree = "<group>"; };
 		63EE3C192A4C5A9B00B275DF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -86,6 +91,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63C034152A4EF2E8009A1CB3 /* CocoaLumberjackSwift in Frameworks */,
+				63C034172A4EF2E8009A1CB3 /* CocoaLumberjackSwiftLogBackend in Frameworks */,
+				63C034132A4EF2E8009A1CB3 /* CocoaLumberjack in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,6 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				634B8E632A41B6A500BE9ADB /* FontStyles.swift */,
+				63C034182A4EF97C009A1CB3 /* LogFormatter.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -280,6 +289,11 @@
 			dependencies = (
 			);
 			name = School_ToDoList;
+			packageProductDependencies = (
+				63C034122A4EF2E8009A1CB3 /* CocoaLumberjack */,
+				63C034142A4EF2E8009A1CB3 /* CocoaLumberjackSwift */,
+				63C034162A4EF2E8009A1CB3 /* CocoaLumberjackSwiftLogBackend */,
+			);
 			productName = School_ToDoList;
 			productReference = 634452592A34A85600BFB9E3 /* School_ToDoList.app */;
 			productType = "com.apple.product-type.application";
@@ -330,6 +344,9 @@
 				Base,
 			);
 			mainGroup = 634452502A34A85600BFB9E3;
+			packageReferences = (
+				63C034112A4EF2E8009A1CB3 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */,
+			);
 			productRefGroup = 6344525A2A34A85600BFB9E3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -377,6 +394,7 @@
 				634B8E642A41B6A500BE9ADB /* FontStyles.swift in Sources */,
 				634452792A38A34500BFB9E3 /* JSONExtend.swift in Sources */,
 				634B8E6D2A41D2C900BE9ADB /* TextViewDelegateExtend.swift in Sources */,
+				63C034192A4EF97C009A1CB3 /* LogFormatter.swift in Sources */,
 				63C034002A4DB6D3009A1CB3 /* ImportantTableViewCell.swift in Sources */,
 				6344525D2A34A85600BFB9E3 /* AppDelegate.swift in Sources */,
 				63C034042A4DB6F3009A1CB3 /* BothTableViewCell.swift in Sources */,
@@ -646,6 +664,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		63C034112A4EF2E8009A1CB3 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CocoaLumberjack/CocoaLumberjack";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		63C034122A4EF2E8009A1CB3 /* CocoaLumberjack */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63C034112A4EF2E8009A1CB3 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjack;
+		};
+		63C034142A4EF2E8009A1CB3 /* CocoaLumberjackSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63C034112A4EF2E8009A1CB3 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjackSwift;
+		};
+		63C034162A4EF2E8009A1CB3 /* CocoaLumberjackSwiftLogBackend */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63C034112A4EF2E8009A1CB3 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjackSwiftLogBackend;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 634452512A34A85600BFB9E3 /* Project object */;
 }

@@ -1,5 +1,6 @@
 
 import UIKit
+import CocoaLumberjackSwift
 
 class DetailsViewController: UIViewController, UITableViewDataSource {
     
@@ -133,15 +134,18 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     @objc func datePickerValueChanged(_ sender: UIDatePicker) {
         dismissKeyboard()
         selectedDate = sender.date
+        DDLogDebug("Date changed to \(String(describing: selectedDate))", level: .debug)
         dateUntilLabel.setTitle(dateConfiguration(date: selectedDate).0, for: .normal)
         saveButtonEnableCheck()
     }
     
     @objc func cancelButtonTapped() {
+        DDLogDebug("Cancel button pressed", level: .debug)
         dismiss(animated: true)
     }
     
     @objc func deleteButtonTapped() {
+        DDLogDebug("Delete button pressed", level: .debug)
         completionHandler?(item?.id ?? "", item?.taskText ?? "", item?.importance ?? .regular, item?.deadline, item?.completed ?? false, item?.createDate ?? Date(), item?.editDate, true)
         dismiss(animated: true)
     }
@@ -159,10 +163,12 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
         default:
             itemImportance = .regular
         }
+        DDLogDebug("Importance changed to \(itemImportance)", level: .debug)
         saveButtonEnableCheck()
     }
     
     @objc private func saveButtonTapped() {
+        DDLogDebug("Save button pressed", level: .debug)
         var toEditDate: Date? = nil
         if item != nil {
             toEditDate = Date()
@@ -267,6 +273,8 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        DDLogDebug("Details view loaded", level: .debug)
+        
         itemImportance = item?.importance ?? .regular
 
         navigationBarSetup()
@@ -424,7 +432,6 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
 
         }
         
-        
         return cell
     }
     
@@ -484,6 +491,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     // MARK: Done until button to show
     
     @objc func switchValueChanged(_ sender: UISwitch) {
+        DDLogDebug("Switch controller changed value", level: .debug)
         dismissKeyboard()
         if let cell = sender.superview?.superview as? UITableViewCell,
            let tableView = cell.superview as? UITableView {
@@ -491,6 +499,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
             let dateCell = IndexPath(row: 1, section: 0)
             
             if isSwitchOn {
+                DDLogDebug("Deadline activated", level: .debug)
                 labelConstraint1?.constant = -10
                 if selectedDate == nil {
                     selectedDate = Date(timeIntervalSinceNow: 86400)
@@ -500,6 +509,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
                     self.scrollView.layoutIfNeeded()
                 }
             } else {
+                DDLogDebug("Deadline disactivated", level: .debug)
                 if isCalendarShown {
                     dateButtonPressed()
                 }

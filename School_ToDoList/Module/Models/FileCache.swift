@@ -1,6 +1,7 @@
 
 
 import Foundation
+import CocoaLumberjackSwift
 
 final class FileCache {
     private(set) var items: [String: ToDoItem] = [:]
@@ -8,15 +9,17 @@ final class FileCache {
     func add(item: ToDoItem) -> ToDoItem? {
         let replacedItem = items[item.id]
         items.updateValue(item, forKey: item.id)
+        DDLogDebug("Item added to fileCache", level: .debug)
         return replacedItem
     }
     
     func remove(at id: String) -> ToDoItem? {
         if let deletedItem = items[id] {
             items[id] = nil
+            DDLogDebug("Item deleted from fileCache", level: .debug)
             return deletedItem
         } else {
-            print("where is no item with this id: \(id)")
+            DDLogError("Where is no item with this id: \(id)", level: .error)
             return nil
         }
     }
@@ -29,21 +32,23 @@ final class FileCache {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: jsonItems, options: [])
             guard let filesDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-                print("documents directory not found")
+                DDLogError("Documents directory not found", level: .error)
                 return
             }
+            DDLogDebug("Files directory configurated", level: .debug)
             let fileURL = filesDirectory.appendingPathComponent("\(fileName).todofile")
             try jsonData.write(to: fileURL)
             
         } catch {
-            print("saving to file error: \(error)")
+            DDLogError("Saving to file error: \(error)", level: .error)
         }
+        DDLogDebug("Saved fileCache", level: .debug)
     }
     
     func loadFromFile(from fileName: String) {
         do {
             guard let filesDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-                print("documents directory not found")
+                DDLogError("Documents directory not found", level: .error)
                 return
             }
             let fileURL = filesDirectory.appendingPathComponent("\(fileName).todofile")
@@ -53,7 +58,7 @@ final class FileCache {
             items = Dictionary(uniqueKeysWithValues: loadedItems.map { ($0.id, $0) })
             
         } catch {
-            print("loading from file error: \(error)")
+            DDLogError("Loading from file error: \(error)", level: .error)
         }
     }
     
@@ -65,21 +70,21 @@ final class FileCache {
         
         do {
             guard let filesDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-                print("documents directory not found")
+                DDLogError("Documents directory not found", level: .error)
                 return
             }
             let fileURL = filesDirectory.appendingPathComponent("\(fileName).csv")
             try csvString.write(to: fileURL, atomically: true, encoding: .utf8)
             
         } catch {
-            print("saving to CSV file error: \(error)")
+            DDLogError("Saving to CSV file error: \(error)", level: .error)
         }
     }
     
     func loadFromCSVFile(from fileName: String) {
         do {
             guard let filesDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-                print("documents directory not found")
+                DDLogError("Documents directory not found", level: .error)
                 return
             }
             let fileURL = filesDirectory.appendingPathComponent("\(fileName).csv")
@@ -91,7 +96,7 @@ final class FileCache {
             items = Dictionary(uniqueKeysWithValues: loadedItems.map { ($0.id, $0) })
             
         } catch {
-            print("loading from CSV file error: \(error)")
+            DDLogError("Loading from CSV file error: \(error)", level: .error)
         }
     }
 }

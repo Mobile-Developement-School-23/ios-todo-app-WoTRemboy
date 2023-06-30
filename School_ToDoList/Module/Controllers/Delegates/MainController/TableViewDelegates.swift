@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CocoaLumberjackSwift
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -31,7 +32,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             cell.imageView?.image = imageEmpty
             cell.accessoryView = nil
             cell.backgroundColor = UIColor(named: "BackSecondary")
-
+            
             return cell
         }
         
@@ -39,6 +40,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             if sortedArray[indexPath.row].completed {
                 guard let cellEmpty: EmptyTableViewCell = tableView.dequeueReusableCell(withIdentifier: EmptyTableViewCell.identifier, for: indexPath) as? EmptyTableViewCell
                 else {
+                    DDLogError("EmptyTableViewCell config error", level: .error)
                     fatalError()
                 }
                 
@@ -69,6 +71,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 
                 guard let cellDeadlineImportant: BothTableViewCell = tableView.dequeueReusableCell(withIdentifier: BothTableViewCell.identifier, for: indexPath) as? BothTableViewCell
                 else {
+                    DDLogError("BothTableViewCell config error", level: .error)
                     fatalError()
                 }
                 
@@ -111,6 +114,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             } else { // deadline && !important
                 guard let cellDeadline: DeadlineTableViewCell = tableView.dequeueReusableCell(withIdentifier: DeadlineTableViewCell.identifier, for: indexPath) as? DeadlineTableViewCell
                 else {
+                    DDLogError("DeadlineTableViewCell config error", level: .error)
                     fatalError()
                 }
                 let item = sortedArray[indexPath.row]
@@ -143,6 +147,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 
                 guard let cellImportant: ImportantTableViewCell = tableView.dequeueReusableCell(withIdentifier: ImportantTableViewCell.identifier, for: indexPath) as? ImportantTableViewCell
                 else {
+                    DDLogError("ImportantTableViewCell config error", level: .error)
                     fatalError()
                 }
                 
@@ -178,6 +183,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 
                 guard let cellDefault: DefaultTableViewCell = tableView.dequeueReusableCell(withIdentifier: DefaultTableViewCell.identifier, for: indexPath) as? DefaultTableViewCell
                 else {
+                    DDLogError("DefaultTableViewCell config error", level: .error)
                     fatalError()
                 }
                 
@@ -255,6 +261,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 cell?.imageView?.image = UIImage(named: "doneCircle")
                 itemDone = true
                 self.completedCount += 1
+                DDLogDebug("\(item.taskText) is done", level: .debug)
                 if self.doneTasksAreHidden { // to hide done task
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                         self.tableView.reloadRows(at: [indexPath], with: .fade)
@@ -269,6 +276,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 }
                 itemDone = false
                 self.completedCount -= 1
+                DDLogDebug("\(item.taskText) is undone", level: .debug)
             }
             let newItem = ToDoItem(id: item.id, taskText: item.taskText, importance: item.importance, deadline: item.deadline, completed: itemDone, createDate: item.createDate, editDate: item.editDate)
             self.headerSetup()
@@ -333,6 +341,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         detailsAction.backgroundColor = UIColor(named: "GrayLight")
         detailsAction.image = imageInfo
         
+        
         let deleteAction = UIContextualAction(style: .destructive, title: "") { (action, sourceView, completionHandler) in
             
             if self.sortedArray[indexPath.row].completed { // countLabel update
@@ -349,6 +358,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 let _ = self.fileCache.remove(at: item.id)
                 self.fileCache.saveToFile(to: "testFile")
             }
+            DDLogDebug("\(item.taskText) is deleted", level: .debug)
             completionHandler(true)
         }
         deleteAction.backgroundColor = UIColor(named: "Red")
