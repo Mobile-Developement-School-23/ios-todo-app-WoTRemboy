@@ -1,4 +1,5 @@
 import UIKit
+import FileCachePackage
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 

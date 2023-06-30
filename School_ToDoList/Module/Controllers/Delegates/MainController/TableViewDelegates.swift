@@ -7,6 +7,7 @@
 
 import UIKit
 import CocoaLumberjackSwift
+import FileCachePackage
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     

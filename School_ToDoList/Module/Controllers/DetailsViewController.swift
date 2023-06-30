@@ -1,5 +1,6 @@
 import UIKit
 import CocoaLumberjackSwift
+import FileCachePackage
 
 class DetailsViewController: UIViewController, UITableViewDataSource {
     
