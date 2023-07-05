@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		631E26692A55B2C800C3430D /* URLSessionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631E26682A55B2C800C3430D /* URLSessionExtension.swift */; };
+		631E266B2A55B39D00C3430D /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631E266A2A55B39D00C3430D /* NetworkingService.swift */; };
 		6344525D2A34A85600BFB9E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6344525C2A34A85600BFB9E3 /* AppDelegate.swift */; };
 		6344525F2A34A85600BFB9E3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6344525E2A34A85600BFB9E3 /* SceneDelegate.swift */; };
 		634452612A34A85600BFB9E3 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634452602A34A85600BFB9E3 /* DetailsViewController.swift */; };
@@ -54,6 +56,8 @@
 		065AF5FBBE90ECD5609AC9FC /* Pods_School_ToDoListTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_School_ToDoListTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D59CF7F3DD7F63C9F08E882 /* Pods-School_ToDoList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-School_ToDoList.release.xcconfig"; path = "Target Support Files/Pods-School_ToDoList/Pods-School_ToDoList.release.xcconfig"; sourceTree = "<group>"; };
 		328318BF22868B50B663E3F5 /* Pods-School_ToDoList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-School_ToDoList.debug.xcconfig"; path = "Target Support Files/Pods-School_ToDoList/Pods-School_ToDoList.debug.xcconfig"; sourceTree = "<group>"; };
+		631E26682A55B2C800C3430D /* URLSessionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionExtension.swift; sourceTree = "<group>"; };
+		631E266A2A55B39D00C3430D /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
 		634452592A34A85600BFB9E3 /* School_ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = School_ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6344525C2A34A85600BFB9E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6344525E2A34A85600BFB9E3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -111,6 +115,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		631E26672A55B2A500C3430D /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				631E26682A55B2C800C3430D /* URLSessionExtension.swift */,
+				631E266A2A55B39D00C3430D /* NetworkingService.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 		634452502A34A85600BFB9E3 = {
 			isa = PBXGroup;
 			children = (
@@ -156,7 +169,7 @@
 		634452712A34A8D300BFB9E3 /* Module */ = {
 			isa = PBXGroup;
 			children = (
-				634452742A34A8EE00BFB9E3 /* Models (now in package) */,
+				631E26672A55B2A500C3430D /* Networking */,
 				634B8E592A409AAE00BE9ADB /* Views */,
 				634452722A34A8DC00BFB9E3 /* Controllers */,
 				63C0340A2A4E0703009A1CB3 /* Animations */,
@@ -172,13 +185,6 @@
 				634B8E762A41FBA100BE9ADB /* Delegates */,
 			);
 			path = Controllers;
-			sourceTree = "<group>";
-		};
-		634452742A34A8EE00BFB9E3 /* Models (now in package) */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Models (now in package)";
 			sourceTree = "<group>";
 		};
 		634452752A34A8FF00BFB9E3 /* SupportingFiles */ = {
@@ -491,6 +497,8 @@
 				63EE3C1A2A4C5A9B00B275DF /* MainViewController.swift in Sources */,
 				634B8E752A41F51900BE9ADB /* SegmentedControl.swift in Sources */,
 				634B8E6B2A41CABD00BE9ADB /* DetailsTextView.swift in Sources */,
+				631E26692A55B2C800C3430D /* URLSessionExtension.swift in Sources */,
+				631E266B2A55B39D00C3430D /* NetworkingService.swift in Sources */,
 				63C034022A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift in Sources */,
 				63C034072A4DF343009A1CB3 /* EmptyTableViewCell.swift in Sources */,
 				63C034092A4E06F7009A1CB3 /* TransitionAnimator.swift in Sources */,
@@ -574,6 +582,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
 			};
 			name = Debug;
 		};
@@ -627,6 +636,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

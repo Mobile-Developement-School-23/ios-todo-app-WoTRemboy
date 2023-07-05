@@ -92,6 +92,11 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         DDLogDebug("Main view loaded", level: .debug)
         
+        Task {
+            let network = DefaultNetworkingService()
+            await network.get()
+        }
+        
         fileCache.loadFromFile(from: "testFile")
         DDLogDebug("Loaded fileCache is fine", level: .debug)
         completedCount = items.values.filter { $0.completed }.count
