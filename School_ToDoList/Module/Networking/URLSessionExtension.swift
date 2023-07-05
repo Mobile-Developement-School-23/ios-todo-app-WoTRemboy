@@ -27,6 +27,3 @@ extension URLSession {
         }
     }
 }
-
-// Пользовательский тип ошибки для неизвестных ошибок
-struct UnknownError: Error {}
