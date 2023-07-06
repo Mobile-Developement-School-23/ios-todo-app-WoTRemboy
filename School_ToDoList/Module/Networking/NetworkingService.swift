@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CocoaLumberjackSwift
 
 protocol NetworkingService {
     func get() async
@@ -28,7 +29,7 @@ class DefaultNetworkingService: NetworkingService {
                 let task = try await URLSession.shared.dataTask(for: request)
                 print(task)
             } catch {
-                print(error)
+                DDLogError(error, level: .error)
             }
         }
     }
