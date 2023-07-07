@@ -184,22 +184,30 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     // MARK: Working with keyboard show
     
     @objc func keyboardWillShow(_ notification: Notification) {
-        guard let userInfo = notification.userInfo,
-              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
-            return
+        Task {
+            await MainActor.run {
+                guard let userInfo = notification.userInfo,
+                      let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+                    return
+                }
+                
+                let keyboardHeight = keyboardFrame.size.height
+                scrollView.contentInset.bottom = keyboardHeight
+                scrollView.verticalScrollIndicatorInsets.bottom = keyboardHeight
+                
+                let rect = CGRect(x: 0, y: detailsTextView.frame.origin.y, width: detailsTextView.frame.width, height: detailsTextView.frame.height)
+                scrollView.scrollRectToVisible(rect, animated: true)
+            }
         }
-        
-        let keyboardHeight = keyboardFrame.size.height
-        scrollView.contentInset.bottom = keyboardHeight
-        scrollView.verticalScrollIndicatorInsets.bottom = keyboardHeight
-        
-        let rect = CGRect(x: 0, y: detailsTextView.frame.origin.y, width: detailsTextView.frame.width, height: detailsTextView.frame.height)
-        scrollView.scrollRectToVisible(rect, animated: true)
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
-        scrollView.contentInset.bottom = 0
-        scrollView.verticalScrollIndicatorInsets.bottom = 0
+        Task {
+            await MainActor.run {
+                scrollView.contentInset = .zero
+                scrollView.verticalScrollIndicatorInsets = .zero
+            }
+        }
     }
     
     @objc func dismissKeyboard() {
@@ -310,8 +318,8 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
         if tableView.observationInfo != nil {
             tableView.removeObserver(self, forKeyPath: "contentSize")
         }
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     // MARK: Constraints setup methods

@@ -87,10 +87,28 @@ class MainViewController: UIViewController {
     }
     
     // MARK: Main Part
-    
+            
     override func viewDidLoad() {
         super.viewDidLoad()
         DDLogDebug("Main view loaded", level: .debug)
+        
+        let network = DefaultNetworkingService()
+        let taskCanceled = Task {
+            try await Task.sleep(nanoseconds: 1000)
+            await network.get()
+        }
+
+        taskCanceled.cancel()
+
+        if taskCanceled.isCancelled {
+            DDLogDebug("Task has been canceled", level: .debug)
+        } else {
+            DDLogDebug("Task has not been canceled", level: .debug)
+        }
+        
+//        Task {
+//            await network.get()
+//        }
         
         fileCache.loadFromFile(from: "testFile")
         DDLogDebug("Loaded fileCache is fine", level: .debug)
