@@ -240,6 +240,20 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                     }
                     tableView.reloadData()
                     _ = self.fileCache.remove(at: id)
+                    
+                    let networkingService = DefaultNetworkingService()
+                    DispatchQueue.global().async {
+                        networkingService.deleteItem(id: item.id, revision: self.revision) { result in
+                            switch result {
+                            case .success:
+                                DDLogDebug("Successful deleted task", level: .debug)
+                                self.revision += 1
+                            case .failure(let error):
+                                DDLogError("Unsuccessful deleted task: \(error)", level: .error)
+                                print(self.revision)
+                            }
+                        }
+                    }
                 }
                 DispatchQueue.main.async {
                     self.fileCache.saveToFile(to: "testFile")
@@ -375,6 +389,20 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 _ = self.fileCache.remove(at: item.id)
                 self.fileCache.saveToFile(to: "testFile")
             }
+            
+            let networkingService = DefaultNetworkingService()
+            DispatchQueue.global().async {
+                networkingService.deleteItem(id: item.id, revision: self.revision) { result in
+                    switch result {
+                    case .success:
+                        DDLogDebug("Successful deleted task", level: .debug)
+                        self.revision += 1
+                    case .failure(let error):
+                        DDLogError("Unsuccessful deleted task: \(error)", level: .error)
+                        print(self.revision)
+                    }
+                }
+            }
             DDLogDebug("\(item.taskText) is deleted", level: .debug)
             completionHandler(true)
         }
@@ -422,6 +450,20 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                         }
                         tableView.reloadData()
                         _ = self?.fileCache.remove(at: id)
+                        
+                        let networkingService = DefaultNetworkingService()
+                        DispatchQueue.global().async {
+                            networkingService.deleteItem(id: item.id, revision: self?.revision ?? -1) { result in
+                                switch result {
+                                case .success:
+                                    DDLogDebug("Successful deleted task", level: .debug)
+                                    self?.revision += 1
+                                case .failure(let error):
+                                    DDLogError("Unsuccessful deleted task: \(error)", level: .error)
+                                    print(self?.revision ?? -1)
+                                }
+                            }
+                        }
                     }
                     DispatchQueue.main.async {
                         self?.fileCache.saveToFile(to: "testFile")
@@ -447,6 +489,21 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                     _ = self?.fileCache.remove(at: item?.id ?? "")
                     self?.fileCache.saveToFile(to: "testFile")
                 }
+                
+                let networkingService = DefaultNetworkingService()
+                DispatchQueue.global().async {
+                    networkingService.deleteItem(id: item?.id ?? "-1", revision: self?.revision ?? -1) { result in
+                        switch result {
+                        case .success:
+                            DDLogDebug("Successful deleted task", level: .debug)
+                            self?.revision += 1
+                        case .failure(let error):
+                            DDLogError("Unsuccessful deleted task: \(error)", level: .error)
+                            print(self?.revision ?? -1)
+                        }
+                    }
+                }
+                
             }
             
             return UIMenu(title: "", children: [editAction, deleteAction])

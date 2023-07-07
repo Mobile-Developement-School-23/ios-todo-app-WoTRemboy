@@ -11,6 +11,8 @@ import FileCachePackage
 
 class MainViewController: UIViewController {
     
+    var revision = 0
+        
     // MARK: ToDoItems initialization and sorting
     
     let items: [String: ToDoItem]
@@ -86,29 +88,30 @@ class MainViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func gettingRevision(revision: Int) {
+        self.revision = revision
+    }
+    
     // MARK: Main Part
             
     override func viewDidLoad() {
         super.viewDidLoad()
         DDLogDebug("Main view loaded", level: .debug)
         
-        let network = DefaultNetworkingService()
-        let taskCanceled = Task {
-            try await Task.sleep(nanoseconds: 1000)
-            await network.get()
-        }
+        let networkingService = DefaultNetworkingService()
 
-        taskCanceled.cancel()
-
-        if taskCanceled.isCancelled {
-            DDLogDebug("Task has been canceled", level: .debug)
-        } else {
-            DDLogDebug("Task has not been canceled", level: .debug)
+        DispatchQueue.global().async {
+            
+            networkingService.getList { [weak self] result in
+                switch result {
+                case .success(let (items, revision)):
+                    print(items)
+                    self?.revision = revision
+                case .failure(let error):
+                    print("неуспешно: \(error)")
+                }
+            }
         }
-        
-//        Task {
-//            await network.get()
-//        }
         
         fileCache.loadFromFile(from: "testFile")
         DDLogDebug("Loaded fileCache is fine", level: .debug)
@@ -249,6 +252,19 @@ class MainViewController: UIViewController {
             DispatchQueue.main.async {
                 _ = self.fileCache.add(item: item)
                 self.fileCache.saveToFile(to: "testFile")
+            }
+            let networkingService = DefaultNetworkingService()
+            DispatchQueue.global().async {
+                networkingService.addItem(revision: self.revision, item: item) { result in
+                    switch result {
+                    case .success:
+                        DDLogDebug("Successful posted task", level: .debug)
+                        self.revision += 1
+                    case .failure(let error):
+                        DDLogError("Unsuccessful posted task: \(error)", level: .error)
+                        print(self.revision)
+                    }
+                }
             }
         }
         let navVC = UINavigationController(rootViewController: viewController)
