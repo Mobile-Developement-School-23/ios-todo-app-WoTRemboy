@@ -233,6 +233,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                     tableView.reloadRows(at: [indexPath], with: .none)
                     _ = self.fileCache.add(item: item)
                     
+                    self.serverUpdateItem(item: item)
+                    
                 } else { // DetailsVC Delete button pressed
                     if item.completed {
                         self.completedCount -= 1
@@ -240,6 +242,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                     }
                     tableView.reloadData()
                     _ = self.fileCache.remove(at: id)
+                    
+                    self.serverDeleteItem(item: item)
                 }
                 DispatchQueue.main.async {
                     self.fileCache.saveToFile(to: "testFile")
@@ -276,7 +280,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 cell?.imageView?.image = UIImage(named: "doneCircle")
                 itemDone = true
                 self.completedCount += 1
-                DDLogDebug("\(item.taskText) is done", level: .debug)
+                DDLogDebug("Successful local '\(item.taskText)' is done", level: .debug)
                 if self.doneTasksAreHidden { // to hide done task
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                         self.tableView.reloadRows(at: [indexPath], with: .fade)
@@ -305,6 +309,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 _ = self.fileCache.add(item: newItem)
                 self.fileCache.saveToFile(to: "testFile")
             }
+            
+            self.serverUpdateItem(item: newItem)
+            
             completionHandler(true)
         }
         if !isDone {
@@ -338,6 +345,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                     self.sortedArray.insert(item, at: indexPath.row)
                     tableView.reloadRows(at: [indexPath], with: .none)
                     _ = self.fileCache.add(item: item)
+                    self.serverUpdateItem(item: item)
                 } else { // pressed DetailsVC Delete button
                     if item.completed {
                         self.completedCount -= 1
@@ -345,6 +353,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                     }
                     tableView.reloadData()
                     _ = self.fileCache.remove(at: id)
+                    
+                    self.serverDeleteItem(item: item)
+                    
                 }
                 tableView.reloadRows(at: [indexPath], with: .none)
                 DispatchQueue.main.async {
@@ -375,7 +386,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 _ = self.fileCache.remove(at: item.id)
                 self.fileCache.saveToFile(to: "testFile")
             }
-            DDLogDebug("\(item.taskText) is deleted", level: .debug)
+            
+            self.serverDeleteItem(item: item)
+            DDLogDebug("Successful local deleted '\(item.taskText)'", level: .debug)
             completionHandler(true)
         }
         deleteAction.backgroundColor = UIColor(named: "Red")
@@ -415,6 +428,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                         tableView.reloadRows(at: [indexPath], with: .none)
                         _ = self?.fileCache.add(item: item)
                         
+                        self?.serverUpdateItem(item: item)
+                        
                     } else { // DetailsVC Delete button pressed
                         if item.completed {
                             self?.completedCount -= 1
@@ -422,6 +437,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                         }
                         tableView.reloadData()
                         _ = self?.fileCache.remove(at: id)
+                        
+                        self?.serverDeleteItem(item: item)
                     }
                     DispatchQueue.main.async {
                         self?.fileCache.saveToFile(to: "testFile")
@@ -443,10 +460,14 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 tableView.deleteRows(at: [indexPath], with: .fade)
                 tableView.endUpdates()
                 
-                DispatchQueue.main.async {
-                    _ = self?.fileCache.remove(at: item?.id ?? "")
-                    self?.fileCache.saveToFile(to: "testFile")
+                if let item = item {
+                    DispatchQueue.main.async {
+                        _ = self?.fileCache.remove(at: item.id)
+                        self?.fileCache.saveToFile(to: "testFile")
+                    }
+                    self?.serverDeleteItem(item: item)
                 }
+                
             }
             
             return UIMenu(title: "", children: [editAction, deleteAction])

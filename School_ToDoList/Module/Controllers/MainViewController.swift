@@ -11,6 +11,12 @@ import FileCachePackage
 
 class MainViewController: UIViewController {
     
+    // MARK: API points
+    
+    var revision = 0
+    var isDirty = false
+    let networkingService = DefaultNetworkingService()
+        
     // MARK: ToDoItems initialization and sorting
     
     let items: [String: ToDoItem]
@@ -25,6 +31,7 @@ class MainViewController: UIViewController {
     // MARK: TableView, Labels and Images initialization
     
     let tableView = UITableView(frame: .zero, style: .insetGrouped)
+    let refreshControl = UIRefreshControl() // to do sync in a hard way
     
     let countLabel: UILabel = {
         let label = UILabel()
@@ -87,37 +94,27 @@ class MainViewController: UIViewController {
     }
     
     // MARK: Main Part
+    
+    override func viewWillAppear(_ animated: Bool) {
+        serverFirstSyncItems()
+    }
             
     override func viewDidLoad() {
         super.viewDidLoad()
         DDLogDebug("Main view loaded", level: .debug)
-        
-        let network = DefaultNetworkingService()
-        let taskCanceled = Task {
-            try await Task.sleep(nanoseconds: 1000)
-            await network.get()
-        }
 
-        taskCanceled.cancel()
-
-        if taskCanceled.isCancelled {
-            DDLogDebug("Task has been canceled", level: .debug)
-        } else {
-            DDLogDebug("Task has not been canceled", level: .debug)
-        }
-        
-//        Task {
-//            await network.get()
-//        }
-        
         fileCache.loadFromFile(from: "testFile")
         DDLogDebug("Loaded fileCache is fine", level: .debug)
+        
         completedCount = items.values.filter { $0.completed }.count
         DDLogInfo("All tasks: \(items.count); Completed tasks: \(completedCount)", level: .info)
         
         title = "Мои дела"
         view.backgroundColor = UIColor(named: "BackPrimary")
         tableView.backgroundColor = nil
+        
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        tableView.refreshControl = refreshControl
         
         navigationController?.navigationBar.prefersLargeTitles = true
         
@@ -207,8 +204,7 @@ class MainViewController: UIViewController {
         button.tintColor = .white
         
         let image = UIImage(systemName: "plus",
-                            withConfiguration: UIImage.SymbolConfiguration(pointSize: 32,
-                                                                           weight: .medium))
+                            withConfiguration: UIImage.SymbolConfiguration(pointSize: 32, weight: .medium))
         
         button.setImage(image, for: .normal)
         
@@ -250,6 +246,7 @@ class MainViewController: UIViewController {
                 _ = self.fileCache.add(item: item)
                 self.fileCache.saveToFile(to: "testFile")
             }
+            self.serverAddItem(item: item)
         }
         let navVC = UINavigationController(rootViewController: viewController)
         present(navVC, animated: true)
@@ -270,5 +267,132 @@ class MainViewController: UIViewController {
                 tableView.reloadRows(at: visibleIndexPaths, with: .fade)
             }
         }
+    }
+    
+    @objc private func refreshData() {
+        serverSyncItems()
+        refreshControl.endRefreshing()
+    }
+    
+    // MARK: Internet trips functions
+    
+    func updatingListFromServer(items: [ToDoItem], sortedArray: [ToDoItem]) {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            for item in sortedArray {
+                _ = self.fileCache.remove(at: item.id)
+            }
+            for item in items {
+                _ = self.fileCache.add(item: item)
+            }
+            self.completedCount = items.filter { $0.completed }.count
+            self.headerSetup()
+            self.fileCache.saveToFile(to: "testFile")
+        }
+    }
+    
+    func serverFirstSyncItems() {
+        self.networkingService.getList { [weak self] result in
+            switch result {
+            case .success(let (items, revision)):
+                let sortedValues = items.sorted { $0.createDate > $1.createDate }
+                let array = sortedValues.map { $0 }
+                let completedCountServer = items.filter { $0.completed }.count
+                
+                guard let sortedArray = self?.sortedArray else { return }
+                let completedCountLocal = sortedArray.filter { $0.completed }.count
+                
+                if sortedArray.count != array.count || completedCountLocal != completedCountServer {
+                    self?.sortedArray = array
+                    self?.updatingListFromServer(items: items, sortedArray: sortedArray)
+                }
+                self?.revision = revision
+                self?.isDirty = false
+                DDLogDebug("Successful server first synced", level: .debug)
+                print(items)
+            case .failure(let error):
+                self?.isDirty = true
+                DDLogError("Unsuccessful server first synced: \(error)", level: .error)
+            }
+        }
+    }
+    
+    func serverSyncItems() {
+        self.networkingService.getList { [weak self] result in
+            switch result {
+            case .success(let (items, revision)):
+                let sortedValues = items.sorted { $0.createDate > $1.createDate }
+                let array = sortedValues.map { $0 }
+                guard let sortedArray = self?.sortedArray else { return }
+                
+                    /* При успешном прохождении запроса синхронизации
+                     обновляем список дел тем что отдал сервер
+                     
+                     Я бы сделал наоборот, что обновил данные на сервере, но по заданию так... */
+                
+                self?.sortedArray = array
+                self?.updatingListFromServer(items: items, sortedArray: sortedArray)
+                
+                self?.revision = revision
+                self?.isDirty = false
+                DDLogDebug("Successful server synced", level: .debug)
+            case .failure(let error):
+                self?.isDirty = true
+                DDLogError("Unsuccessful server synced: \(error)", level: .error)
+            }
+        }
+    }
+    
+    func serverAddItem(item: ToDoItem) {
+        if isDirty {
+            serverSyncItems()
+        }
+        self.networkingService.addItem(revision: self.revision, item: item) { result in
+            switch result {
+            case .success:
+                DDLogDebug("Successful server posted '\(item.taskText)'", level: .debug)
+                self.revision += 1
+            case .failure(let error):
+                self.isDirty = true
+                DDLogError("Unsuccessful server posted '\(item.taskText)': \(error)", level: .error)
+                print(self.revision)
+            }
+        }
+    }
+    
+    func serverDeleteItem(item: ToDoItem) {
+        if isDirty {
+            serverSyncItems()
+        }
+            self.networkingService.deleteItem(id: item.id, revision: self.revision) { result in
+                switch result {
+                case .success:
+                    DDLogDebug("Successful server deleted '\(item.taskText)'", level: .debug)
+                    self.revision += 1
+                case .failure(let error):
+                    self.isDirty = true
+                    DDLogError("Unsuccessful server deleted '\(item.taskText)': \(error)", level: .error)
+                    print(self.revision)
+                }
+            }
+        
+    }
+    
+    func serverUpdateItem(item: ToDoItem) {
+        if isDirty {
+            serverSyncItems()
+        }
+        self.networkingService.updateItem(id: item.id, revision: self.revision, item: item) { result in
+            switch result {
+            case .success:
+                DDLogDebug("Successful server changed item to '\(item)'", level: .debug)
+                self.revision += 1
+            case .failure(let error):
+                self.isDirty = true
+                DDLogError("Unsuccessful server changed item to '\(item)': \(error)", level: .error)
+                print(self.revision)
+            }
+        }
+        
     }
 }
