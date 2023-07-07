@@ -31,7 +31,7 @@ class MainViewController: UIViewController {
     // MARK: TableView, Labels and Images initialization
     
     let tableView = UITableView(frame: .zero, style: .insetGrouped)
-    let refreshControl = UIRefreshControl()
+    let refreshControl = UIRefreshControl() // to do sync in a hard way
     
     let countLabel: UILabel = {
         let label = UILabel()

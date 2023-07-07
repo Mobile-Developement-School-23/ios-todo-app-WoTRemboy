@@ -73,7 +73,7 @@ extension ToDoItem {
         }
         dictionary["created_at"] = Int(createDate.timeIntervalSince1970)
         
-        dictionary["changed_at"] = Int(editDate?.timeIntervalSince1970 ?? createDate.timeIntervalSince1970)
+        dictionary["changed_at"] = Int(editDate?.timeIntervalSince1970 ?? createDate.timeIntervalSince1970) // the API description does not say what may be missing
         
         let device = UIDevice.current
         let deviceID = device.identifierForVendor?.uuidString
