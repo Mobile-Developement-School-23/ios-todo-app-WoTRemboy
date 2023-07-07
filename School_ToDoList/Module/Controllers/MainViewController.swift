@@ -12,6 +12,9 @@ import FileCachePackage
 class MainViewController: UIViewController {
     
     var revision = 0
+    var isDirty = false
+    var hasLoaded = false
+    let networkingService = DefaultNetworkingService()
         
     // MARK: ToDoItems initialization and sorting
     
@@ -27,6 +30,7 @@ class MainViewController: UIViewController {
     // MARK: TableView, Labels and Images initialization
     
     let tableView = UITableView(frame: .zero, style: .insetGrouped)
+    let refreshControl = UIRefreshControl()
     
     let countLabel: UILabel = {
         let label = UILabel()
@@ -88,31 +92,136 @@ class MainViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func gettingRevision(revision: Int) {
-        self.revision = revision
+    // MARK: Internet trips functions
+    
+    func updatingListFromServer(items: [ToDoItem], sortedArray: [ToDoItem]) {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            for item in sortedArray {
+                _ = self.fileCache.remove(at: item.id)
+            }
+            for item in items {
+                _ = self.fileCache.add(item: item)
+            }
+            self.completedCount = items.filter { $0.completed }.count
+            self.headerSetup()
+            self.fileCache.saveToFile(to: "testFile")
+        }
+    }
+    
+    func serverFirstSyncItems() {
+        self.networkingService.getList { [weak self] result in
+            switch result {
+            case .success(let (items, revision)):
+                let sortedValues = items.sorted { $0.createDate > $1.createDate }
+                let array = sortedValues.map { $0 }
+                let completedCountServer = items.filter { $0.completed }.count
+                guard let sortedArray = self?.sortedArray else { return }
+                let completedCountLocal = sortedArray.filter { $0.completed }.count
+                if sortedArray.count != array.count || completedCountLocal != completedCountServer {
+                    self?.sortedArray = array
+                    self?.updatingListFromServer(items: items, sortedArray: sortedArray)
+                }
+                self?.revision = revision
+                self?.isDirty = false
+                print(items)
+            case .failure(let error):
+                self?.isDirty = true
+                print("неуспешно: \(error)")
+            }
+        }
+    }
+    
+    func serverSyncItems() {
+        self.networkingService.getList { [weak self] result in
+            switch result {
+            case .success(let (items, revision)):
+                let sortedValues = items.sorted { $0.createDate > $1.createDate }
+                let array = sortedValues.map { $0 }
+                let completedCountServer = items.filter { $0.completed }.count
+                guard let sortedArray = self?.sortedArray else { return }
+                
+                    /* При успешном прохождении запроса синхронизации
+                     обновляем список дел тем что отдал сервер
+                     
+                     Я бы сделал наоборот, что обновил данные на сервере, но по заданию так... */
+                
+                self?.sortedArray = array
+                self?.updatingListFromServer(items: items, sortedArray: sortedArray)
+                
+                self?.revision = revision
+                self?.isDirty = false
+                print(items)
+            case .failure(let error):
+                self?.isDirty = true
+                print("неуспешно: \(error)")
+            }
+        }
+    }
+    
+    func serverAddItem(item: ToDoItem) {
+        if isDirty {
+            serverSyncItems()
+        }
+        self.networkingService.addItem(revision: self.revision, item: item) { result in
+            switch result {
+            case .success:
+                DDLogDebug("Successful server posted '\(item.taskText)'", level: .debug)
+                self.revision += 1
+            case .failure(let error):
+                self.isDirty = true
+                DDLogError("Unsuccessful server posted '\(item.taskText)': \(error)", level: .error)
+                print(self.revision)
+            }
+        }
+    }
+    
+    func serverDeleteItem(item: ToDoItem) {
+        if isDirty {
+            serverSyncItems()
+        }
+            self.networkingService.deleteItem(id: item.id, revision: self.revision) { result in
+                switch result {
+                case .success:
+                    DDLogDebug("Successful server deleted '\(item.taskText)'", level: .debug)
+                    self.revision += 1
+                case .failure(let error):
+                    self.isDirty = true
+                    DDLogError("Unsuccessful server deleted '\(item.taskText)': \(error)", level: .error)
+                    print(self.revision)
+                }
+            }
+        
+    }
+    
+    func serverUpdateItem(item: ToDoItem) {
+        if isDirty {
+            serverSyncItems()
+        }
+        self.networkingService.updateItem(id: item.id, revision: self.revision, item: item) { result in
+            switch result {
+            case .success:
+                DDLogDebug("Successful server changed to '\(item)'", level: .debug)
+                self.revision += 1
+            case .failure(let error):
+                self.isDirty = true
+                DDLogError("Unsuccessful server changed to '\(item)': \(error)", level: .error)
+                print(self.revision)
+            }
+        }
+        
     }
     
     // MARK: Main Part
+    
+    override func viewWillAppear(_ animated: Bool) {
+        serverFirstSyncItems()
+    }
             
     override func viewDidLoad() {
         super.viewDidLoad()
         DDLogDebug("Main view loaded", level: .debug)
-        
-        let networkingService = DefaultNetworkingService()
 
-        DispatchQueue.global().async {
-            
-            networkingService.getList { [weak self] result in
-                switch result {
-                case .success(let (items, revision)):
-                    print(items)
-                    self?.revision = revision
-                case .failure(let error):
-                    print("неуспешно: \(error)")
-                }
-            }
-        }
-        
         fileCache.loadFromFile(from: "testFile")
         DDLogDebug("Loaded fileCache is fine", level: .debug)
         completedCount = items.values.filter { $0.completed }.count
@@ -121,6 +230,9 @@ class MainViewController: UIViewController {
         title = "Мои дела"
         view.backgroundColor = UIColor(named: "BackPrimary")
         tableView.backgroundColor = nil
+        
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        tableView.refreshControl = refreshControl
         
         navigationController?.navigationBar.prefersLargeTitles = true
         
@@ -137,6 +249,11 @@ class MainViewController: UIViewController {
         floatingButtonSetup()
         headerSetup()
         largeTitleCustomMargins()
+    }
+    
+    @objc private func refreshData() {
+        serverSyncItems()
+        refreshControl.endRefreshing()
     }
     
     // MARK: TableView and it's header setups
@@ -253,19 +370,7 @@ class MainViewController: UIViewController {
                 _ = self.fileCache.add(item: item)
                 self.fileCache.saveToFile(to: "testFile")
             }
-            let networkingService = DefaultNetworkingService()
-            DispatchQueue.global().async {
-                networkingService.addItem(revision: self.revision, item: item) { result in
-                    switch result {
-                    case .success:
-                        DDLogDebug("Successful posted task", level: .debug)
-                        self.revision += 1
-                    case .failure(let error):
-                        DDLogError("Unsuccessful posted task: \(error)", level: .error)
-                        print(self.revision)
-                    }
-                }
-            }
+            self.serverAddItem(item: item)
         }
         let navVC = UINavigationController(rootViewController: viewController)
         present(navVC, animated: true)

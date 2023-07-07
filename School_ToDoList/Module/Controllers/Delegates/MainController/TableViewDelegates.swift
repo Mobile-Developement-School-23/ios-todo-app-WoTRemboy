@@ -233,6 +233,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                     tableView.reloadRows(at: [indexPath], with: .none)
                     _ = self.fileCache.add(item: item)
                     
+                    self.serverUpdateItem(item: item)
+                    
                 } else { // DetailsVC Delete button pressed
                     if item.completed {
                         self.completedCount -= 1
@@ -241,19 +243,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                     tableView.reloadData()
                     _ = self.fileCache.remove(at: id)
                     
-                    let networkingService = DefaultNetworkingService()
-                    DispatchQueue.global().async {
-                        networkingService.deleteItem(id: item.id, revision: self.revision) { result in
-                            switch result {
-                            case .success:
-                                DDLogDebug("Successful deleted task", level: .debug)
-                                self.revision += 1
-                            case .failure(let error):
-                                DDLogError("Unsuccessful deleted task: \(error)", level: .error)
-                                print(self.revision)
-                            }
-                        }
-                    }
+                    self.serverDeleteItem(item: item)
                 }
                 DispatchQueue.main.async {
                     self.fileCache.saveToFile(to: "testFile")
@@ -290,7 +280,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 cell?.imageView?.image = UIImage(named: "doneCircle")
                 itemDone = true
                 self.completedCount += 1
-                DDLogDebug("\(item.taskText) is done", level: .debug)
+                DDLogDebug("Successful local '\(item.taskText)' is done", level: .debug)
                 if self.doneTasksAreHidden { // to hide done task
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                         self.tableView.reloadRows(at: [indexPath], with: .fade)
@@ -319,6 +309,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 _ = self.fileCache.add(item: newItem)
                 self.fileCache.saveToFile(to: "testFile")
             }
+            
+            self.serverUpdateItem(item: newItem)
+            
             completionHandler(true)
         }
         if !isDone {
@@ -352,6 +345,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                     self.sortedArray.insert(item, at: indexPath.row)
                     tableView.reloadRows(at: [indexPath], with: .none)
                     _ = self.fileCache.add(item: item)
+                    self.serverUpdateItem(item: item)
                 } else { // pressed DetailsVC Delete button
                     if item.completed {
                         self.completedCount -= 1
@@ -359,6 +353,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                     }
                     tableView.reloadData()
                     _ = self.fileCache.remove(at: id)
+                    
+                    self.serverDeleteItem(item: item)
+                    
                 }
                 tableView.reloadRows(at: [indexPath], with: .none)
                 DispatchQueue.main.async {
@@ -390,20 +387,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 self.fileCache.saveToFile(to: "testFile")
             }
             
-            let networkingService = DefaultNetworkingService()
-            DispatchQueue.global().async {
-                networkingService.deleteItem(id: item.id, revision: self.revision) { result in
-                    switch result {
-                    case .success:
-                        DDLogDebug("Successful deleted task", level: .debug)
-                        self.revision += 1
-                    case .failure(let error):
-                        DDLogError("Unsuccessful deleted task: \(error)", level: .error)
-                        print(self.revision)
-                    }
-                }
-            }
-            DDLogDebug("\(item.taskText) is deleted", level: .debug)
+            self.serverDeleteItem(item: item)
+            DDLogDebug("Successful local deleted '\(item.taskText)'", level: .debug)
             completionHandler(true)
         }
         deleteAction.backgroundColor = UIColor(named: "Red")
@@ -443,6 +428,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                         tableView.reloadRows(at: [indexPath], with: .none)
                         _ = self?.fileCache.add(item: item)
                         
+                        self?.serverUpdateItem(item: item)
+                        
                     } else { // DetailsVC Delete button pressed
                         if item.completed {
                             self?.completedCount -= 1
@@ -451,19 +438,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                         tableView.reloadData()
                         _ = self?.fileCache.remove(at: id)
                         
-                        let networkingService = DefaultNetworkingService()
-                        DispatchQueue.global().async {
-                            networkingService.deleteItem(id: item.id, revision: self?.revision ?? -1) { result in
-                                switch result {
-                                case .success:
-                                    DDLogDebug("Successful deleted task", level: .debug)
-                                    self?.revision += 1
-                                case .failure(let error):
-                                    DDLogError("Unsuccessful deleted task: \(error)", level: .error)
-                                    print(self?.revision ?? -1)
-                                }
-                            }
-                        }
+                        self?.serverDeleteItem(item: item)
                     }
                     DispatchQueue.main.async {
                         self?.fileCache.saveToFile(to: "testFile")
@@ -485,23 +460,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 tableView.deleteRows(at: [indexPath], with: .fade)
                 tableView.endUpdates()
                 
-                DispatchQueue.main.async {
-                    _ = self?.fileCache.remove(at: item?.id ?? "")
-                    self?.fileCache.saveToFile(to: "testFile")
-                }
-                
-                let networkingService = DefaultNetworkingService()
-                DispatchQueue.global().async {
-                    networkingService.deleteItem(id: item?.id ?? "-1", revision: self?.revision ?? -1) { result in
-                        switch result {
-                        case .success:
-                            DDLogDebug("Successful deleted task", level: .debug)
-                            self?.revision += 1
-                        case .failure(let error):
-                            DDLogError("Unsuccessful deleted task: \(error)", level: .error)
-                            print(self?.revision ?? -1)
-                        }
+                if let item = item {
+                    DispatchQueue.main.async {
+                        _ = self?.fileCache.remove(at: item.id)
+                        self?.fileCache.saveToFile(to: "testFile")
                     }
+                    self?.serverDeleteItem(item: item)
                 }
                 
             }

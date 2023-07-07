@@ -20,7 +20,18 @@ extension ToDoItem {
         
         let createDate = Date(timeIntervalSince1970: TimeInterval(createDateInt))
         let completed = data["done"] as? Bool
-        let importance = (data["importance"] as? String).flatMap(Importance.init(rawValue:))
+        var importanceR = data["importance"] as? String
+        var importance = Importance.regular
+        switch importanceR {
+        case "low":
+            importance = Importance.unimportant
+        case "basic":
+            importance = Importance.regular
+        case "important":
+            importance = Importance.important
+        default:
+            importance = Importance.regular
+        }
         let deadline = (data["deadline"] as? Int).flatMap { timestamp -> Date? in
             return Date(timeIntervalSince1970: TimeInterval(timestamp))
         }
@@ -33,7 +44,7 @@ extension ToDoItem {
 
         return ToDoItem(id: id,
                         taskText: taskText,
-                        importance: importance ?? .regular,
+                        importance: importance,
                         deadline: deadline,
                         completed: completed ?? false,
                         createDate: createDate,
@@ -44,7 +55,7 @@ extension ToDoItem {
         var dictionary: [String: Any] = [
             "id": id,
             "text": taskText,
-            "done": false
+            "done": completed
         ]
         
         switch importance {

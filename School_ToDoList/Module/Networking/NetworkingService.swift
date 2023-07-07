@@ -14,7 +14,7 @@ public protocol NetworkingService {
     func updateList(revision: Int, items: [ToDoItem], completion: @escaping (Result<Void, Error>) -> Void)
     func getItem(id: String, completion: @escaping (Result<ToDoItem, Error>) -> Void)
     func addItem(revision: Int, item: ToDoItem, completion: @escaping (Result<Void, Error>) -> Void)
-    func updateItem(id: String, item: ToDoItem, completion: @escaping (Result<Void, Error>) -> Void)
+    func updateItem(id: String, revision: Int, item: ToDoItem, completion: @escaping (Result<Void, Error>) -> Void)
     func deleteItem(id: String, revision: Int, completion: @escaping (Result<ToDoItem, Error>) -> Void)
 }
 
@@ -39,7 +39,7 @@ public class DefaultNetworkingService: NetworkingService {
         
         let requestConst = request
         
-        DispatchQueue.global().async {
+        DispatchQueue.global(qos: .utility).async {
             self.sendRequest(request: requestConst) { result in
                 switch result {
                 case .success(let data):
@@ -66,8 +66,9 @@ public class DefaultNetworkingService: NetworkingService {
         var request = URLRequest(url: url)
         request.httpMethod = "PATCH"
         request.addValue(String(revision), forHTTPHeaderField: "X-Last-Known-Revision")
+        request.addValue("Bearer " + token, forHTTPHeaderField: "Authorization")
         
-        let requestData = items.compactMap { $0.json }
+        let requestData = items.compactMap { $0.sharingJSON }
         do {
             let json = try JSONSerialization.data(withJSONObject: requestData, options: [])
             request.httpBody = json
@@ -78,7 +79,7 @@ public class DefaultNetworkingService: NetworkingService {
         
         let requestConst = request
         
-        DispatchQueue.global().async {
+        DispatchQueue.global(qos: .utility).async {
             self.sendRequest(request: requestConst) { result in
                 switch result {
                 case .success:
@@ -93,9 +94,10 @@ public class DefaultNetworkingService: NetworkingService {
     public func getItem(id: String, completion: @escaping (Result<ToDoItem, Error>) -> Void) {
         guard var url = baseURL else { return }
         url = url.appendingPathComponent("list/\(id)")
-        let request = URLRequest(url: url)
+        var request = URLRequest(url: url)
+        request.addValue("Bearer " + token, forHTTPHeaderField: "Authorization")
         
-        DispatchQueue.global().async {
+        DispatchQueue.global(qos: .utility).async {
             self.sendRequest(request: request) { result in
                 switch result {
                 case.success(let data):
@@ -138,7 +140,7 @@ public class DefaultNetworkingService: NetworkingService {
         
         let requestConst = request
         
-        DispatchQueue.global().async {
+        DispatchQueue.global(qos: .utility).async {
             self.sendRequest(request: requestConst) { result in
                 switch result {
                 case .success:
@@ -150,14 +152,16 @@ public class DefaultNetworkingService: NetworkingService {
         }
     }
     
-    public func updateItem(id: String, item: ToDoItem, completion: @escaping (Result<Void, Error>) -> Void) {
+    public func updateItem(id: String, revision: Int, item: ToDoItem, completion: @escaping (Result<Void, Error>) -> Void) {
         guard var url = baseURL else { return }
         url = url.appendingPathComponent("list/\(id)")
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
+        request.addValue(String(revision), forHTTPHeaderField: "X-Last-Known-Revision")
+        request.addValue("Bearer " + token, forHTTPHeaderField: "Authorization")
         
         do {
-            let requestData = try JSONSerialization.data(withJSONObject: item.json, options: [])
+            let requestData = try JSONSerialization.data(withJSONObject: item.sharingJSON, options: [])
             request.httpBody = requestData
         } catch {
             completion(.failure(error))
@@ -166,7 +170,7 @@ public class DefaultNetworkingService: NetworkingService {
         
         let requestConst = request
         
-        DispatchQueue.global().async {
+        DispatchQueue.global(qos: .utility).async {
             self.sendRequest(request: requestConst) { result in
                 switch result {
                 case .success:
@@ -188,7 +192,7 @@ public class DefaultNetworkingService: NetworkingService {
         
         let requestConst = request
         
-        DispatchQueue.global().async {
+        DispatchQueue.global(qos: .utility).async {
             self.sendRequest(request: requestConst) { result in
                 switch result {
                 case .success(let data):
@@ -217,22 +221,18 @@ public class DefaultNetworkingService: NetworkingService {
                 completion(.failure(error))
                 return
             }
-            
             guard let httpResponse = response as? HTTPURLResponse else {
                 completion(.failure(NetworkingError.invalidResponse))
                 return
             }
-            
             guard (200...299).contains(httpResponse.statusCode) else {
                 completion(.failure(NetworkingError.httpError(statusCode: httpResponse.statusCode)))
                 return
             }
-            
             guard let responseData = data else {
                 completion(.failure(NetworkingError.emptyResponse))
                 return
             }
-            
             completion(.success(responseData))
         }
         
