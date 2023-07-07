@@ -24,7 +24,6 @@ public class DefaultNetworkingService: NetworkingService {
     private let token = "palaeontologically"
     
     public init() {
-        
         let sessionConfiguration = URLSessionConfiguration.default
         sessionConfiguration.timeoutIntervalForResource = 30
         self.session = URLSession(configuration: sessionConfiguration)
@@ -104,7 +103,7 @@ public class DefaultNetworkingService: NetworkingService {
                     do {
                         let response = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
                         if let itemData = response?["element"] as? [String: Any],
-                           let item = ToDoItem.parse(json: itemData) {
+                           let item = ToDoItem.sharingParse(sharingJSON: itemData) {
                             completion(.success(item))
                         } else {
                             completion(.failure(NetworkingError.invalidData))

@@ -7,6 +7,7 @@
 
 import Foundation
 import FileCachePackage
+import UIKit
 
 extension ToDoItem {
     public static func sharingParse(sharingJSON: Any) -> ToDoItem? {
@@ -20,7 +21,7 @@ extension ToDoItem {
         
         let createDate = Date(timeIntervalSince1970: TimeInterval(createDateInt))
         let completed = data["done"] as? Bool
-        var importanceR = data["importance"] as? String
+        let importanceR = data["importance"] as? String
         var importance = Importance.regular
         switch importanceR {
         case "low":
@@ -73,7 +74,10 @@ extension ToDoItem {
         dictionary["created_at"] = Int(createDate.timeIntervalSince1970)
         
         dictionary["changed_at"] = Int(editDate?.timeIntervalSince1970 ?? createDate.timeIntervalSince1970)
-        dictionary["last_updated_by"] = "EF28B7CB-03BB-42A5-BC1C-AC91DEC32DFE"
+        
+        let device = UIDevice.current
+        let deviceID = device.identifierForVendor?.uuidString
+        dictionary["last_updated_by"] = deviceID
         
         let sharingDictionary: [String: Any] = [
             "status": "ok",
