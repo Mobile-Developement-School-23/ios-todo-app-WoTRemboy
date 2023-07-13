@@ -16,6 +16,7 @@ class MainViewController: UIViewController {
     var revision = 0
     var isDirty = false
     let networkingService = DefaultNetworkingService()
+    let databaseSQL = FileCacheSQL()
         
     // MARK: ToDoItems initialization and sorting
     
@@ -102,12 +103,14 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         DDLogDebug("Main view loaded", level: .debug)
-
-        fileCache.loadFromFile(from: "testFile")
+        
+//        fileCache.loadFromFile(from: "testFile")
         DDLogDebug("Loaded fileCache is fine", level: .debug)
         
         completedCount = items.values.filter { $0.completed }.count
         DDLogInfo("All tasks: \(items.count); Completed tasks: \(completedCount)", level: .info)
+        
+        databaseSQL.saveToDatabaseSQL(items: sortedArray)
         
         title = "Мои дела"
         view.backgroundColor = UIColor(named: "BackPrimary")
@@ -309,7 +312,6 @@ class MainViewController: UIViewController {
                 self?.revision = revision
                 self?.isDirty = false
                 DDLogDebug("Successful server first synced", level: .debug)
-                print(items)
             case .failure(let error):
                 self?.isDirty = true
                 DDLogError("Unsuccessful server first synced: \(error)", level: .error)
