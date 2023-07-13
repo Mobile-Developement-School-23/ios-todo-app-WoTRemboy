@@ -27,7 +27,7 @@ public final class FileCacheSQL {
     init() {
         do {
             guard let filesDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-                print("Documents directory not found")
+                DDLogError("Documents directory not found", level: .error)
                 return
             }
             let databaseURL = filesDirectory.appendingPathComponent("fileCache.db")
@@ -44,7 +44,7 @@ public final class FileCacheSQL {
     func createTableSQLIfNeeded() {
         do {
             guard let database = self.database else {
-                DDLogError("Database connection error")
+                DDLogError("Database connection error", level: .error)
                 return
             }
             
@@ -66,13 +66,17 @@ public final class FileCacheSQL {
     func saveToDatabaseSQL(items: [ToDoItem]) {
         do {
             guard let database = self.database else {
-                DDLogError("Database connection error")
+                DDLogError("Database connection error", level: .error)
                 return
             }
             
             var sqlReplaceStatement = ""
             
             for item in items {
+                let request = "REPLACE INTO"
+                let table = "toDoItems"
+                let toDoItemModel = "(id, taskText, importance, deadline, completed, createDate, editDate)"
+                
                 var deadline: Int?
                 if let deadlineCheck = item.deadline?.timeIntervalSince1970 {
                     deadline = Int(deadlineCheck)
@@ -83,8 +87,8 @@ public final class FileCacheSQL {
                     editDate = Int(editDateCheck)
                 }
                 let replaceStatement = """
-                            REPLACE INTO toDoItems
-                            (id, taskText, importance, deadline, completed, createDate, editDate)
+                            \(request) \(table)
+                            \(toDoItemModel)
                             VALUES
                             ('\(item.id)', '\(item.taskText)', '\(item.importance.rawValue)', \(deadline != nil ? "'\(deadline ?? 0)'" : "NULL"), \(item.completed), '\(createDate)', \(editDate != nil ? "'\(editDate ?? 0)'" : "NULL"));
                             """
@@ -100,22 +104,6 @@ public final class FileCacheSQL {
                 let deleteQuery = toDoItems.filter(deletedItemIDs.contains(id))
                 try database.run(deleteQuery.delete())
             }
-            
-//            try database.run(toDoItems.delete())
-            
-//            for item in items {
-//                let insert = toDoItems.insert(
-//                    id <- item.id,
-//                    taskText <- item.taskText,
-//                    importance <- item.importance.rawValue,
-//                    deadline <- item.deadline,
-//                    completed <- item.completed,
-//                    createDate <- item.createDate,
-//                    editDate <- item.editDate
-//                )
-//                let replace = insert
-//                try database.run(insert)
-//            }
             DDLogDebug("Saved to database SQL", level: .debug)
 
         } catch {
@@ -126,7 +114,7 @@ public final class FileCacheSQL {
     func loadFromDatabaseSQL() {
         do {
             guard let database = self.database else {
-                DDLogError("Database connection error")
+                DDLogError("Database connection error", level: .error)
                 return
             }
             let query = toDoItems.order(createDate)
@@ -146,6 +134,86 @@ public final class FileCacheSQL {
             items = Dictionary(uniqueKeysWithValues: loadedItems.map { ($0.id, $0) })
         } catch {
             DDLogError("Loading items from database SQL error: \(error)")
+        }
+    }
+    
+    func deleteFromDatabaseSQL(at itemID: String) {
+        do {
+            guard let database = self.database else {
+                DDLogError("Database connection error", level: .error)
+                return
+            }
+            
+            let deleteQuery = toDoItems.filter(id == itemID)
+            try database.run(deleteQuery.delete())
+            
+            DDLogDebug("Deleted from database SQL", level: .debug)
+        } catch {
+            DDLogError("Deleting from database SQL error: \(error)", level: .error)
+        }
+    }
+
+    func insertToDatabaseSQL(item: ToDoItem) {
+        do {
+            guard let database = self.database else {
+                DDLogError("Database connection error", level: .error)
+                return
+            }
+            
+            var itemDeadline: Int?
+            if let deadlineCheck = item.deadline?.timeIntervalSince1970 {
+                itemDeadline = Int(deadlineCheck)
+            }
+            let itemCreateDate = Int(item.createDate.timeIntervalSince1970)
+            var itemEditDate: Int?
+            if let editDateCheck = item.editDate?.timeIntervalSince1970 {
+                itemEditDate = Int(editDateCheck)
+            }
+            
+            try database.run(toDoItems.insert(
+                id <- item.id,
+                taskText <- item.taskText,
+                importance <- item.importance.rawValue,
+                deadline <- itemDeadline,
+                completed <- item.completed,
+                createDate <- itemCreateDate,
+                editDate <- itemEditDate
+            ))
+            
+            DDLogDebug("Inserted into database SQL", level: .debug)
+        } catch {
+            DDLogError("Inserting into database SQL error: \(error)", level: .error)
+        }
+    }
+
+    func updateInDatabaseSQL(item: ToDoItem) {
+        do {
+            guard let database = self.database else {
+                DDLogError("Database connection error")
+                return
+            }
+            
+            var itemDeadline: Int?
+            if let deadlineCheck = item.deadline?.timeIntervalSince1970 {
+                itemDeadline = Int(deadlineCheck)
+            }
+            var itemEditDate: Int?
+            if let editDateCheck = item.editDate?.timeIntervalSince1970 {
+                itemEditDate = Int(editDateCheck)
+            }
+            
+            let update = toDoItems.filter(id == item.id)
+            try database.run(update.update(
+                taskText <- item.taskText,
+                importance <- item.importance.rawValue,
+                deadline <- itemDeadline,
+                completed <- item.completed,
+                editDate <- itemEditDate
+            ))
+            
+            DDLogDebug("Updated in database SQL", level: .debug)
+        } catch {
+            DDLogError("Updating in database SQL error: \(error)", level: .error)
         }
     }
 

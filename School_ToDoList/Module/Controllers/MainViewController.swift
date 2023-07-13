@@ -16,7 +16,7 @@ class MainViewController: UIViewController {
     var revision = 0
     var isDirty = false
     let networkingService = DefaultNetworkingService()
-    let databaseSQL = FileCacheSQL()
+    let fileCacheSQL = FileCacheSQL()
         
     // MARK: ToDoItems initialization and sorting
     
@@ -103,15 +103,10 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         DDLogDebug("Main view loaded", level: .debug)
-        
-//        fileCache.loadFromFile(from: "testFile")
-        DDLogDebug("Loaded fileCache is fine", level: .debug)
-        
+                
         completedCount = items.values.filter { $0.completed }.count
         DDLogInfo("All tasks: \(items.count); Completed tasks: \(completedCount)", level: .info)
-        
-        databaseSQL.saveToDatabaseSQL(items: sortedArray)
-        
+                
         title = "Мои дела"
         view.backgroundColor = UIColor(named: "BackPrimary")
         tableView.backgroundColor = nil
@@ -246,8 +241,7 @@ class MainViewController: UIViewController {
             self.sortedArray.insert(item, at: 0)
             self.tableView.reloadData()
             DispatchQueue.main.async {
-                _ = self.fileCache.add(item: item)
-                self.fileCache.saveToFile(to: "testFile")
+                self.fileCacheSQL.insertToDatabaseSQL(item: item)
             }
             self.serverAddItem(item: item)
         }
@@ -282,15 +276,9 @@ class MainViewController: UIViewController {
     func updatingListFromServer(items: [ToDoItem], sortedArray: [ToDoItem]) {
         DispatchQueue.main.async {
             self.tableView.reloadData()
-            for item in sortedArray {
-                _ = self.fileCache.remove(at: item.id)
-            }
-            for item in items {
-                _ = self.fileCache.add(item: item)
-            }
+            self.fileCacheSQL.saveToDatabaseSQL(items: items)
             self.completedCount = items.filter { $0.completed }.count
             self.headerSetup()
-            self.fileCache.saveToFile(to: "testFile")
         }
     }
     
