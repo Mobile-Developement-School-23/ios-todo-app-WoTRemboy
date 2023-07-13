@@ -71,12 +71,11 @@ public final class FileCacheSQL {
             }
             
             var sqlReplaceStatement = ""
+            let request = "REPLACE INTO"
+            let table = "toDoItems"
+            let toDoItemModel = "(id, taskText, importance, deadline, completed, createDate, editDate)"
             
             for item in items {
-                let request = "REPLACE INTO"
-                let table = "toDoItems"
-                let toDoItemModel = "(id, taskText, importance, deadline, completed, createDate, editDate)"
-                
                 var deadline: Int?
                 if let deadlineCheck = item.deadline?.timeIntervalSince1970 {
                     deadline = Int(deadlineCheck)
