@@ -17,6 +17,7 @@ class MainViewController: UIViewController {
     var isDirty = false
     let networkingService = DefaultNetworkingService()
     let fileCacheSQL = FileCacheSQL()
+    let fileCacheCoreData = FileCacheCoreData()
         
     // MARK: ToDoItems initialization and sorting
     
@@ -103,7 +104,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         DDLogDebug("Main view loaded", level: .debug)
-                
+                        
         completedCount = items.values.filter { $0.completed }.count
         DDLogInfo("All tasks: \(items.count); Completed tasks: \(completedCount)", level: .info)
                 
@@ -277,6 +278,8 @@ class MainViewController: UIViewController {
         DispatchQueue.main.async {
             self.tableView.reloadData()
             self.fileCacheSQL.saveToDatabaseSQL(items: items)
+            self.fileCacheCoreData.saveToDatabaseCoreData(items: items)
+            print(self.fileCacheCoreData.items)
             self.completedCount = items.filter { $0.completed }.count
             self.headerSetup()
         }
