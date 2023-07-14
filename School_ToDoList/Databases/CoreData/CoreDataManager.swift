@@ -16,7 +16,7 @@ class CoreDataManager {
     private init() {}
     
     lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "CoreDataBase")
+        let container = NSPersistentContainer(name: "CoreDataBaseModel")
         container.loadPersistentStores(completionHandler: {_, error in
             _ = error.map { fatalError("Persistent container error: \($0)") }
         })

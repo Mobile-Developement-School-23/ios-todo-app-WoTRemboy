@@ -104,6 +104,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         DDLogDebug("Main view loaded", level: .debug)
+        print(fileCacheCoreData.items)
                         
         completedCount = items.values.filter { $0.completed }.count
         DDLogInfo("All tasks: \(items.count); Completed tasks: \(completedCount)", level: .info)
@@ -243,6 +244,7 @@ class MainViewController: UIViewController {
             self.tableView.reloadData()
             DispatchQueue.main.async {
                 self.fileCacheSQL.insertToDatabaseSQL(item: item)
+                self.fileCacheCoreData.insertToDatabaseCoreData(item: item)
             }
             self.serverAddItem(item: item)
         }
@@ -279,7 +281,6 @@ class MainViewController: UIViewController {
             self.tableView.reloadData()
             self.fileCacheSQL.saveToDatabaseSQL(items: items)
             self.fileCacheCoreData.saveToDatabaseCoreData(items: items)
-            print(self.fileCacheCoreData.items)
             self.completedCount = items.filter { $0.completed }.count
             self.headerSetup()
         }

@@ -41,8 +41,8 @@
 		63CE09A02A5EB68300831E2A /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 63CE099F2A5EB68300831E2A /* SQLite */; };
 		63CE09A52A5EBBB100831E2A /* DatabaseSQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CE09A42A5EBBB100831E2A /* DatabaseSQL.swift */; };
 		63CE09BB2A617FA600831E2A /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CE09BA2A617FA600831E2A /* CoreDataManager.swift */; };
-		63CE09BD2A61835F00831E2A /* DatabaseCD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CE09BC2A61835F00831E2A /* DatabaseCD.swift */; };
-		63CE09D72A619EFC00831E2A /* CoreDataBase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63CE09D52A619EFC00831E2A /* CoreDataBase.xcdatamodeld */; };
+		63CE09BD2A61835F00831E2A /* DatabaseCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CE09BC2A61835F00831E2A /* DatabaseCoreData.swift */; };
+		63CE09D72A619EFC00831E2A /* CoreDataBaseModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63CE09D52A619EFC00831E2A /* CoreDataBaseModel.xcdatamodeld */; };
 		63CE09DB2A619F7400831E2A /* ToDoItems+CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CE09D92A619F7400831E2A /* ToDoItems+CoreData.swift */; };
 		63EE3C1A2A4C5A9B00B275DF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EE3C192A4C5A9B00B275DF /* MainViewController.swift */; };
 		BFE647AFEDC12F038C799505 /* Pods_School_ToDoListTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 065AF5FBBE90ECD5609AC9FC /* Pods_School_ToDoListTests.framework */; };
@@ -95,7 +95,7 @@
 		63C034182A4EF97C009A1CB3 /* LogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFormatter.swift; sourceTree = "<group>"; };
 		63CE09A42A5EBBB100831E2A /* DatabaseSQL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseSQL.swift; sourceTree = "<group>"; };
 		63CE09BA2A617FA600831E2A /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		63CE09BC2A61835F00831E2A /* DatabaseCD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseCD.swift; sourceTree = "<group>"; };
+		63CE09BC2A61835F00831E2A /* DatabaseCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseCoreData.swift; sourceTree = "<group>"; };
 		63CE09D62A619EFC00831E2A /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		63CE09D92A619F7400831E2A /* ToDoItems+CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToDoItems+CoreData.swift"; sourceTree = "<group>"; };
 		63EE3C192A4C5A9B00B275DF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -327,8 +327,8 @@
 			children = (
 				63CE09D92A619F7400831E2A /* ToDoItems+CoreData.swift */,
 				63CE09BA2A617FA600831E2A /* CoreDataManager.swift */,
-				63CE09BC2A61835F00831E2A /* DatabaseCD.swift */,
-				63CE09D52A619EFC00831E2A /* CoreDataBase.xcdatamodeld */,
+				63CE09BC2A61835F00831E2A /* DatabaseCoreData.swift */,
+				63CE09D52A619EFC00831E2A /* CoreDataBaseModel.xcdatamodeld */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -541,10 +541,10 @@
 				63C034102A4EDBA6009A1CB3 /* TableViewDelegates.swift in Sources */,
 				634B8E782A422B5800BE9ADB /* ScrollView.swift in Sources */,
 				634B8E732A41F3D000BE9ADB /* TableViewDelegateExtend.swift in Sources */,
-				63CE09D72A619EFC00831E2A /* CoreDataBase.xcdatamodeld in Sources */,
+				63CE09D72A619EFC00831E2A /* CoreDataBaseModel.xcdatamodeld in Sources */,
 				63CE09DB2A619F7400831E2A /* ToDoItems+CoreData.swift in Sources */,
 				63C033FD2A4DB6B3009A1CB3 /* DefaultTableViewCell.swift in Sources */,
-				63CE09BD2A61835F00831E2A /* DatabaseCD.swift in Sources */,
+				63CE09BD2A61835F00831E2A /* DatabaseCoreData.swift in Sources */,
 				634B8E642A41B6A500BE9ADB /* FontStyles.swift in Sources */,
 				63CE09BB2A617FA600831E2A /* CoreDataManager.swift in Sources */,
 				634B8E6D2A41D2C900BE9ADB /* TextViewDelegateExtend.swift in Sources */,
@@ -883,13 +883,13 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		63CE09D52A619EFC00831E2A /* CoreDataBase.xcdatamodeld */ = {
+		63CE09D52A619EFC00831E2A /* CoreDataBaseModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				63CE09D62A619EFC00831E2A /* CoreDataModel.xcdatamodel */,
 			);
 			currentVersion = 63CE09D62A619EFC00831E2A /* CoreDataModel.xcdatamodel */;
-			path = CoreDataBase.xcdatamodeld;
+			path = CoreDataBaseModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
