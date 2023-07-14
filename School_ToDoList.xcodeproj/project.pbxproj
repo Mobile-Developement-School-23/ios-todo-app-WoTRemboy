@@ -168,8 +168,8 @@
 		6344525B2A34A85600BFB9E3 /* School_ToDoList */ = {
 			isa = PBXGroup;
 			children = (
-				63CE09B42A617E0200831E2A /* Databases */,
 				634452702A34A8C400BFB9E3 /* Application */,
+				63CE09B42A617E0200831E2A /* Databases */,
 				634452712A34A8D300BFB9E3 /* Module */,
 				634452832A3B1A5500BFB9E3 /* School_ToDoListTests */,
 				634B8E652A41B89A00BE9ADB /* Extensions */,
