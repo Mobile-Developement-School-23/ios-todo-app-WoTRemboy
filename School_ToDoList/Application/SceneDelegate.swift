@@ -11,10 +11,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
         
-        let fileCache = FileCache()
-        fileCache.loadFromFile(from: "testFile")
-
-        let viewController = MainViewController(items: fileCache.items)
+        let fileCacheSQL = FileCacheSQL()
+        let viewController = MainViewController(items: fileCacheSQL.items)
+        
+//        To test MainController init by CoreData:
+//        let fileCacheCoreData = FileCacheCoreData()
+//        let viewController = MainViewController(items: fileCacheCoreData.items)
 
         let navController = UINavigationController(rootViewController: viewController)
         

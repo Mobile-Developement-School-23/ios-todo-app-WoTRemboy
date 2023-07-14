@@ -231,7 +231,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 if !toDelete { // DetailsVC Save button pressed
                     self.sortedArray.insert(item, at: indexPath.row)
                     tableView.reloadRows(at: [indexPath], with: .none)
-                    _ = self.fileCache.add(item: item)
+                    DispatchQueue.main.async {
+                        self.fileCacheSQL.updateInDatabaseSQL(item: item)
+                        self.fileCacheCoreData.updateInDatabaseCoreData(item: item)
+                    }
                     
                     self.serverUpdateItem(item: item)
                     
@@ -241,12 +244,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                         self.headerSetup()
                     }
                     tableView.reloadData()
-                    _ = self.fileCache.remove(at: id)
+                    DispatchQueue.main.async {
+                        self.fileCacheSQL.deleteFromDatabaseSQL(at: id)
+                        self.fileCacheCoreData.deleteFromDatabaseCoreData(at: id)
+                    }
                     
                     self.serverDeleteItem(item: item)
-                }
-                DispatchQueue.main.async {
-                    self.fileCache.saveToFile(to: "testFile")
                 }
             }
             
@@ -301,15 +304,14 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 self.completedCount -= 1
                 DDLogDebug("\(item.taskText) is undone", level: .debug)
             }
-            let newItem = ToDoItem(id: item.id, taskText: item.taskText, importance: item.importance, deadline: item.deadline, completed: itemDone, createDate: item.createDate, editDate: item.editDate)
+            let newItem = ToDoItem(id: item.id, taskText: item.taskText, importance: item.importance, deadline: item.deadline, completed: itemDone, createDate: item.createDate, editDate: Date())
             self.headerSetup()
             self.sortedArray[indexPath.row] = newItem
             
             DispatchQueue.main.async {
-                _ = self.fileCache.add(item: newItem)
-                self.fileCache.saveToFile(to: "testFile")
+                self.fileCacheSQL.updateInDatabaseSQL(item: newItem)
+                self.fileCacheCoreData.updateInDatabaseCoreData(item: newItem)
             }
-            
             self.serverUpdateItem(item: newItem)
             
             completionHandler(true)
@@ -344,7 +346,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 if !toDelete { // pressed DetailsVC Save button
                     self.sortedArray.insert(item, at: indexPath.row)
                     tableView.reloadRows(at: [indexPath], with: .none)
-                    _ = self.fileCache.add(item: item)
+                    DispatchQueue.main.async {
+                        self.fileCacheSQL.updateInDatabaseSQL(item: item)
+                        self.fileCacheCoreData.updateInDatabaseCoreData(item: item)
+                    }
                     self.serverUpdateItem(item: item)
                 } else { // pressed DetailsVC Delete button
                     if item.completed {
@@ -352,15 +357,13 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                         self.headerSetup()
                     }
                     tableView.reloadData()
-                    _ = self.fileCache.remove(at: id)
-                    
+                    DispatchQueue.main.async {
+                        self.fileCacheSQL.deleteFromDatabaseSQL(at: id)
+                        self.fileCacheCoreData.deleteFromDatabaseCoreData(at: id)
+                    }
                     self.serverDeleteItem(item: item)
-                    
                 }
                 tableView.reloadRows(at: [indexPath], with: .none)
-                DispatchQueue.main.async {
-                    self.fileCache.saveToFile(to: "testFile")
-                }
             }
             let navVC = UINavigationController(rootViewController: viewController)
             self.present(navVC, animated: true)
@@ -383,8 +386,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             tableView.endUpdates()
             
             DispatchQueue.main.async {
-                _ = self.fileCache.remove(at: item.id)
-                self.fileCache.saveToFile(to: "testFile")
+                self.fileCacheSQL.deleteFromDatabaseSQL(at: item.id)
+                self.fileCacheCoreData.deleteFromDatabaseCoreData(at: item.id)
             }
             
             self.serverDeleteItem(item: item)
@@ -426,8 +429,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                     if !toDelete { // DetailsVC Save button pressed
                         self?.sortedArray.insert(item, at: indexPath.row)
                         tableView.reloadRows(at: [indexPath], with: .none)
-                        _ = self?.fileCache.add(item: item)
-                        
+                        DispatchQueue.main.async {
+                            self?.fileCacheSQL.updateInDatabaseSQL(item: item)
+                            self?.fileCacheCoreData.updateInDatabaseCoreData(item: item)
+                        }
                         self?.serverUpdateItem(item: item)
                         
                     } else { // DetailsVC Delete button pressed
@@ -436,12 +441,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                             self?.headerSetup()
                         }
                         tableView.reloadData()
-                        _ = self?.fileCache.remove(at: id)
+                        DispatchQueue.main.async {
+                            self?.fileCacheSQL.deleteFromDatabaseSQL(at: id)
+                            self?.fileCacheCoreData.deleteFromDatabaseCoreData(at: id)
+                        }
                         
                         self?.serverDeleteItem(item: item)
-                    }
-                    DispatchQueue.main.async {
-                        self?.fileCache.saveToFile(to: "testFile")
                     }
                 }
                 let navVC = UINavigationController(rootViewController: viewController)
@@ -462,8 +467,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 
                 if let item = item {
                     DispatchQueue.main.async {
-                        _ = self?.fileCache.remove(at: item.id)
-                        self?.fileCache.saveToFile(to: "testFile")
+                        self?.fileCacheSQL.deleteFromDatabaseSQL(at: item.id)
+                        self?.fileCacheCoreData.deleteFromDatabaseCoreData(at: item.id)
                     }
                     self?.serverDeleteItem(item: item)
                 }

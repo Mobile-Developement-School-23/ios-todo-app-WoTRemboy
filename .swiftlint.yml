@@ -17,3 +17,4 @@ disabled_rules:
 - trailing_whitespace
 - redundant_optional_initialization
 - block_based_kvo
+- for_where
