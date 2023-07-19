@@ -67,6 +67,17 @@
 		63CE09BD2A61835F00831E2A /* DatabaseCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CE09BC2A61835F00831E2A /* DatabaseCoreData.swift */; };
 		63CE09D72A619EFC00831E2A /* CoreDataBaseModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63CE09D52A619EFC00831E2A /* CoreDataBaseModel.xcdatamodeld */; };
 		63CE09DB2A619F7400831E2A /* ToDoItems+CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CE09D92A619F7400831E2A /* ToDoItems+CoreData.swift */; };
+		63EC33E32A6872DC008D39CE /* SwipesModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EC33E22A6872DC008D39CE /* SwipesModifiers.swift */; };
+		63EC33E52A687353008D39CE /* FloatingButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EC33E42A687353008D39CE /* FloatingButtonView.swift */; };
+		63EC33E72A6873D0008D39CE /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EC33E62A6873D0008D39CE /* HeaderView.swift */; };
+		63EC33E92A68740D008D39CE /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EC33E82A68740D008D39CE /* MockData.swift */; };
+		63EC33ED2A6875F1008D39CE /* TaskRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EC33EC2A6875F1008D39CE /* TaskRow.swift */; };
+		63EC33EF2A687A57008D39CE /* DeadlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EC33EE2A687A57008D39CE /* DeadlineView.swift */; };
+		63EC33F12A6880CA008D39CE /* CompletedCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EC33F02A6880CA008D39CE /* CompletedCircleView.swift */; };
+		63EC33F32A688219008D39CE /* NewTaskRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EC33F22A688219008D39CE /* NewTaskRow.swift */; };
+		63EC33F52A688252008D39CE /* ImportanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EC33F42A688252008D39CE /* ImportanceView.swift */; };
+		63EC33F92A6882A3008D39CE /* MainRowContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EC33F82A6882A3008D39CE /* MainRowContent.swift */; };
+		63EC33FB2A6883CE008D39CE /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EC33FA2A6883CE008D39CE /* ListView.swift */; };
 		63EE3C1A2A4C5A9B00B275DF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EE3C192A4C5A9B00B275DF /* MainViewController.swift */; };
 		BFE647AFEDC12F038C799505 /* Pods_School_ToDoListTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 065AF5FBBE90ECD5609AC9FC /* Pods_School_ToDoListTests.framework */; };
 		D3A1F42126E052A6E5C98039 /* Pods_School_ToDoList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5A67FC8666696EC3CEC9FDF /* Pods_School_ToDoList.framework */; };
@@ -129,6 +140,17 @@
 		63CE09BC2A61835F00831E2A /* DatabaseCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseCoreData.swift; sourceTree = "<group>"; };
 		63CE09D62A619EFC00831E2A /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		63CE09D92A619F7400831E2A /* ToDoItems+CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToDoItems+CoreData.swift"; sourceTree = "<group>"; };
+		63EC33E22A6872DC008D39CE /* SwipesModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipesModifiers.swift; sourceTree = "<group>"; };
+		63EC33E42A687353008D39CE /* FloatingButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButtonView.swift; sourceTree = "<group>"; };
+		63EC33E62A6873D0008D39CE /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		63EC33E82A68740D008D39CE /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		63EC33EC2A6875F1008D39CE /* TaskRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRow.swift; sourceTree = "<group>"; };
+		63EC33EE2A687A57008D39CE /* DeadlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeadlineView.swift; sourceTree = "<group>"; };
+		63EC33F02A6880CA008D39CE /* CompletedCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedCircleView.swift; sourceTree = "<group>"; };
+		63EC33F22A688219008D39CE /* NewTaskRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskRow.swift; sourceTree = "<group>"; };
+		63EC33F42A688252008D39CE /* ImportanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportanceView.swift; sourceTree = "<group>"; };
+		63EC33F82A6882A3008D39CE /* MainRowContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRowContent.swift; sourceTree = "<group>"; };
+		63EC33FA2A6883CE008D39CE /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		63EE3C192A4C5A9B00B275DF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		D488755A119373DEEF4B59CE /* Pods-School_ToDoListTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-School_ToDoListTests.release.xcconfig"; path = "Target Support Files/Pods-School_ToDoListTests/Pods-School_ToDoListTests.release.xcconfig"; sourceTree = "<group>"; };
 		E5A67FC8666696EC3CEC9FDF /* Pods_School_ToDoList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_School_ToDoList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -317,9 +339,10 @@
 		63A3F5B52A66B37600FD2E14 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				63EC33EA2A687419008D39CE /* Application */,
+				63EC33E12A68728E008D39CE /* MainView */,
 				63A3F5BE2A66EB7E00FD2E14 /* Models */,
-				63A3F5BB2A66B49700FD2E14 /* ToDoListApp.swift */,
-				63A3F5B92A66B47500FD2E14 /* ContentView.swift */,
+				63EC33FD2A6886DC008D39CE /* Modifiers */,
 				63A3F5B32A66B34F00FD2E14 /* School_ToDoList copy-Info.plist */,
 			);
 			path = SwiftUI;
@@ -328,6 +351,7 @@
 		63A3F5BE2A66EB7E00FD2E14 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				63EC33E82A68740D008D39CE /* MockData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -405,6 +429,55 @@
 				63CE09D52A619EFC00831E2A /* CoreDataBaseModel.xcdatamodeld */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		63EC33E12A68728E008D39CE /* MainView */ = {
+			isa = PBXGroup;
+			children = (
+				63EC33EB2A6875DD008D39CE /* ListView */,
+				63EC33E42A687353008D39CE /* FloatingButtonView.swift */,
+				63EC33E62A6873D0008D39CE /* HeaderView.swift */,
+			);
+			path = MainView;
+			sourceTree = "<group>";
+		};
+		63EC33EA2A687419008D39CE /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				63A3F5BB2A66B49700FD2E14 /* ToDoListApp.swift */,
+				63A3F5B92A66B47500FD2E14 /* ContentView.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		63EC33EB2A6875DD008D39CE /* ListView */ = {
+			isa = PBXGroup;
+			children = (
+				63EC33FC2A6885FF008D39CE /* RowViews */,
+				63EC33EC2A6875F1008D39CE /* TaskRow.swift */,
+				63EC33F22A688219008D39CE /* NewTaskRow.swift */,
+				63EC33FA2A6883CE008D39CE /* ListView.swift */,
+			);
+			path = ListView;
+			sourceTree = "<group>";
+		};
+		63EC33FC2A6885FF008D39CE /* RowViews */ = {
+			isa = PBXGroup;
+			children = (
+				63EC33EE2A687A57008D39CE /* DeadlineView.swift */,
+				63EC33F02A6880CA008D39CE /* CompletedCircleView.swift */,
+				63EC33F42A688252008D39CE /* ImportanceView.swift */,
+				63EC33F82A6882A3008D39CE /* MainRowContent.swift */,
+			);
+			path = RowViews;
+			sourceTree = "<group>";
+		};
+		63EC33FD2A6886DC008D39CE /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				63EC33E22A6872DC008D39CE /* SwipesModifiers.swift */,
+			);
+			path = Modifiers;
 			sourceTree = "<group>";
 		};
 		76A0973C9FEA01FC1F3D7990 /* Frameworks */ = {
@@ -737,13 +810,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				63A3F5E52A68008200FD2E14 /* NetworkJSON.swift in Sources */,
+				63EC33F32A688219008D39CE /* NewTaskRow.swift in Sources */,
 				63A3F5E02A68005300FD2E14 /* JSONExtend.swift in Sources */,
 				63A3F5BC2A66B49700FD2E14 /* ToDoListApp.swift in Sources */,
+				63EC33E92A68740D008D39CE /* MockData.swift in Sources */,
 				63A3F5E42A68007D00FD2E14 /* FileCache.swift in Sources */,
+				63EC33ED2A6875F1008D39CE /* TaskRow.swift in Sources */,
+				63EC33EF2A687A57008D39CE /* DeadlineView.swift in Sources */,
+				63EC33E52A687353008D39CE /* FloatingButtonView.swift in Sources */,
 				63A3F5E32A68006800FD2E14 /* ToDoItem.swift in Sources */,
 				63A3F5BD2A66E0B100FD2E14 /* DatabaseSQL.swift in Sources */,
+				63EC33E72A6873D0008D39CE /* HeaderView.swift in Sources */,
+				63EC33FB2A6883CE008D39CE /* ListView.swift in Sources */,
+				63EC33F52A688252008D39CE /* ImportanceView.swift in Sources */,
 				63A3F5BA2A66B47500FD2E14 /* ContentView.swift in Sources */,
+				63EC33E32A6872DC008D39CE /* SwipesModifiers.swift in Sources */,
 				63A3F58B2A66B34E00FD2E14 /* CoreDataBaseModel.xcdatamodeld in Sources */,
+				63EC33F92A6882A3008D39CE /* MainRowContent.swift in Sources */,
+				63EC33F12A6880CA008D39CE /* CompletedCircleView.swift in Sources */,
 				63A3F5E62A68008400FD2E14 /* CSVExtend.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
