@@ -85,6 +85,7 @@
 		634B8E722A41F3D000BE9ADB /* TableViewDelegateExtend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDelegateExtend.swift; sourceTree = "<group>"; };
 		634B8E742A41F51900BE9ADB /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
 		634B8E772A422B5800BE9ADB /* ScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollView.swift; sourceTree = "<group>"; };
+		63A3F5C82A67F43300FD2E14 /* FileCachePackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FileCachePackage; path = ../../../../FileCachePackage; sourceTree = "<group>"; };
 		63C033FC2A4DB6B3009A1CB3 /* DefaultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTableViewCell.swift; sourceTree = "<group>"; };
 		63C033FF2A4DB6D3009A1CB3 /* ImportantTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportantTableViewCell.swift; sourceTree = "<group>"; };
 		63C034012A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeadlineTableViewCell.swift; sourceTree = "<group>"; };
@@ -192,6 +193,7 @@
 		634452712A34A8D300BFB9E3 /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				63A3F5BF2A67F30400FD2E14 /* FileCachePackage */,
 				631E266E2A57433400C3430D /* Models */,
 				631E26672A55B2A500C3430D /* Networking */,
 				634B8E592A409AAE00BE9ADB /* Views */,
@@ -266,6 +268,14 @@
 				63C0340B2A4EDB51009A1CB3 /* DetailsController */,
 			);
 			path = Delegates;
+			sourceTree = "<group>";
+		};
+		63A3F5BF2A67F30400FD2E14 /* FileCachePackage */ = {
+			isa = PBXGroup;
+			children = (
+				63A3F5C82A67F43300FD2E14 /* FileCachePackage */,
+			);
+			path = FileCachePackage;
 			sourceTree = "<group>";
 		};
 		63C033FE2A4DB6B8009A1CB3 /* TableViewCells */ = {
