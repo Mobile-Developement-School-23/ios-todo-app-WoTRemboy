@@ -26,6 +26,10 @@
 		634B8E732A41F3D000BE9ADB /* TableViewDelegateExtend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634B8E722A41F3D000BE9ADB /* TableViewDelegateExtend.swift */; };
 		634B8E752A41F51900BE9ADB /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634B8E742A41F51900BE9ADB /* SegmentedControl.swift */; };
 		634B8E782A422B5800BE9ADB /* ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634B8E772A422B5800BE9ADB /* ScrollView.swift */; };
+		63A3F5D02A67FB2500FD2E14 /* CSVExtend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3F5CF2A67FB2500FD2E14 /* CSVExtend.swift */; };
+		63A3F5D22A67FB3400FD2E14 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3F5D12A67FB3400FD2E14 /* FileCache.swift */; };
+		63A3F5D42A67FB4600FD2E14 /* JSONExtend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3F5D32A67FB4600FD2E14 /* JSONExtend.swift */; };
+		63A3F5D62A67FB5200FD2E14 /* ToDoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3F5D52A67FB5200FD2E14 /* ToDoItem.swift */; };
 		63C033FD2A4DB6B3009A1CB3 /* DefaultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C033FC2A4DB6B3009A1CB3 /* DefaultTableViewCell.swift */; };
 		63C034002A4DB6D3009A1CB3 /* ImportantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C033FF2A4DB6D3009A1CB3 /* ImportantTableViewCell.swift */; };
 		63C034022A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C034012A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift */; };
@@ -37,7 +41,6 @@
 		63C034152A4EF2E8009A1CB3 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 63C034142A4EF2E8009A1CB3 /* CocoaLumberjackSwift */; };
 		63C034172A4EF2E8009A1CB3 /* CocoaLumberjackSwiftLogBackend in Frameworks */ = {isa = PBXBuildFile; productRef = 63C034162A4EF2E8009A1CB3 /* CocoaLumberjackSwiftLogBackend */; };
 		63C034192A4EF97C009A1CB3 /* LogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C034182A4EF97C009A1CB3 /* LogFormatter.swift */; };
-		63C0341E2A4F2ECA009A1CB3 /* FileCachePackage in Frameworks */ = {isa = PBXBuildFile; productRef = 63C0341D2A4F2ECA009A1CB3 /* FileCachePackage */; };
 		63CE09A02A5EB68300831E2A /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 63CE099F2A5EB68300831E2A /* SQLite */; };
 		63CE09A52A5EBBB100831E2A /* DatabaseSQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CE09A42A5EBBB100831E2A /* DatabaseSQL.swift */; };
 		63CE09BB2A617FA600831E2A /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CE09BA2A617FA600831E2A /* CoreDataManager.swift */; };
@@ -85,7 +88,10 @@
 		634B8E722A41F3D000BE9ADB /* TableViewDelegateExtend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDelegateExtend.swift; sourceTree = "<group>"; };
 		634B8E742A41F51900BE9ADB /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
 		634B8E772A422B5800BE9ADB /* ScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollView.swift; sourceTree = "<group>"; };
-		63A3F5C82A67F43300FD2E14 /* FileCachePackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FileCachePackage; path = ../../../../FileCachePackage; sourceTree = "<group>"; };
+		63A3F5CF2A67FB2500FD2E14 /* CSVExtend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVExtend.swift; sourceTree = "<group>"; };
+		63A3F5D12A67FB3400FD2E14 /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
+		63A3F5D32A67FB4600FD2E14 /* JSONExtend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONExtend.swift; sourceTree = "<group>"; };
+		63A3F5D52A67FB5200FD2E14 /* ToDoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItem.swift; sourceTree = "<group>"; };
 		63C033FC2A4DB6B3009A1CB3 /* DefaultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTableViewCell.swift; sourceTree = "<group>"; };
 		63C033FF2A4DB6D3009A1CB3 /* ImportantTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportantTableViewCell.swift; sourceTree = "<group>"; };
 		63C034012A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeadlineTableViewCell.swift; sourceTree = "<group>"; };
@@ -115,7 +121,6 @@
 				63C034172A4EF2E8009A1CB3 /* CocoaLumberjackSwiftLogBackend in Frameworks */,
 				63C034132A4EF2E8009A1CB3 /* CocoaLumberjack in Frameworks */,
 				D3A1F42126E052A6E5C98039 /* Pods_School_ToDoList.framework in Frameworks */,
-				63C0341E2A4F2ECA009A1CB3 /* FileCachePackage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,7 +278,10 @@
 		63A3F5BF2A67F30400FD2E14 /* FileCachePackage */ = {
 			isa = PBXGroup;
 			children = (
-				63A3F5C82A67F43300FD2E14 /* FileCachePackage */,
+				63A3F5CF2A67FB2500FD2E14 /* CSVExtend.swift */,
+				63A3F5D12A67FB3400FD2E14 /* FileCache.swift */,
+				63A3F5D32A67FB4600FD2E14 /* JSONExtend.swift */,
+				63A3F5D52A67FB5200FD2E14 /* ToDoItem.swift */,
 			);
 			path = FileCachePackage;
 			sourceTree = "<group>";
@@ -385,7 +393,6 @@
 				63C034122A4EF2E8009A1CB3 /* CocoaLumberjack */,
 				63C034142A4EF2E8009A1CB3 /* CocoaLumberjackSwift */,
 				63C034162A4EF2E8009A1CB3 /* CocoaLumberjackSwiftLogBackend */,
-				63C0341D2A4F2ECA009A1CB3 /* FileCachePackage */,
 				63CE099F2A5EB68300831E2A /* SQLite */,
 			);
 			productName = School_ToDoList;
@@ -441,7 +448,6 @@
 			mainGroup = 634452502A34A85600BFB9E3;
 			packageReferences = (
 				63C034112A4EF2E8009A1CB3 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */,
-				63C0341C2A4F2ECA009A1CB3 /* XCRemoteSwiftPackageReference "FileCachePackage" */,
 				63CE099E2A5EB68300831E2A /* XCRemoteSwiftPackageReference "SQLite" */,
 			);
 			productRefGroup = 6344525A2A34A85600BFB9E3 /* Products */;
@@ -549,6 +555,8 @@
 			files = (
 				634452612A34A85600BFB9E3 /* DetailsViewController.swift in Sources */,
 				63C034102A4EDBA6009A1CB3 /* TableViewDelegates.swift in Sources */,
+				63A3F5D62A67FB5200FD2E14 /* ToDoItem.swift in Sources */,
+				63A3F5D22A67FB3400FD2E14 /* FileCache.swift in Sources */,
 				634B8E782A422B5800BE9ADB /* ScrollView.swift in Sources */,
 				634B8E732A41F3D000BE9ADB /* TableViewDelegateExtend.swift in Sources */,
 				63CE09D72A619EFC00831E2A /* CoreDataBaseModel.xcdatamodeld in Sources */,
@@ -559,11 +567,13 @@
 				63CE09BB2A617FA600831E2A /* CoreDataManager.swift in Sources */,
 				634B8E6D2A41D2C900BE9ADB /* TextViewDelegateExtend.swift in Sources */,
 				63C034192A4EF97C009A1CB3 /* LogFormatter.swift in Sources */,
+				63A3F5D42A67FB4600FD2E14 /* JSONExtend.swift in Sources */,
 				63C034002A4DB6D3009A1CB3 /* ImportantTableViewCell.swift in Sources */,
 				6344525D2A34A85600BFB9E3 /* AppDelegate.swift in Sources */,
 				63C034042A4DB6F3009A1CB3 /* BothTableViewCell.swift in Sources */,
 				63EE3C1A2A4C5A9B00B275DF /* MainViewController.swift in Sources */,
 				634B8E752A41F51900BE9ADB /* SegmentedControl.swift in Sources */,
+				63A3F5D02A67FB2500FD2E14 /* CSVExtend.swift in Sources */,
 				634B8E6B2A41CABD00BE9ADB /* DetailsTextView.swift in Sources */,
 				631E26692A55B2C800C3430D /* URLSessionExtension.swift in Sources */,
 				631E266B2A55B39D00C3430D /* NetworkingService.swift in Sources */,
@@ -846,14 +856,6 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		63C0341C2A4F2ECA009A1CB3 /* XCRemoteSwiftPackageReference "FileCachePackage" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/WoTRemboy/FileCachePackage.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		63CE099E2A5EB68300831E2A /* XCRemoteSwiftPackageReference "SQLite" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/stephencelis/SQLite.swift";
@@ -879,11 +881,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 63C034112A4EF2E8009A1CB3 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
 			productName = CocoaLumberjackSwiftLogBackend;
-		};
-		63C0341D2A4F2ECA009A1CB3 /* FileCachePackage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 63C0341C2A4F2ECA009A1CB3 /* XCRemoteSwiftPackageReference "FileCachePackage" */;
-			productName = FileCachePackage;
 		};
 		63CE099F2A5EB68300831E2A /* SQLite */ = {
 			isa = XCSwiftPackageProductDependency;
