@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		631E26692A55B2C800C3430D /* URLSessionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631E26682A55B2C800C3430D /* URLSessionExtension.swift */; };
 		631E266B2A55B39D00C3430D /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631E266A2A55B39D00C3430D /* NetworkingService.swift */; };
-		631E26702A57437100C3430D /* SharingJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631E266F2A57437100C3430D /* SharingJSON.swift */; };
+		631E26702A57437100C3430D /* NetworkJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631E266F2A57437100C3430D /* NetworkJSON.swift */; };
 		6344525D2A34A85600BFB9E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6344525C2A34A85600BFB9E3 /* AppDelegate.swift */; };
 		6344525F2A34A85600BFB9E3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6344525E2A34A85600BFB9E3 /* SceneDelegate.swift */; };
 		634452612A34A85600BFB9E3 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634452602A34A85600BFB9E3 /* DetailsViewController.swift */; };
@@ -68,7 +68,7 @@
 		328318BF22868B50B663E3F5 /* Pods-School_ToDoList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-School_ToDoList.debug.xcconfig"; path = "Target Support Files/Pods-School_ToDoList/Pods-School_ToDoList.debug.xcconfig"; sourceTree = "<group>"; };
 		631E26682A55B2C800C3430D /* URLSessionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionExtension.swift; sourceTree = "<group>"; };
 		631E266A2A55B39D00C3430D /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
-		631E266F2A57437100C3430D /* SharingJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingJSON.swift; sourceTree = "<group>"; };
+		631E266F2A57437100C3430D /* NetworkJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkJSON.swift; sourceTree = "<group>"; };
 		634452592A34A85600BFB9E3 /* School_ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = School_ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6344525C2A34A85600BFB9E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6344525E2A34A85600BFB9E3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -147,7 +147,9 @@
 		631E266E2A57433400C3430D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				631E266F2A57437100C3430D /* SharingJSON.swift */,
+				63A3F5D82A67FD9200FD2E14 /* Parsings */,
+				63A3F5D12A67FB3400FD2E14 /* FileCache.swift */,
+				63A3F5D52A67FB5200FD2E14 /* ToDoItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -198,7 +200,6 @@
 		634452712A34A8D300BFB9E3 /* Module */ = {
 			isa = PBXGroup;
 			children = (
-				63A3F5BF2A67F30400FD2E14 /* FileCachePackage */,
 				631E266E2A57433400C3430D /* Models */,
 				631E26672A55B2A500C3430D /* Networking */,
 				634B8E592A409AAE00BE9ADB /* Views */,
@@ -275,15 +276,14 @@
 			path = Delegates;
 			sourceTree = "<group>";
 		};
-		63A3F5BF2A67F30400FD2E14 /* FileCachePackage */ = {
+		63A3F5D82A67FD9200FD2E14 /* Parsings */ = {
 			isa = PBXGroup;
 			children = (
 				63A3F5CF2A67FB2500FD2E14 /* CSVExtend.swift */,
-				63A3F5D12A67FB3400FD2E14 /* FileCache.swift */,
 				63A3F5D32A67FB4600FD2E14 /* JSONExtend.swift */,
-				63A3F5D52A67FB5200FD2E14 /* ToDoItem.swift */,
+				631E266F2A57437100C3430D /* NetworkJSON.swift */,
 			);
-			path = FileCachePackage;
+			path = Parsings;
 			sourceTree = "<group>";
 		};
 		63C033FE2A4DB6B8009A1CB3 /* TableViewCells */ = {
@@ -579,7 +579,7 @@
 				631E266B2A55B39D00C3430D /* NetworkingService.swift in Sources */,
 				63C034022A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift in Sources */,
 				63CE09A52A5EBBB100831E2A /* DatabaseSQL.swift in Sources */,
-				631E26702A57437100C3430D /* SharingJSON.swift in Sources */,
+				631E26702A57437100C3430D /* NetworkJSON.swift in Sources */,
 				63C034072A4DF343009A1CB3 /* EmptyTableViewCell.swift in Sources */,
 				63C034092A4E06F7009A1CB3 /* TransitionAnimator.swift in Sources */,
 				6344525F2A34A85600BFB9E3 /* SceneDelegate.swift in Sources */,

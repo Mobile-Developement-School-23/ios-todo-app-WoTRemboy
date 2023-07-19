@@ -7,7 +7,6 @@
 
 import UIKit
 import CocoaLumberjackSwift
-import FileCachePackage
 
 class MainViewController: UIViewController {
     
