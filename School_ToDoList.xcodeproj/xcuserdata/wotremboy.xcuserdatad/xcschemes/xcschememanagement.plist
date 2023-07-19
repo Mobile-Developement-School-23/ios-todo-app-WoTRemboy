@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>School_ToDoList-SUI.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
 		<key>School_ToDoList.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -18,6 +23,11 @@
 			<true/>
 		</dict>
 		<key>634452812A3B1A5500BFB9E3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>63A3F57B2A66B34E00FD2E14</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -26,6 +26,22 @@
 		634B8E732A41F3D000BE9ADB /* TableViewDelegateExtend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634B8E722A41F3D000BE9ADB /* TableViewDelegateExtend.swift */; };
 		634B8E752A41F51900BE9ADB /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634B8E742A41F51900BE9ADB /* SegmentedControl.swift */; };
 		634B8E782A422B5800BE9ADB /* ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634B8E772A422B5800BE9ADB /* ScrollView.swift */; };
+		63A3F58B2A66B34E00FD2E14 /* CoreDataBaseModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63CE09D52A619EFC00831E2A /* CoreDataBaseModel.xcdatamodeld */; };
+		63A3F5A22A66B34E00FD2E14 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 63A3F5822A66B34E00FD2E14 /* SQLite */; };
+		63A3F5A32A66B34E00FD2E14 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 63A3F57E2A66B34E00FD2E14 /* CocoaLumberjackSwift */; };
+		63A3F5A42A66B34E00FD2E14 /* CocoaLumberjackSwiftLogBackend in Frameworks */ = {isa = PBXBuildFile; productRef = 63A3F57F2A66B34E00FD2E14 /* CocoaLumberjackSwiftLogBackend */; };
+		63A3F5A52A66B34E00FD2E14 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 63A3F57C2A66B34E00FD2E14 /* CocoaLumberjack */; };
+		63A3F5A62A66B34E00FD2E14 /* Pods_School_ToDoList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5A67FC8666696EC3CEC9FDF /* Pods_School_ToDoList.framework */; };
+		63A3F5A72A66B34E00FD2E14 /* FileCachePackage in Frameworks */ = {isa = PBXBuildFile; productRef = 63A3F5802A66B34E00FD2E14 /* FileCachePackage */; };
+		63A3F5A92A66B34E00FD2E14 /* SFProDisplay-Regular.OTF in Resources */ = {isa = PBXBuildFile; fileRef = 634B8E5F2A41B53300BE9ADB /* SFProDisplay-Regular.OTF */; };
+		63A3F5AA2A66B34E00FD2E14 /* SFProDisplay-Medium.OTF in Resources */ = {isa = PBXBuildFile; fileRef = 634B8E5D2A41B53300BE9ADB /* SFProDisplay-Medium.OTF */; };
+		63A3F5AB2A66B34E00FD2E14 /* SFProText-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 634B8E672A41BA7100BE9ADB /* SFProText-Medium.otf */; };
+		63A3F5AC2A66B34E00FD2E14 /* SFProDisplay-Bold.OTF in Resources */ = {isa = PBXBuildFile; fileRef = 634B8E5E2A41B53300BE9ADB /* SFProDisplay-Bold.OTF */; };
+		63A3F5AD2A66B34E00FD2E14 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 634452652A34A85700BFB9E3 /* Assets.xcassets */; };
+		63A3F5AE2A66B34E00FD2E14 /* SFProText-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 634B8E662A41BA7000BE9ADB /* SFProText-Light.otf */; };
+		63A3F5BA2A66B47500FD2E14 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3F5B92A66B47500FD2E14 /* ContentView.swift */; };
+		63A3F5BC2A66B49700FD2E14 /* ToDoListApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3F5BB2A66B49700FD2E14 /* ToDoListApp.swift */; };
+		63A3F5BD2A66E0B100FD2E14 /* DatabaseSQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CE09A42A5EBBB100831E2A /* DatabaseSQL.swift */; };
 		63C033FD2A4DB6B3009A1CB3 /* DefaultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C033FC2A4DB6B3009A1CB3 /* DefaultTableViewCell.swift */; };
 		63C034002A4DB6D3009A1CB3 /* ImportantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C033FF2A4DB6D3009A1CB3 /* ImportantTableViewCell.swift */; };
 		63C034022A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C034012A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift */; };
@@ -85,6 +101,10 @@
 		634B8E722A41F3D000BE9ADB /* TableViewDelegateExtend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDelegateExtend.swift; sourceTree = "<group>"; };
 		634B8E742A41F51900BE9ADB /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
 		634B8E772A422B5800BE9ADB /* ScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollView.swift; sourceTree = "<group>"; };
+		63A3F5B22A66B34E00FD2E14 /* School_ToDoList-SUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "School_ToDoList-SUI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		63A3F5B32A66B34F00FD2E14 /* School_ToDoList copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "School_ToDoList copy-Info.plist"; path = "/Users/wotremboy/Documents/ios-todo-app-WoTRemboy/School_ToDoList copy-Info.plist"; sourceTree = "<absolute>"; };
+		63A3F5B92A66B47500FD2E14 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		63A3F5BB2A66B49700FD2E14 /* ToDoListApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListApp.swift; sourceTree = "<group>"; };
 		63C033FC2A4DB6B3009A1CB3 /* DefaultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTableViewCell.swift; sourceTree = "<group>"; };
 		63C033FF2A4DB6D3009A1CB3 /* ImportantTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportantTableViewCell.swift; sourceTree = "<group>"; };
 		63C034012A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeadlineTableViewCell.swift; sourceTree = "<group>"; };
@@ -126,6 +146,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		63A3F5A12A66B34E00FD2E14 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63A3F5A22A66B34E00FD2E14 /* SQLite in Frameworks */,
+				63A3F5A32A66B34E00FD2E14 /* CocoaLumberjackSwift in Frameworks */,
+				63A3F5A42A66B34E00FD2E14 /* CocoaLumberjackSwiftLogBackend in Frameworks */,
+				63A3F5A52A66B34E00FD2E14 /* CocoaLumberjack in Frameworks */,
+				63A3F5A62A66B34E00FD2E14 /* Pods_School_ToDoList.framework in Frameworks */,
+				63A3F5A72A66B34E00FD2E14 /* FileCachePackage in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -150,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				6344525B2A34A85600BFB9E3 /* School_ToDoList */,
+				63A3F5B52A66B37600FD2E14 /* SwiftUI */,
 				6344525A2A34A85600BFB9E3 /* Products */,
 				775840DE2B1F68679CB80447 /* Pods */,
 				76A0973C9FEA01FC1F3D7990 /* Frameworks */,
@@ -161,6 +195,7 @@
 			children = (
 				634452592A34A85600BFB9E3 /* School_ToDoList.app */,
 				634452822A3B1A5500BFB9E3 /* School_ToDoListTests.xctest */,
+				63A3F5B22A66B34E00FD2E14 /* School_ToDoList-SUI.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -266,6 +301,24 @@
 				63C0340B2A4EDB51009A1CB3 /* DetailsController */,
 			);
 			path = Delegates;
+			sourceTree = "<group>";
+		};
+		63A3F5B52A66B37600FD2E14 /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				63A3F5BE2A66EB7E00FD2E14 /* Models */,
+				63A3F5BB2A66B49700FD2E14 /* ToDoListApp.swift */,
+				63A3F5B92A66B47500FD2E14 /* ContentView.swift */,
+				63A3F5B32A66B34F00FD2E14 /* School_ToDoList copy-Info.plist */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
+		63A3F5BE2A66EB7E00FD2E14 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		63C033FE2A4DB6B8009A1CB3 /* TableViewCells */ = {
@@ -401,6 +454,32 @@
 			productReference = 634452822A3B1A5500BFB9E3 /* School_ToDoListTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		63A3F57B2A66B34E00FD2E14 /* School_ToDoList-SUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 63A3F5AF2A66B34E00FD2E14 /* Build configuration list for PBXNativeTarget "School_ToDoList-SUI" */;
+			buildPhases = (
+				63A3F5842A66B34E00FD2E14 /* ShellScript */,
+				63A3F5852A66B34E00FD2E14 /* [CP] Check Pods Manifest.lock */,
+				63A3F5862A66B34E00FD2E14 /* Sources */,
+				63A3F5A12A66B34E00FD2E14 /* Frameworks */,
+				63A3F5A82A66B34E00FD2E14 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "School_ToDoList-SUI";
+			packageProductDependencies = (
+				63A3F57C2A66B34E00FD2E14 /* CocoaLumberjack */,
+				63A3F57E2A66B34E00FD2E14 /* CocoaLumberjackSwift */,
+				63A3F57F2A66B34E00FD2E14 /* CocoaLumberjackSwiftLogBackend */,
+				63A3F5802A66B34E00FD2E14 /* FileCachePackage */,
+				63A3F5822A66B34E00FD2E14 /* SQLite */,
+			);
+			productName = School_ToDoList;
+			productReference = 63A3F5B22A66B34E00FD2E14 /* School_ToDoList-SUI.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -417,6 +496,9 @@
 					634452812A3B1A5500BFB9E3 = {
 						CreatedOnToolsVersion = 14.3.1;
 						TestTargetID = 634452582A34A85600BFB9E3;
+					};
+					63A3F57B2A66B34E00FD2E14 = {
+						LastSwiftMigration = 1430;
 					};
 				};
 			};
@@ -439,6 +521,7 @@
 			projectRoot = "";
 			targets = (
 				634452582A34A85600BFB9E3 /* School_ToDoList */,
+				63A3F57B2A66B34E00FD2E14 /* School_ToDoList-SUI */,
 				634452812A3B1A5500BFB9E3 /* School_ToDoListTests */,
 			);
 		};
@@ -465,10 +548,63 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		63A3F5A82A66B34E00FD2E14 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63A3F5A92A66B34E00FD2E14 /* SFProDisplay-Regular.OTF in Resources */,
+				63A3F5AA2A66B34E00FD2E14 /* SFProDisplay-Medium.OTF in Resources */,
+				63A3F5AB2A66B34E00FD2E14 /* SFProText-Medium.otf in Resources */,
+				63A3F5AC2A66B34E00FD2E14 /* SFProDisplay-Bold.OTF in Resources */,
+				63A3F5AD2A66B34E00FD2E14 /* Assets.xcassets in Resources */,
+				63A3F5AE2A66B34E00FD2E14 /* SFProText-Light.otf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		440737C97458070ACF5CA610 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-School_ToDoList-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		63A3F5842A66B34E00FD2E14 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint\n";
+		};
+		63A3F5852A66B34E00FD2E14 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -571,6 +707,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				634452852A3B1A5500BFB9E3 /* ConfigurationAndParsingTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63A3F5862A66B34E00FD2E14 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63A3F5BC2A66B49700FD2E14 /* ToDoListApp.swift in Sources */,
+				63A3F5BD2A66E0B100FD2E14 /* DatabaseSQL.swift in Sources */,
+				63A3F5BA2A66B47500FD2E14 /* ContentView.swift in Sources */,
+				63A3F58B2A66B34E00FD2E14 /* CoreDataBaseModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -795,6 +942,65 @@
 			};
 			name = Release;
 		};
+		63A3F5B02A66B34E00FD2E14 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 328318BF22868B50B663E3F5 /* Pods-School_ToDoList.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ZFH6DW7S4P;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "School_ToDoList copy-Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.remby.School-ToDoList";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		63A3F5B12A66B34E00FD2E14 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1D59CF7F3DD7F63C9F08E882 /* Pods-School_ToDoList.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ZFH6DW7S4P;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "School_ToDoList copy-Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.remby.School-ToDoList";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -825,9 +1031,42 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		63A3F5AF2A66B34E00FD2E14 /* Build configuration list for PBXNativeTarget "School_ToDoList-SUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63A3F5B02A66B34E00FD2E14 /* Debug */,
+				63A3F5B12A66B34E00FD2E14 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		63A3F57D2A66B34E00FD2E14 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CocoaLumberjack/CocoaLumberjack";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+		63A3F5812A66B34E00FD2E14 /* XCRemoteSwiftPackageReference "FileCachePackage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WoTRemboy/FileCachePackage.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		63A3F5832A66B34E00FD2E14 /* XCRemoteSwiftPackageReference "SQLite" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.14.1;
+			};
+		};
 		63C034112A4EF2E8009A1CB3 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CocoaLumberjack/CocoaLumberjack";
@@ -855,6 +1094,31 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		63A3F57C2A66B34E00FD2E14 /* CocoaLumberjack */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63A3F57D2A66B34E00FD2E14 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjack;
+		};
+		63A3F57E2A66B34E00FD2E14 /* CocoaLumberjackSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63A3F57D2A66B34E00FD2E14 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjackSwift;
+		};
+		63A3F57F2A66B34E00FD2E14 /* CocoaLumberjackSwiftLogBackend */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63A3F57D2A66B34E00FD2E14 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjackSwiftLogBackend;
+		};
+		63A3F5802A66B34E00FD2E14 /* FileCachePackage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63A3F5812A66B34E00FD2E14 /* XCRemoteSwiftPackageReference "FileCachePackage" */;
+			productName = FileCachePackage;
+		};
+		63A3F5822A66B34E00FD2E14 /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63A3F5832A66B34E00FD2E14 /* XCRemoteSwiftPackageReference "SQLite" */;
+			productName = SQLite;
+		};
 		63C034122A4EF2E8009A1CB3 /* CocoaLumberjack */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 63C034112A4EF2E8009A1CB3 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
