@@ -10,15 +10,6 @@
       }
     },
     {
-      "identity" : "filecachepackage",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/WoTRemboy/FileCachePackage.git",
-      "state" : {
-        "branch" : "main",
-        "revision" : "b4821b1337950ee5defe6686d85567b36484b1d7"
-      }
-    },
-    {
       "identity" : "sqlite.swift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/stephencelis/SQLite.swift",

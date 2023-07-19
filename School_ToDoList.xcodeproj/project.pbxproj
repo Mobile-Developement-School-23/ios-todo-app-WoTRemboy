@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		631E26692A55B2C800C3430D /* URLSessionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631E26682A55B2C800C3430D /* URLSessionExtension.swift */; };
 		631E266B2A55B39D00C3430D /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631E266A2A55B39D00C3430D /* NetworkingService.swift */; };
-		631E26702A57437100C3430D /* SharingJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631E266F2A57437100C3430D /* SharingJSON.swift */; };
+		631E26702A57437100C3430D /* NetworkJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631E266F2A57437100C3430D /* NetworkJSON.swift */; };
 		6344525D2A34A85600BFB9E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6344525C2A34A85600BFB9E3 /* AppDelegate.swift */; };
 		6344525F2A34A85600BFB9E3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6344525E2A34A85600BFB9E3 /* SceneDelegate.swift */; };
 		634452612A34A85600BFB9E3 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634452602A34A85600BFB9E3 /* DetailsViewController.swift */; };
@@ -32,7 +32,6 @@
 		63A3F5A42A66B34E00FD2E14 /* CocoaLumberjackSwiftLogBackend in Frameworks */ = {isa = PBXBuildFile; productRef = 63A3F57F2A66B34E00FD2E14 /* CocoaLumberjackSwiftLogBackend */; };
 		63A3F5A52A66B34E00FD2E14 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 63A3F57C2A66B34E00FD2E14 /* CocoaLumberjack */; };
 		63A3F5A62A66B34E00FD2E14 /* Pods_School_ToDoList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5A67FC8666696EC3CEC9FDF /* Pods_School_ToDoList.framework */; };
-		63A3F5A72A66B34E00FD2E14 /* FileCachePackage in Frameworks */ = {isa = PBXBuildFile; productRef = 63A3F5802A66B34E00FD2E14 /* FileCachePackage */; };
 		63A3F5A92A66B34E00FD2E14 /* SFProDisplay-Regular.OTF in Resources */ = {isa = PBXBuildFile; fileRef = 634B8E5F2A41B53300BE9ADB /* SFProDisplay-Regular.OTF */; };
 		63A3F5AA2A66B34E00FD2E14 /* SFProDisplay-Medium.OTF in Resources */ = {isa = PBXBuildFile; fileRef = 634B8E5D2A41B53300BE9ADB /* SFProDisplay-Medium.OTF */; };
 		63A3F5AB2A66B34E00FD2E14 /* SFProText-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 634B8E672A41BA7100BE9ADB /* SFProText-Medium.otf */; };
@@ -42,6 +41,15 @@
 		63A3F5BA2A66B47500FD2E14 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3F5B92A66B47500FD2E14 /* ContentView.swift */; };
 		63A3F5BC2A66B49700FD2E14 /* ToDoListApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3F5BB2A66B49700FD2E14 /* ToDoListApp.swift */; };
 		63A3F5BD2A66E0B100FD2E14 /* DatabaseSQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CE09A42A5EBBB100831E2A /* DatabaseSQL.swift */; };
+		63A3F5DB2A68001B00FD2E14 /* CSVExtend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3F5DA2A68001B00FD2E14 /* CSVExtend.swift */; };
+		63A3F5DD2A68002800FD2E14 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3F5DC2A68002800FD2E14 /* FileCache.swift */; };
+		63A3F5DF2A68005300FD2E14 /* JSONExtend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3F5DE2A68005300FD2E14 /* JSONExtend.swift */; };
+		63A3F5E02A68005300FD2E14 /* JSONExtend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3F5DE2A68005300FD2E14 /* JSONExtend.swift */; };
+		63A3F5E22A68006800FD2E14 /* ToDoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3F5E12A68006800FD2E14 /* ToDoItem.swift */; };
+		63A3F5E32A68006800FD2E14 /* ToDoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3F5E12A68006800FD2E14 /* ToDoItem.swift */; };
+		63A3F5E42A68007D00FD2E14 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3F5DC2A68002800FD2E14 /* FileCache.swift */; };
+		63A3F5E52A68008200FD2E14 /* NetworkJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631E266F2A57437100C3430D /* NetworkJSON.swift */; };
+		63A3F5E62A68008400FD2E14 /* CSVExtend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A3F5DA2A68001B00FD2E14 /* CSVExtend.swift */; };
 		63C033FD2A4DB6B3009A1CB3 /* DefaultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C033FC2A4DB6B3009A1CB3 /* DefaultTableViewCell.swift */; };
 		63C034002A4DB6D3009A1CB3 /* ImportantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C033FF2A4DB6D3009A1CB3 /* ImportantTableViewCell.swift */; };
 		63C034022A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C034012A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift */; };
@@ -53,7 +61,6 @@
 		63C034152A4EF2E8009A1CB3 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 63C034142A4EF2E8009A1CB3 /* CocoaLumberjackSwift */; };
 		63C034172A4EF2E8009A1CB3 /* CocoaLumberjackSwiftLogBackend in Frameworks */ = {isa = PBXBuildFile; productRef = 63C034162A4EF2E8009A1CB3 /* CocoaLumberjackSwiftLogBackend */; };
 		63C034192A4EF97C009A1CB3 /* LogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C034182A4EF97C009A1CB3 /* LogFormatter.swift */; };
-		63C0341E2A4F2ECA009A1CB3 /* FileCachePackage in Frameworks */ = {isa = PBXBuildFile; productRef = 63C0341D2A4F2ECA009A1CB3 /* FileCachePackage */; };
 		63CE09A02A5EB68300831E2A /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 63CE099F2A5EB68300831E2A /* SQLite */; };
 		63CE09A52A5EBBB100831E2A /* DatabaseSQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CE09A42A5EBBB100831E2A /* DatabaseSQL.swift */; };
 		63CE09BB2A617FA600831E2A /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CE09BA2A617FA600831E2A /* CoreDataManager.swift */; };
@@ -81,7 +88,7 @@
 		328318BF22868B50B663E3F5 /* Pods-School_ToDoList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-School_ToDoList.debug.xcconfig"; path = "Target Support Files/Pods-School_ToDoList/Pods-School_ToDoList.debug.xcconfig"; sourceTree = "<group>"; };
 		631E26682A55B2C800C3430D /* URLSessionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionExtension.swift; sourceTree = "<group>"; };
 		631E266A2A55B39D00C3430D /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
-		631E266F2A57437100C3430D /* SharingJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingJSON.swift; sourceTree = "<group>"; };
+		631E266F2A57437100C3430D /* NetworkJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkJSON.swift; sourceTree = "<group>"; };
 		634452592A34A85600BFB9E3 /* School_ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = School_ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6344525C2A34A85600BFB9E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6344525E2A34A85600BFB9E3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +112,10 @@
 		63A3F5B32A66B34F00FD2E14 /* School_ToDoList copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "School_ToDoList copy-Info.plist"; path = "/Users/wotremboy/Documents/ios-todo-app-WoTRemboy/School_ToDoList copy-Info.plist"; sourceTree = "<absolute>"; };
 		63A3F5B92A66B47500FD2E14 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		63A3F5BB2A66B49700FD2E14 /* ToDoListApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListApp.swift; sourceTree = "<group>"; };
+		63A3F5DA2A68001B00FD2E14 /* CSVExtend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVExtend.swift; sourceTree = "<group>"; };
+		63A3F5DC2A68002800FD2E14 /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
+		63A3F5DE2A68005300FD2E14 /* JSONExtend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONExtend.swift; sourceTree = "<group>"; };
+		63A3F5E12A68006800FD2E14 /* ToDoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ToDoItem.swift; path = Parsings/ToDoItem.swift; sourceTree = "<group>"; };
 		63C033FC2A4DB6B3009A1CB3 /* DefaultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTableViewCell.swift; sourceTree = "<group>"; };
 		63C033FF2A4DB6D3009A1CB3 /* ImportantTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportantTableViewCell.swift; sourceTree = "<group>"; };
 		63C034012A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeadlineTableViewCell.swift; sourceTree = "<group>"; };
@@ -134,7 +145,6 @@
 				63C034172A4EF2E8009A1CB3 /* CocoaLumberjackSwiftLogBackend in Frameworks */,
 				63C034132A4EF2E8009A1CB3 /* CocoaLumberjack in Frameworks */,
 				D3A1F42126E052A6E5C98039 /* Pods_School_ToDoList.framework in Frameworks */,
-				63C0341E2A4F2ECA009A1CB3 /* FileCachePackage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,7 +165,6 @@
 				63A3F5A42A66B34E00FD2E14 /* CocoaLumberjackSwiftLogBackend in Frameworks */,
 				63A3F5A52A66B34E00FD2E14 /* CocoaLumberjack in Frameworks */,
 				63A3F5A62A66B34E00FD2E14 /* Pods_School_ToDoList.framework in Frameworks */,
-				63A3F5A72A66B34E00FD2E14 /* FileCachePackage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,7 +183,9 @@
 		631E266E2A57433400C3430D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				631E266F2A57437100C3430D /* SharingJSON.swift */,
+				63A3F5D92A67FFDE00FD2E14 /* Parsings */,
+				63A3F5E12A68006800FD2E14 /* ToDoItem.swift */,
+				63A3F5DC2A68002800FD2E14 /* FileCache.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -321,6 +332,16 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		63A3F5D92A67FFDE00FD2E14 /* Parsings */ = {
+			isa = PBXGroup;
+			children = (
+				63A3F5DA2A68001B00FD2E14 /* CSVExtend.swift */,
+				631E266F2A57437100C3430D /* NetworkJSON.swift */,
+				63A3F5DE2A68005300FD2E14 /* JSONExtend.swift */,
+			);
+			path = Parsings;
+			sourceTree = "<group>";
+		};
 		63C033FE2A4DB6B8009A1CB3 /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -428,7 +449,6 @@
 				63C034122A4EF2E8009A1CB3 /* CocoaLumberjack */,
 				63C034142A4EF2E8009A1CB3 /* CocoaLumberjackSwift */,
 				63C034162A4EF2E8009A1CB3 /* CocoaLumberjackSwiftLogBackend */,
-				63C0341D2A4F2ECA009A1CB3 /* FileCachePackage */,
 				63CE099F2A5EB68300831E2A /* SQLite */,
 			);
 			productName = School_ToDoList;
@@ -473,7 +493,6 @@
 				63A3F57C2A66B34E00FD2E14 /* CocoaLumberjack */,
 				63A3F57E2A66B34E00FD2E14 /* CocoaLumberjackSwift */,
 				63A3F57F2A66B34E00FD2E14 /* CocoaLumberjackSwiftLogBackend */,
-				63A3F5802A66B34E00FD2E14 /* FileCachePackage */,
 				63A3F5822A66B34E00FD2E14 /* SQLite */,
 			);
 			productName = School_ToDoList;
@@ -513,7 +532,6 @@
 			mainGroup = 634452502A34A85600BFB9E3;
 			packageReferences = (
 				63C034112A4EF2E8009A1CB3 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */,
-				63C0341C2A4F2ECA009A1CB3 /* XCRemoteSwiftPackageReference "FileCachePackage" */,
 				63CE099E2A5EB68300831E2A /* XCRemoteSwiftPackageReference "SQLite" */,
 			);
 			productRefGroup = 6344525A2A34A85600BFB9E3 /* Products */;
@@ -675,6 +693,8 @@
 			files = (
 				634452612A34A85600BFB9E3 /* DetailsViewController.swift in Sources */,
 				63C034102A4EDBA6009A1CB3 /* TableViewDelegates.swift in Sources */,
+				63A3F5E22A68006800FD2E14 /* ToDoItem.swift in Sources */,
+				63A3F5DD2A68002800FD2E14 /* FileCache.swift in Sources */,
 				634B8E782A422B5800BE9ADB /* ScrollView.swift in Sources */,
 				634B8E732A41F3D000BE9ADB /* TableViewDelegateExtend.swift in Sources */,
 				63CE09D72A619EFC00831E2A /* CoreDataBaseModel.xcdatamodeld in Sources */,
@@ -685,17 +705,19 @@
 				63CE09BB2A617FA600831E2A /* CoreDataManager.swift in Sources */,
 				634B8E6D2A41D2C900BE9ADB /* TextViewDelegateExtend.swift in Sources */,
 				63C034192A4EF97C009A1CB3 /* LogFormatter.swift in Sources */,
+				63A3F5DF2A68005300FD2E14 /* JSONExtend.swift in Sources */,
 				63C034002A4DB6D3009A1CB3 /* ImportantTableViewCell.swift in Sources */,
 				6344525D2A34A85600BFB9E3 /* AppDelegate.swift in Sources */,
 				63C034042A4DB6F3009A1CB3 /* BothTableViewCell.swift in Sources */,
 				63EE3C1A2A4C5A9B00B275DF /* MainViewController.swift in Sources */,
 				634B8E752A41F51900BE9ADB /* SegmentedControl.swift in Sources */,
+				63A3F5DB2A68001B00FD2E14 /* CSVExtend.swift in Sources */,
 				634B8E6B2A41CABD00BE9ADB /* DetailsTextView.swift in Sources */,
 				631E26692A55B2C800C3430D /* URLSessionExtension.swift in Sources */,
 				631E266B2A55B39D00C3430D /* NetworkingService.swift in Sources */,
 				63C034022A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift in Sources */,
 				63CE09A52A5EBBB100831E2A /* DatabaseSQL.swift in Sources */,
-				631E26702A57437100C3430D /* SharingJSON.swift in Sources */,
+				631E26702A57437100C3430D /* NetworkJSON.swift in Sources */,
 				63C034072A4DF343009A1CB3 /* EmptyTableViewCell.swift in Sources */,
 				63C034092A4E06F7009A1CB3 /* TransitionAnimator.swift in Sources */,
 				6344525F2A34A85600BFB9E3 /* SceneDelegate.swift in Sources */,
@@ -714,10 +736,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63A3F5E52A68008200FD2E14 /* NetworkJSON.swift in Sources */,
+				63A3F5E02A68005300FD2E14 /* JSONExtend.swift in Sources */,
 				63A3F5BC2A66B49700FD2E14 /* ToDoListApp.swift in Sources */,
+				63A3F5E42A68007D00FD2E14 /* FileCache.swift in Sources */,
+				63A3F5E32A68006800FD2E14 /* ToDoItem.swift in Sources */,
 				63A3F5BD2A66E0B100FD2E14 /* DatabaseSQL.swift in Sources */,
 				63A3F5BA2A66B47500FD2E14 /* ContentView.swift in Sources */,
 				63A3F58B2A66B34E00FD2E14 /* CoreDataBaseModel.xcdatamodeld in Sources */,
+				63A3F5E62A68008400FD2E14 /* CSVExtend.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1051,14 +1078,6 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		63A3F5812A66B34E00FD2E14 /* XCRemoteSwiftPackageReference "FileCachePackage" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/WoTRemboy/FileCachePackage.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		63A3F5832A66B34E00FD2E14 /* XCRemoteSwiftPackageReference "SQLite" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/stephencelis/SQLite.swift";
@@ -1073,14 +1092,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 3.0.0;
-			};
-		};
-		63C0341C2A4F2ECA009A1CB3 /* XCRemoteSwiftPackageReference "FileCachePackage" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/WoTRemboy/FileCachePackage.git";
-			requirement = {
-				branch = main;
-				kind = branch;
 			};
 		};
 		63CE099E2A5EB68300831E2A /* XCRemoteSwiftPackageReference "SQLite" */ = {
@@ -1109,11 +1120,6 @@
 			package = 63A3F57D2A66B34E00FD2E14 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
 			productName = CocoaLumberjackSwiftLogBackend;
 		};
-		63A3F5802A66B34E00FD2E14 /* FileCachePackage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 63A3F5812A66B34E00FD2E14 /* XCRemoteSwiftPackageReference "FileCachePackage" */;
-			productName = FileCachePackage;
-		};
 		63A3F5822A66B34E00FD2E14 /* SQLite */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 63A3F5832A66B34E00FD2E14 /* XCRemoteSwiftPackageReference "SQLite" */;
@@ -1133,11 +1139,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 63C034112A4EF2E8009A1CB3 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
 			productName = CocoaLumberjackSwiftLogBackend;
-		};
-		63C0341D2A4F2ECA009A1CB3 /* FileCachePackage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 63C0341C2A4F2ECA009A1CB3 /* XCRemoteSwiftPackageReference "FileCachePackage" */;
-			productName = FileCachePackage;
 		};
 		63CE099F2A5EB68300831E2A /* SQLite */ = {
 			isa = XCSwiftPackageProductDependency;
