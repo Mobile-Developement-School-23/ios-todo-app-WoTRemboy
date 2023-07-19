@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import FileCachePackage
 
 struct ContentView: View {
     
@@ -24,20 +23,58 @@ struct ContentView: View {
     }
 }
 
+struct LeadingSwipe: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .swipeActions(edge: .leading) {
+                Button {
+                    buttonTapped()
+                } label: {
+                    Image(systemName: "checkmark.circle")
+                }
+                .tint(Color("Green"))
+            }
+    }
+}
+
+struct TrailingSwipe: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .swipeActions(edge: .trailing) {
+                Button(role: .destructive) {
+                    buttonTapped()
+                } label: {
+                    Image(systemName: "trash.fill")
+                }
+                Button {
+                    buttonTapped()
+                } label: {
+                    Image(systemName: "info.circle")
+                }
+                .tint(Color("GrayLight"))
+            }
+    }
+}
+
 struct ListView: View {
     @State var items: [ToDoItem]
     
     var body: some View {
         List {
-            Section(header: Header().textCase(.none)) {
+            Section(header: Header(items: items).textCase(.none)) {
                 ForEach(items, id: \.id) { item in
                     TaskRow(item: item)
                 }
+                .modifier(LeadingSwipe())
+                .modifier(TrailingSwipe())
                 NewTaskRow()
             }
+            .listRowSeparatorTint(Color("SupportSeparator"))
             .listRowBackground(Color("BackSecondary"))
-//            .listRowSeparator(.hidden)
         }
+        .scrollContentBackground(.hidden)
+        .listStyle(.insetGrouped)
+        .background(Color("BackPrimary"))
     }
 }
 
@@ -62,9 +99,11 @@ func buttonTapped() {
 }
 
 struct Header: View {
+    var items: [ToDoItem]
     var body: some View {
+        let completedCount = items.filter { $0.completed }.count
         HStack {
-            Text("Выполнено — 1")
+            Text("Выполнено — \(completedCount)")
                 .font(.subheadline)
                 .foregroundColor(Color("LabelTertiary"))
             Spacer()
@@ -99,19 +138,24 @@ struct MainRowContent: View {
     
     var item: ToDoItem
     var body: some View {
-        HStack(spacing: 5) {
-            ImportanceView(importance: item.importance)
-            VStack(alignment: .leading, spacing: 4) {
-                Text(item.taskText)
-                    .font(.body)
-                    .foregroundColor(Color("LabelPrimary"))
-                    .lineLimit(3)
-                    .padding(item.deadline != nil ? deadlineEdges : noDeadlineEdges)
+        HStack(spacing: 0) {
+            Text("") // to fix separator width
+                .foregroundColor(Color.clear)
+            HStack(spacing: 5) {
+                ImportanceView(importance: item.importance)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(item.taskText)
+                        .font(.body)
+                        .foregroundColor(Color("LabelPrimary"))
+                        .lineLimit(3)
+                        .padding(item.deadline != nil ? deadlineEdges : noDeadlineEdges)
 
-                if item.deadline != nil {
-                    DeadlineStack(deadline: item.deadline)
+                    if item.deadline != nil {
+                        DeadlineStack(deadline: item.deadline)
+                    }
                 }
             }
+            
         }
     }
 }
@@ -131,9 +175,13 @@ struct NewTaskRow: View {
 
 struct CompletedView: View {
     var completed: Bool
+    var importance: Importance
     var body: some View {
         if completed {
             Image("doneCircle")
+                .renderingMode(.original)
+        } else if importance == .important {
+            Image("importantCircle")
                 .renderingMode(.original)
         } else {
             Image("emptyCircle")
@@ -146,7 +194,7 @@ struct TaskRow: View {
     var item: ToDoItem
     var body: some View {
         HStack {
-            CompletedView(completed: item.completed)
+            CompletedView(completed: item.completed, importance: item.importance)
             VStack(spacing: 10) {
                 HStack {
                     MainRowContent(item: item)
@@ -183,7 +231,7 @@ struct DeadlineStack: View {
 final class MokeData {
     let item4 = ToDoItem(taskText: "Here forth", importance: .regular, deadline: .distantFuture, completed: true, createDate: Date(), editDate: Date())
     let item1 = ToDoItem(taskText: "Here first mane many many many many many many many many many many many many many many", importance: .important)
-    let item2 = ToDoItem(taskText: "Here second", importance: .regular, deadline: Date())
+    let item2 = ToDoItem(taskText: "Here second", importance: .regular, deadline: Date(), completed: true)
     let item3 = ToDoItem(taskText: "Here third", importance: .unimportant)
 }
 

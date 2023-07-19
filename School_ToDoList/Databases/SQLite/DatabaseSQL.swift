@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import FileCachePackage
 import CocoaLumberjackSwift
 import SQLite
 

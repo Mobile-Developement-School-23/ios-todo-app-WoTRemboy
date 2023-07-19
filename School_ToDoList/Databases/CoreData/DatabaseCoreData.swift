@@ -7,7 +7,6 @@
 
 import Foundation
 import CoreData
-import FileCachePackage
 import CocoaLumberjackSwift
 
 public final class FileCacheCoreData {
