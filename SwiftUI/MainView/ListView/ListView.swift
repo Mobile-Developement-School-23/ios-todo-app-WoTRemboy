@@ -12,7 +12,7 @@ struct ListView: View {
     @State var isShown: Bool
     
     var body: some View {
-        let hideItems = items.filter { $0.completed }
+        let hideItems = items.filter { $0.completed == false }
         List {
             Section(header: Header(isShown: $isShown, items: items).textCase(.none)) {
                 ForEach(isShown ? hideItems : items, id: \.id) { item in
