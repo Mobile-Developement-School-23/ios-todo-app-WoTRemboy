@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  MainContentView.swift
 //  School_ToDoList-SUI
 //
 //  Created by Roman Tverdokhleb on 18.07.2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct MainContentView: View {
     var sortedArray: [ToDoItem]
     var isShown = false
     var body: some View {
@@ -30,6 +30,6 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let data = MockData()
         @State var items = [data.item1, data.item2, data.item3, data.item4]
-        ContentView(sortedArray: items)
+        MainContentView(sortedArray: items)
     }
 }

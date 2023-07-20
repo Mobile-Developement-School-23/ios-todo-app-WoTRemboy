@@ -17,7 +17,8 @@ struct ToDoListApp: App {
         let sortedArray = sortedValues.map { $0 }
         
         WindowGroup {
-            ContentView(sortedArray: sortedArray)
+            DetailsContentView(taskText: sortedArray.first!.taskText, item: sortedArray.first!)
+//            MainContentView(sortedArray: sortedArray)
         }
     }
 }
