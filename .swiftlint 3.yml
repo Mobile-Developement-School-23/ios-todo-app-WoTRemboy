@@ -1,0 +1,20 @@
+line_length:
+- 250 # warning
+- 350 # error
+type_body_length:
+- 450 # warning
+- 500 # error
+function_body_length:
+- 150 # warning
+- 200 # error
+file_length:
+- 550 # warning
+- 600 # error
+cyclomatic_complexity:
+- 20 # warning
+- 25 # error
+disabled_rules:
+- trailing_whitespace
+- redundant_optional_initialization
+- block_based_kvo
+- for_where
