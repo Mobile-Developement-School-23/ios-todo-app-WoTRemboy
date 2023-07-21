@@ -832,6 +832,7 @@
 				63C034022A4DB6E9009A1CB3 /* DeadlineTableViewCell.swift in Sources */,
 				63CE09A52A5EBBB100831E2A /* DatabaseSQL.swift in Sources */,
 				631E26702A57437100C3430D /* NetworkJSON.swift in Sources */,
+				631E26702A57437100C3430D /* NetworkJSON.swift in Sources */,
 				63C034072A4DF343009A1CB3 /* EmptyTableViewCell.swift in Sources */,
 				63C034092A4E06F7009A1CB3 /* TransitionAnimator.swift in Sources */,
 				6344525F2A34A85600BFB9E3 /* SceneDelegate.swift in Sources */,
