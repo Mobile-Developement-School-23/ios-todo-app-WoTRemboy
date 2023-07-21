@@ -12,4 +12,5 @@ final class MockData {
     let item1 = ToDoItem(taskText: "Here first mane many many many many many many many many many many many many many many", importance: .important)
     let item2 = ToDoItem(taskText: "Here second", importance: .regular, deadline: Date(), completed: true)
     let item3 = ToDoItem(taskText: "Here third", importance: .unimportant)
+    let emptyItem = ToDoItem(taskText: "", importance: .regular)
 }

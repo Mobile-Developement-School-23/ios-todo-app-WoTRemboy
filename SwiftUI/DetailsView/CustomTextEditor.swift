@@ -8,18 +8,18 @@
 import SwiftUI
 
 struct CustomTextEditor: View {
-    @State private var text: String = ""
+    @Binding var taskText: String
     
     var placeholder: String = "Что надо сделать?"
 
     var body: some View {
         ZStack(alignment: .leading) {
-            UITextViewWrapper(text: $text)
+            UITextViewWrapper(text: $taskText)
                 .cornerRadius(15)
-                .frame(height: dynamicHeight(text: text))
+                .frame(height: dynamicHeight(text: taskText))
                 .foregroundColor(.red)
                 .padding()
-            if text.isEmpty {
+            if taskText.isEmpty {
                 Text(placeholder)
                     .foregroundColor(Color("LabelTertiary"))
                     .padding(.leading, 35)

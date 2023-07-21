@@ -11,6 +11,7 @@ struct DeadlineRowView: View {
     @Binding var isDeadline: Bool
     @Binding var date: Date
     @Binding var datePickerToShow: Bool
+    var item: ToDoItem
     
     let timeStartFormatter: DateFormatter = {
         let formater = DateFormatter()
@@ -22,27 +23,29 @@ struct DeadlineRowView: View {
     var body: some View {
         HStack {
             if isDeadline {
-            VStack(alignment: .leading, spacing: 3) {
-                Text("Сделать до")
-                    .font(.body)
-                    .padding(.top, 8)
+                VStack(alignment: .leading, spacing: 3) {
+                    Text("Сделать до")
+                        .font(.body)
+                        .padding(.top, 8)
+                        .foregroundColor(Color("LabelPrimary"))
                     Button {
-//                                withAnimation {
+                        withAnimation {
                             datePickerToShow.toggle()
-//                                }
+                        }
                     } label: {
                         Text(timeStartFormatter.string(from: date))
                             .font(.footnote)
                             .padding(.bottom, 8)
                     }
-            }
-            .padding(.horizontal)
-            .padding(.leading, 5)
+                }
+                .padding(.horizontal)
+                .padding(.leading, 5)
             } else {
                 Text("Сделать до")
                     .font(.body)
                     .padding()
                     .padding(.leading, 5)
+                    .foregroundColor(Color("LabelPrimary"))
             }
             Spacer()
             Toggle(isOn: $isDeadline) {}
@@ -55,6 +58,7 @@ struct DeadlineRowView: View {
                 DatePicker(
                         "Start Date",
                         selection: $date,
+                        in: Date()...,
                         displayedComponents: [.date]
                     )
                 .datePickerStyle(.graphical)

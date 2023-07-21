@@ -20,6 +20,7 @@ struct DeadlineView: View {
         HStack(spacing: 2) {
             Image("miniCalendar")
                 .renderingMode(.template)
+                .foregroundColor(Color("LabelTertiary"))
             Text(fromDate)
                 .font(.subheadline)
                 .foregroundColor(Color("LabelTertiary"))

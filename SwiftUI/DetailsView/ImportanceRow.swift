@@ -8,19 +8,20 @@
 import SwiftUI
 
 struct ImportanceRowView: View {
-    @Binding var selectedImportance: Int
+    @Binding var selectedImportance: Importance
     var body: some View {
         HStack(spacing: 5) {
             Text("Важность")
                 .font(.body)
                 .padding()
                 .padding(.leading, 5)
+                .foregroundColor(Color("LabelPrimary"))
             Spacer()
             Picker("Importance", selection: $selectedImportance) {
-                            Image("unimportant").tag(0)
-                            Text("нет").tag(1)
-                            Image("important").tag(2)
-                        }
+                Image("unimportant").tag(Importance.unimportant)
+                Text("нет").tag(Importance.regular)
+                Image("important").tag(Importance.important)
+            }
             .pickerStyle(.segmented)
             .frame(width: 150)
             .padding(.trailing, 20)

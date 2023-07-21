@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct FloatingButtonView: View {
+    @State var selectedItem: ToDoItem?
+    @State var presentSheet = false
+
     var body: some View {
         VStack {
             Spacer()
             Button {
-                buttonTapped()
+                selectedItem = MockData().emptyItem
+                presentSheet.toggle()
             } label: {
                 Image(systemName: "plus")
                     .font(.system(size: 28).bold())
@@ -22,6 +26,9 @@ struct FloatingButtonView: View {
                     .cornerRadius(25)
                     .shadow(radius: 15)
                     .padding(.bottom, 30)
+                    .sheet(item: $selectedItem) { item in
+                        DetailsContentView(taskText: item.taskText, presentSheet: $presentSheet, item: item)
+                    }
             }
             
         }

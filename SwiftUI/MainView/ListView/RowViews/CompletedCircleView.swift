@@ -20,6 +20,7 @@ struct CompletedCircleView: View {
         } else {
             Image("emptyCircle")
                 .renderingMode(.template)
+                .foregroundColor(Color("LabelTertiary"))
         }
     }
 }

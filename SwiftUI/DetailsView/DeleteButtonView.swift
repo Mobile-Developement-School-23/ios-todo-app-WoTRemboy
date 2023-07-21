@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct DeleteButtonView: View {
+    @Binding var presentSheet: Bool
+    var isEnableForOld: Bool
+    
     var body: some View {
         GeometryReader { geometry in
             Button {
-                buttonTapped()
+                presentSheet.toggle()
             } label: {
                 ZStack {
                     Rectangle()
@@ -19,11 +22,19 @@ struct DeleteButtonView: View {
                         .foregroundColor(Color("BackSecondary"))
                         .cornerRadius(15)
                         .padding()
-                    Text("Удалить")
-                        .foregroundColor(Color("Red"))
-                        .padding(.vertical)
+                    if isEnableForOld {
+                        Text("Удалить")
+                            .foregroundColor(Color("Red"))
+                            .padding(.vertical)
+                    } else {
+                        Text("Удалить")
+                            .foregroundColor(Color("LabelTertiary"))
+                            .padding(.vertical)
+                    }
+                    
                 }
             }
+            .disabled(!isEnableForOld)
         }
     }
 }

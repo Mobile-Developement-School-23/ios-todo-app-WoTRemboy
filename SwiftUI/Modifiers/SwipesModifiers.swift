@@ -19,12 +19,15 @@ struct LeadingSwipe: ViewModifier {
                 } label: {
                     completed ? doneImage : notDoneImage
                 }
+                .buttonStyle(.automatic)
                 .tint(completed ? Color("GrayLight") : Color("Green"))
             }
     }
 }
 
 struct TrailingSwipe: ViewModifier {
+    @Binding var selectedItem: ToDoItem?
+    @Binding var presentSheet: Bool
     func body(content: Content) -> some View {
         content
             .swipeActions(edge: .trailing) {
@@ -34,10 +37,14 @@ struct TrailingSwipe: ViewModifier {
                     Image(systemName: "trash.fill")
                 }
                 Button {
-                    buttonTapped()
+                    presentSheet.toggle()
                 } label: {
                     Image(systemName: "info.circle")
                 }
+                .sheet(item: $selectedItem) { item in
+                    DetailsContentView(taskText: item.taskText, presentSheet: $presentSheet, item: item)
+                }
+                .buttonStyle(.automatic)
                 .tint(Color("GrayLight"))
             }
     }

@@ -15,7 +15,7 @@ struct UITextViewWrapper: UIViewRepresentable {
         let textView = UITextView()
         textView.delegate = context.coordinator
         textView.isScrollEnabled = false
-        textView.isEditable = true
+        textView.isEditable = false
         textView.isUserInteractionEnabled = true
         textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         textView.font = UIFont.systemFont(ofSize: 17)
