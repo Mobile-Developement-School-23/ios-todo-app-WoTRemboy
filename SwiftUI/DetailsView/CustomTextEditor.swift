@@ -10,7 +10,7 @@ import SwiftUI
 struct CustomTextEditor: View {
     @Binding var taskText: String
     
-    var placeholder: String = "Что надо сделать?"
+    var placeholder: String = "Enter your next task"
 
     var body: some View {
         ZStack(alignment: .leading) {

@@ -235,7 +235,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                         self.fileCacheCoreData.updateInDatabaseCoreData(item: item)
                     }
                     
-                    self.serverUpdateItem(item: item)
+//                    self.serverUpdateItem(item: item)
                     
                 } else { // DetailsVC Delete button pressed
                     if item.completed {
@@ -248,7 +248,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                         self.fileCacheCoreData.deleteFromDatabaseCoreData(at: id)
                     }
                     
-                    self.serverDeleteItem(item: item)
+//                    self.serverDeleteItem(item: item)
                 }
             }
             
@@ -311,7 +311,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 self.fileCacheSQL.updateInDatabaseSQL(item: newItem)
                 self.fileCacheCoreData.updateInDatabaseCoreData(item: newItem)
             }
-            self.serverUpdateItem(item: newItem)
+//            self.serverUpdateItem(item: newItem)
             
             completionHandler(true)
         }
@@ -349,7 +349,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                         self.fileCacheSQL.updateInDatabaseSQL(item: item)
                         self.fileCacheCoreData.updateInDatabaseCoreData(item: item)
                     }
-                    self.serverUpdateItem(item: item)
+//                    self.serverUpdateItem(item: item)
                 } else { // pressed DetailsVC Delete button
                     if item.completed {
                         self.completedCount -= 1
@@ -360,7 +360,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                         self.fileCacheSQL.deleteFromDatabaseSQL(at: id)
                         self.fileCacheCoreData.deleteFromDatabaseCoreData(at: id)
                     }
-                    self.serverDeleteItem(item: item)
+//                    self.serverDeleteItem(item: item)
                 }
                 tableView.reloadRows(at: [indexPath], with: .none)
             }
@@ -389,7 +389,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                 self.fileCacheCoreData.deleteFromDatabaseCoreData(at: item.id)
             }
             
-            self.serverDeleteItem(item: item)
+//            self.serverDeleteItem(item: item)
             DDLogDebug("Successful local deleted '\(item.taskText)'", level: .debug)
             completionHandler(true)
         }
@@ -417,7 +417,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         
         let actionsProvider: ([UIMenuElement]) -> UIMenu? = { _ in
             
-            let editAction = UIAction(title: "Изменить", image: UIImage(systemName: "pencil")) { [weak self] _ in
+            let editAction = UIAction(title: "Edit", image: UIImage(systemName: "pencil")) { [weak self] _ in
                 
                 let viewController = DetailsViewController(openType: .edit, item: self?.sortedArray[indexPath.row])
                 viewController.completionHandler = { id, taskText, importance, deadline, completed, createDate, editDate, toDelete in
@@ -432,7 +432,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                             self?.fileCacheSQL.updateInDatabaseSQL(item: item)
                             self?.fileCacheCoreData.updateInDatabaseCoreData(item: item)
                         }
-                        self?.serverUpdateItem(item: item)
+//                        self?.serverUpdateItem(item: item)
                         
                     } else { // DetailsVC Delete button pressed
                         if item.completed {
@@ -445,14 +445,14 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                             self?.fileCacheCoreData.deleteFromDatabaseCoreData(at: id)
                         }
                         
-                        self?.serverDeleteItem(item: item)
+//                        self?.serverDeleteItem(item: item)
                     }
                 }
                 let navVC = UINavigationController(rootViewController: viewController)
                 self?.present(navVC, animated: true)
             }
             
-            let deleteAction = UIAction(title: "Удалить", image: UIImage(systemName: "trash"), attributes: .destructive) { [weak self] _ in
+            let deleteAction = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { [weak self] _ in
                 
                 if self?.sortedArray[indexPath.row].completed == true {
                     self?.completedCount -= 1
@@ -469,7 +469,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
                         self?.fileCacheSQL.deleteFromDatabaseSQL(at: item.id)
                         self?.fileCacheCoreData.deleteFromDatabaseCoreData(at: item.id)
                     }
-                    self?.serverDeleteItem(item: item)
+//                    self?.serverDeleteItem(item: item)
                 }
                 
             }

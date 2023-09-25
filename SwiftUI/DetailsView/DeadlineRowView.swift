@@ -16,7 +16,7 @@ struct DeadlineRowView: View {
     let timeStartFormatter: DateFormatter = {
         let formater = DateFormatter()
         formater.dateFormat = "dd MMMM yyyy"
-        formater.locale = Locale(identifier: "ru_RU")
+        formater.locale = Locale(identifier: "en_US")
         return formater
     }()
     
@@ -24,7 +24,7 @@ struct DeadlineRowView: View {
         HStack {
             if isDeadline {
                 VStack(alignment: .leading, spacing: 3) {
-                    Text("Сделать до")
+                    Text("Deadline")
                         .font(.body)
                         .padding(.top, 8)
                         .foregroundColor(Color("LabelPrimary"))
@@ -41,7 +41,7 @@ struct DeadlineRowView: View {
                 .padding(.horizontal)
                 .padding(.leading, 5)
             } else {
-                Text("Сделать до")
+                Text("Deadline")
                     .font(.body)
                     .padding()
                     .padding(.leading, 5)
@@ -63,7 +63,7 @@ struct DeadlineRowView: View {
                     )
                 .datePickerStyle(.graphical)
                 .padding(.horizontal, 14)
-                .environment(\.locale, Locale(identifier: "ru_RU"))
+                .environment(\.locale, Locale(identifier: "en_US"))
             }
         }
     }

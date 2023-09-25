@@ -97,7 +97,7 @@ class MainViewController: UIViewController {
     // MARK: Main Part
     
     override func viewWillAppear(_ animated: Bool) {
-        serverFirstSyncItems()
+//        serverFirstSyncItems()
     }
             
     override func viewDidLoad() {
@@ -107,7 +107,7 @@ class MainViewController: UIViewController {
         completedCount = items.values.filter { $0.completed }.count
         DDLogInfo("All tasks: \(items.count); Completed tasks: \(completedCount)", level: .info)
                 
-        title = "Мои дела"
+        title = "Tasks"
         view.backgroundColor = UIColor(named: "BackPrimary")
         tableView.backgroundColor = nil
         
@@ -156,7 +156,7 @@ class MainViewController: UIViewController {
                                           width: view.frame.width,
                                           height: 40))
         
-        countLabel.text = "Выполнено — \(completedCount)"
+        countLabel.text = "Were completed: \(completedCount)"
         header.addSubview(countLabel)
         header.addSubview(showButton)
         
@@ -170,9 +170,9 @@ class MainViewController: UIViewController {
         showButton.centerYAnchor.constraint(equalTo: header.centerYAnchor).isActive = true
         showButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 70).isActive = true
         if doneTasksAreHidden {
-            showButton.setTitle("Показать", for: .normal)
+            showButton.setTitle("Show", for: .normal)
         } else {
-            showButton.setTitle("Скрыть", for: .normal)
+            showButton.setTitle("Hide", for: .normal)
         }
         tableView.tableHeaderView = header
         
@@ -244,7 +244,7 @@ class MainViewController: UIViewController {
                 self.fileCacheSQL.insertToDatabaseSQL(item: item)
                 self.fileCacheCoreData.insertToDatabaseCoreData(item: item)
             }
-            self.serverAddItem(item: item)
+//            self.serverAddItem(item: item)
         }
         let navVC = UINavigationController(rootViewController: viewController)
         present(navVC, animated: true)
@@ -254,13 +254,13 @@ class MainViewController: UIViewController {
         doneTasksAreHidden = !doneTasksAreHidden
         if doneTasksAreHidden {
             DDLogDebug("Hide button pressed", level: .debug)
-            showButton.setTitle("Показать", for: .normal)
+            showButton.setTitle("Show", for: .normal)
             if let visibleIndexPaths = tableView.indexPathsForVisibleRows {
                 tableView.reloadRows(at: visibleIndexPaths, with: .fade)
             }
         } else {
             DDLogDebug("Show button pressed", level: .debug)
-            showButton.setTitle("Скрыть", for: .normal)
+            showButton.setTitle("Hide", for: .normal)
             if let visibleIndexPaths = tableView.indexPathsForVisibleRows {
                 tableView.reloadRows(at: visibleIndexPaths, with: .fade)
             }
@@ -268,7 +268,7 @@ class MainViewController: UIViewController {
     }
     
     @objc private func refreshData() {
-        serverSyncItems()
+//        serverSyncItems()
         refreshControl.endRefreshing()
     }
     

@@ -23,7 +23,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     let segmentedControl: UISegmentedControl = {
         let control = UISegmentedControl()
         control.insertSegment(with: UIImage(named: "unimportant")?.withRenderingMode(.alwaysOriginal), at: 0, animated: false)
-        control.insertSegment(withTitle: "нет", at: 1, animated: false)
+        control.insertSegment(withTitle: "no", at: 1, animated: false)
         control.insertSegment(with: UIImage(named: "important")?.withRenderingMode(.alwaysOriginal), at: 2, animated: false)
         control.selectedSegmentIndex = 1
         
@@ -61,7 +61,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     
     let deleteButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Удалить", for: .normal)
+        button.setTitle("Delete", for: .normal)
         button.setTitleColor(UIColor(named: "Red"), for: .normal)
         button.backgroundColor = UIColor(named: "BackSecondary")
         button.layer.cornerRadius = 16
@@ -71,7 +71,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     
     let importanceLabel: UILabel = {
         let label = UILabel()
-        label.text = "Важность"
+        label.text = "Importance"
         label.textColor = UIColor(named: "LabelPrimary")
         label.font = .body()
         
@@ -80,7 +80,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     
     let doneUntilLabel: UILabel = {
         let label = UILabel()
-        label.text = "Сделать до"
+        label.text = "Deadline"
         label.textColor = UIColor(named: "LabelPrimary")
         label.font = .body()
         
@@ -98,15 +98,15 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     // MARK: NavigationBar setup
     
     func navigationBarSetup() {
-        navigationItem.title = "Дело"
+        navigationItem.title = "Task"
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: "Отменить",
+            title: "Cancel",
             style: .plain,
             target: self,
             action: #selector(cancelButtonTapped)
         )
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Сохранить",
+            title: "Save",
             style: .done,
             target: self,
             action: #selector(saveButtonTapped)
@@ -114,7 +114,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource {
     }
     
     func saveButtonEnableCheck() {
-        if !detailsTextView.text.isEmpty && detailsTextView.text != "Что надо сделать?" {
+        if !detailsTextView.text.isEmpty && detailsTextView.text != "Enter your next task" {
             navigationItem.rightBarButtonItem?.isEnabled = true
         }
     }

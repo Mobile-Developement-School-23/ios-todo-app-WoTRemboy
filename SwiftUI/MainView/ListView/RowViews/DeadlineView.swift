@@ -12,7 +12,7 @@ struct DeadlineView: View {
     let timeStartFormatter: DateFormatter = {
         let formater = DateFormatter()
         formater.dateFormat = "dd MMMM"
-        formater.locale = Locale(identifier: "ru_RU")
+        formater.locale = Locale(identifier: "en_US")
         return formater
     }()
     var body: some View {

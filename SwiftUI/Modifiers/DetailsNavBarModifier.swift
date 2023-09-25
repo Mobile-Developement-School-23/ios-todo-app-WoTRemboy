@@ -12,17 +12,17 @@ struct DetailsNavBarModifier: ViewModifier {
     var isSaveDisabled: Bool
     func body(content: Content) -> some View {
         content
-            .navigationTitle("Дело")
+            .navigationTitle("Task")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(leading: Button {
                 dismiss()
             } label: {
-                Text("Отменить")
+                Text("Cancel")
             })
             .navigationBarItems(trailing: Button {
                 dismiss()
             } label: {
-                Text("Сохранить")
+                Text("Save")
             }
                 .disabled(isSaveDisabled)
             )

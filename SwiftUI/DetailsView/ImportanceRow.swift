@@ -11,7 +11,7 @@ struct ImportanceRowView: View {
     @Binding var selectedImportance: Importance
     var body: some View {
         HStack(spacing: 5) {
-            Text("Важность")
+            Text("Importance")
                 .font(.body)
                 .padding()
                 .padding(.leading, 5)
@@ -19,7 +19,7 @@ struct ImportanceRowView: View {
             Spacer()
             Picker("Importance", selection: $selectedImportance) {
                 Image("unimportant").tag(Importance.unimportant)
-                Text("нет").tag(Importance.regular)
+                Text("no").tag(Importance.regular)
                 Image("important").tag(Importance.important)
             }
             .pickerStyle(.segmented)

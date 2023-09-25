@@ -10,7 +10,7 @@ import UIKit
 extension DetailsViewController: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == "Что надо сделать?" && textView.textColor != UIColor(named: "LabelPrimary") {
+        if textView.text == "Enter your next task" && textView.textColor != UIColor(named: "LabelPrimary") {
             textView.text = nil
             textView.textColor = UIColor(named: "LabelPrimary")
         }
@@ -18,7 +18,7 @@ extension DetailsViewController: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
-            textView.text = "Что надо сделать?"
+            textView.text = "Enter your next task"
             textView.textColor = UIColor(named: "LabelTertiary")
         }
     }

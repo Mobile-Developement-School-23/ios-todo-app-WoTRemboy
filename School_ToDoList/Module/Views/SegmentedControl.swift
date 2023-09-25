@@ -12,7 +12,7 @@ class SegmentedControl: UISegmentedControl {
     let segmentControl: UISegmentedControl = {
         let control = UISegmentedControl()
         control.insertSegment(with: UIImage(named: "unimportant")?.withRenderingMode(.alwaysOriginal), at: 0, animated: false)
-        control.insertSegment(withTitle: "нет", at: 1, animated: false)
+        control.insertSegment(withTitle: "no", at: 1, animated: false)
         control.insertSegment(with: UIImage(named: "important")?.withRenderingMode(.alwaysOriginal), at: 2, animated: false)
         control.selectedSegmentIndex = 1
         

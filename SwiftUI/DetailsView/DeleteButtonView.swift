@@ -23,11 +23,11 @@ struct DeleteButtonView: View {
                         .cornerRadius(15)
                         .padding()
                     if isEnableForOld {
-                        Text("Удалить")
+                        Text("Delete")
                             .foregroundColor(Color("Red"))
                             .padding(.vertical)
                     } else {
-                        Text("Удалить")
+                        Text("Delete")
                             .foregroundColor(Color("LabelTertiary"))
                             .padding(.vertical)
                     }

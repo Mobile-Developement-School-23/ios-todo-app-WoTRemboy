@@ -2,7 +2,7 @@ import UIKit
 
 class DetailsTextView: UITextView {
     
-    let placeholder = "Что надо сделать?"
+    let placeholder = "Enter your next task"
     
     private func textViewInit() {
         
